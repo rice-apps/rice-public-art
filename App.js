@@ -1,13 +1,12 @@
 import React from 'react';
+import Piece from './Piece.js';
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}><Text style={{color: 'gray'}}>F</Text>ind</Text>
-      <Text style={styles.text}><Text style={{color: 'gray'}}>A</Text>rt at</Text>
-      <Text style={styles.text}><Text style={{color: 'gray'}}>R</Text>ice</Text>
-      <Text style={styles.text}><Text style={{color: 'gray'}}>T</Text>oday</Text>
+        <Piece title={"Berlin Wall"} desc={"This is a wall"} image={require("./images/wall.png")}> </Piece>
+        <Piece title={"Skyspace"} desc={"This is art"} image={require("./images/skyspace.jpg")} > </Piece>
     </View>
   );
 }
@@ -15,13 +14,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
-    // alignItems: 'center',
+    backgroundColor: '#fff',
+    alignItems: 'center',
     justifyContent: 'center',
   },
-  text: {
-    textAlign: 'left',
-    color: '#fff',
-    fontSize: 50
-  }
 });
