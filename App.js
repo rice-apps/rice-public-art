@@ -1,22 +1,17 @@
+//
 import React from 'react';
-import Piece from './Piece.js';
-import Art from './Art.js';
-import { StyleSheet, Text, View } from 'react-native';
+import {createAppContainer} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
+import { StyleSheet, Text, View, Image, Button } from 'react-native';
 
-export default function App() {
-  return (
-    <Art>
-        <Piece title={"Berlin Wall"} desc={"This is a wall"} image={require("./images/wall.png")}> </Piece>
-        <Piece title={"Skyspace"} desc={"This is art"} image={require("./images/skyspace.jpg")} > </Piece>
-    </Art>
-  );
-}
+//Screens
+import HomeScreen from './screens/Home'
+import AnnounceScreen from './screens/Announce.js'
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+////
+const MainNavigator = createStackNavigator({
+  Home: {screen: HomeScreen},
+  Announce: {screen: AnnounceScreen },
 });
+const App = createAppContainer(MainNavigator);
+export default App;
