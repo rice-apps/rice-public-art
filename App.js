@@ -10,10 +10,9 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import HomeScreen from './screens/Home'
 import AnnounceScreen from './screens/Announce.js'
 
-////
-const MainNavigator = createStackNavigator({
-  Home: {screen: HomeScreen},
-  Announce: {screen: AnnounceScreen },
+const TabNavigator = createBottomTabNavigator({
+  Home: HomeScreen,
+  Announcements: AnnounceScreen,
 });
-const App = createAppContainer(MainNavigator);
-export default App;
+
+export default createAppContainer(TabNavigator);

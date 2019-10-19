@@ -4,9 +4,6 @@ import Art from '../source/Art.js';
 import Piece from '../source/Piece.js';
 
 export default class HomeScreen extends React.Component {
-    static navigationOptions = {
-      title: 'Welcome',
-    };
     render() {
       const {navigate} = this.props.navigation;
       return (
@@ -15,10 +12,6 @@ export default class HomeScreen extends React.Component {
                 <Piece title={"Berlin Wall"} desc={"This is a wall"} image={require("../images/wall.png")}> </Piece>
                 <Piece title={"Skyspace"} desc={"This is art"} image={require("../images/skyspace.jpg")} > </Piece>  
             </Art>
-            <Button
-                title="Go to Announcements!"
-                onPress={() => navigate('Announce', {name: 'Jane'})}
-            />
         </View>
       );
     }
