@@ -4,6 +4,10 @@ import Art from '../source/Art.js';
 import Piece from '../source/Piece.js';
 
 export default class HomeScreen extends React.Component {
+    componentDidMount(){
+      fetch('http://moody-backend.herokuapp.com/moodyArt/allArt', {method: 'GET'})
+        .then( (res) => console.log("data:",res.json() ) );
+    }
     render() {
       const {navigate} = this.props.navigation;
       return (
