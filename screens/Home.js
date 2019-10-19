@@ -15,7 +15,7 @@ export default class HomeScreen extends React.Component {
       fetch('http://moody-backend.herokuapp.com/moodyArt/allArt', {method: 'GET'})
         .then(response => response.json())
         .then((responseJson)=> {
-          this.setState({
+            this.setState({
             loading: false,
             data: responseJson
            })
@@ -30,7 +30,7 @@ export default class HomeScreen extends React.Component {
             <Text> Loading... </Text>
           </View>
       )} else {
-        console.log(this.data);
+        console.log("loaded data:",this.state.data);
         return(
           <View style={styles.container}>
             <Text> Done! </Text>
