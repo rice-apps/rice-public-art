@@ -31,7 +31,7 @@ export default class HomeScreen extends React.Component {
       if(this.state.loading){
         // Display something to inform user data is loading
         return( 
-          <View style={styles.loader}> 
+          <View style={styles.container}> 
             <Text> Loading... </Text>
           </View>
       )} else {
