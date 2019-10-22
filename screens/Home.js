@@ -9,7 +9,7 @@ export default class HomeScreen extends React.Component {
     super(props);
     this.state = {
       loading: true,
-      dataSource:[]
+      data:[]
      };
    }
    // Fires when componenet is initially set/mounted
@@ -20,8 +20,8 @@ export default class HomeScreen extends React.Component {
         .then((responseJson)=> { 
             // Adjust state to reflect loaded status / store data from response
             this.setState({
-            loading: false,
-            data: responseJson
+              loading: false,
+              data: responseJson
            })
         })
         .catch(error=>console.log(error)) //to catch the errors if any
