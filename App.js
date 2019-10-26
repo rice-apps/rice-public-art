@@ -13,12 +13,6 @@ import AnnounceScreen from './screens/Announce.js'
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-// const TabNavigator = createBottomTabNavigator({
-//   Home: HomeScreen,
-//   Map: MapScreen,
-//   Announcements: AnnounceScreen,
-// });
-
 const TabNavigator = createBottomTabNavigator({
   Home: {
     screen: HomeScreen,
@@ -27,7 +21,7 @@ const TabNavigator = createBottomTabNavigator({
         <Icon
           name="home"
           color={tintColor}
-          size={24}
+          size={30}
         />
       )
     }
@@ -39,7 +33,7 @@ const TabNavigator = createBottomTabNavigator({
         <Icon
           name="map-marked-alt"
           color={tintColor}
-          size={24}
+          size={30}
         />
       )
     }
@@ -51,17 +45,19 @@ const TabNavigator = createBottomTabNavigator({
         <Icon
           name="bullhorn"
           color={tintColor}
-          size={24}
+          size={30}
         />
       )
     }
   }
 }, {
-  // tabBarOptions: {
-    // showLabel: false,
-    // activeTintColor: '#000000',
-    // inactiveTintColor: '#555555'
-  // }
+  tabBarOptions: {
+    showLabel: false,
+    activeTintColor: 'rgb(90, 165, 245)',
+    inactiveTintColor: 'white',
+    activeBackgroundColor: 'rgba(0, 0, 0, 0.8)',
+    inactiveBackgroundColor: 'rgba(0, 0, 0, 0.7)',
+  }
 });
 
 export default createAppContainer(TabNavigator);
