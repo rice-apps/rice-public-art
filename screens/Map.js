@@ -6,7 +6,14 @@ export default class MapScreen extends React.Component {
     render() {
       return (
         <View style={styles.container}>
-          <MapView style={styles.mapStyle} />
+          <MapView 
+            style={styles.mapStyle} 
+            initialRegion={{
+              latitude: 29.717031,
+              longitude: -95.402857,
+              latitudeDelta: 0.03,
+              longitudeDelta: 0.015,
+            }}/>
         </View>
       );
     }
