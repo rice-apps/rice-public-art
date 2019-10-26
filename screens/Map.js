@@ -34,6 +34,7 @@ export default class MapScreen extends React.Component {
             <View style={styles.container}>
                 <MapView
                     style={styles.mapStyle}
+                    showsUserLocation={true}
                     initialRegion={{
                         latitude: 29.717031,
                         longitude: -95.402857,
