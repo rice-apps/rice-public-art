@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Button, FlatList, ActivityIndicator} from 'react-native';
 import Art from '../source/Art.js';
-import Piece from '../source/Piece.js';
 import Card from '../source/Card.js';
 
 export default class HomeScreen extends React.Component {
