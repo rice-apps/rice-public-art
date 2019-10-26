@@ -7,8 +7,9 @@ export default class Card extends React.Component {
           <View style={styles.container}>
             <Text> {this.props.name} </Text>
             <Text> {this.props.description} </Text>
-            <Text> {this.props.image} </Text>
+            <Image style={{width: 250, height: 250}} source={{uri: "https:"+this.props.image}}/>
             <Text> {this.props.location} </Text>
+            
           </View>
         );
       }
