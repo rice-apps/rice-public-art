@@ -38,8 +38,7 @@ export default class MapScreen extends React.Component {
             longitude: -95.402857,
             latitudeDelta: 0.03,
             longitudeDelta: 0.015,
-          }}
-          customMapStyle={mapstyle}>
+          }}>
           {this.state.data.map(art => (
             <Marker
               key={art.name}
