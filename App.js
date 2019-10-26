@@ -1,7 +1,7 @@
 //
 import React from 'react';
-import {createAppContainer} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import { StyleSheet, Text, View, Image, Button } from 'react-native';
 //added bottom tab navigator
 import { createBottomTabNavigator } from 'react-navigation-tabs';
@@ -11,52 +11,57 @@ import HomeScreen from './screens/Home'
 import MapScreen from './screens/Map'
 import AnnounceScreen from './screens/Announce.js'
 
+import Icon from 'react-native-vector-icons/FontAwesome5';
+
 // const TabNavigator = createBottomTabNavigator({
 //   Home: HomeScreen,
 //   Map: MapScreen,
 //   Announcements: AnnounceScreen,
 // });
 
-const TabNavigator = createBottomTabNavigator ({
-  Home:{
+const TabNavigator = createBottomTabNavigator({
+  Home: {
     screen: HomeScreen,
     navigationOptions: {
-      tabBarIcon: (focused, tintColor) => (
-        <Image 
-          style={{ width: 35, height: 35 }}
-          source={require('./images/mapIcon.png')} 
-          tintColor={tintColor}/>
+      tabBarIcon: ({ tintColor }) => (
+        <Icon
+          name="home"
+          color={tintColor}
+          size={24}
+        />
       )
     }
   },
-  Map:{
+  Map: {
     screen: MapScreen,
-    navigationOptions:{
-      tabBarIcon: (focused, tintColor) => (
-        <Image 
-          style={{ width: 35, height: 35 }}
-          source={require('./images/mapIcon.png')} 
-          tintColor={tintColor}/>
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => (
+        <Icon
+          name="map-marked-alt"
+          color={tintColor}
+          size={24}
+        />
       )
     }
   },
-  Announcements:{
+  Announcements: {
     screen: AnnounceScreen,
-    navigationOptions:{
-      tabBarIcon: (focused, tintColor) => (
-        <Image 
-          style={{ width: 35, height: 35 }}
-          source={require('./images/mapIcon.png')} 
-          tintColor={tintColor}/>
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => (
+        <Icon
+          name="bullhorn"
+          color={tintColor}
+          size={24}
+        />
       )
     }
   }
 }, {
-  tabBarOptions: { 
+  // tabBarOptions: {
     // showLabel: false,
-    activeTintColor: '#000000',
-    inactiveTintColor: '#555555'
-  }
+    // activeTintColor: '#000000',
+    // inactiveTintColor: '#555555'
+  // }
 });
 
 export default createAppContainer(TabNavigator);
