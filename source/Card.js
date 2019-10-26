@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './stylesheets/DisplayArt.js';
-import { Text, View} from 'react-native';
+import { Text, View, Image} from 'react-native';
 
 export default class Card extends React.Component {
     render() {
