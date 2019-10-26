@@ -37,7 +37,7 @@ export default class HomeScreen extends React.Component {
       )} else {
         // We got the data
           // Here we have to do somoething with this.state.data to reflect in the return statement
-        console.log("loaded data:",this.state.data);
+        // console.log("loaded data:",this.state.data);
         // Return display formating data into Piece componenets
         return(
           <View style={styles.container}>
