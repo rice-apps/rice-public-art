@@ -40,11 +40,15 @@ export default class MapScreen extends React.Component {
                         latitudeDelta: 0.03,
                         longitudeDelta: 0.015,
                     }}>
-                        {this.state.data.map(art => (
-                            <Marker key={art.name} coordinate={{latitude: art.location.lat, longitude: art.location.lon}} title={art.name}/>
-                        ))}
+                    {this.state.data.map(art => (
+                        <Marker
+                            key={art.name}
+                            coordinate={{ latitude: art.location.lat, longitude: art.location.lon }}
+                            title={art.name} 
+                            image={require('../assets/Pin.png')} />
+                    ))}
 
-                    </MapView>
+                </MapView>
             </View>
         );
 
