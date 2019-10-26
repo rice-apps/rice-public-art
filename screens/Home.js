@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, Button, FlatList, ActivityIndicator} from 'react-native';
 import Art from '../source/Art.js';
 import Piece from '../source/Piece.js';
+import Card from '../source/Card.js';
 
 export default class HomeScreen extends React.Component {
   // Set default state for Homescreen (no data, and loading)
@@ -39,9 +40,20 @@ export default class HomeScreen extends React.Component {
           // Here we have to do somoething with this.state.data to reflect in the return statement
         // console.log("loaded data:",this.state.data);
         // Return display formating data into Piece componenets
+        let artText = []
+        //let component
+        for(let i = 0; i < this.state.data.data.length; i++){
+          artName = this.state.data.data[i].name
+          artDescription = this.state.data.data[i].description
+          artImage = this.state.data.data[i].image
+          artLocation = this.state.data.data[i].location
+          artText.push(<Card key={i} name={artName} description={artDescription} image={artImage} location={artLocation} text={artText}> </Card>)
+          //component = <Text key={i}>{this.state.data.data[i].name}</Text>
+          //artText.push(component)
+        }
         return(
           <View style={styles.container}>
-            <Text> Done! </Text>
+            {artText}
          </View>
         );
       }
