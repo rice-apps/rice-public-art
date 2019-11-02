@@ -2,7 +2,6 @@ import React from 'react';
 import MapView, { Callout } from 'react-native-maps';
 import { Marker } from 'react-native-maps';
 import { StyleSheet, Text, View, Image, Button, Dimensions } from 'react-native';
-import { AuthSession } from 'expo';
 
 const colors = ["rgb(0, 50, 160)", "rgb(230, 60, 0)", "rgb(60, 160, 15)", "rgb(90, 165, 245)", "rgb(255, 135, 0)", "rgb(155, 210, 0)"]
 
@@ -58,15 +57,15 @@ export default class MapScreen extends React.Component {
                 title={art.name}
                 image={require('../assets/Pin.png')}>
                 <Callout tooltip={true}>
-                  <View style={[calloutView, {backgroundColor: artColor}]}>
+                  <View style={[styles.calloutView, {backgroundColor: artColor}]}>
                     <Image style={styles.calloutImage} source={{ uri: art.image }} />
                     <View style={styles.calloutText}>
                       <Text style={styles.calloutTitle}>{art.name}</Text>
                       <Text style={styles.calloutDescription}>{art.description}</Text>
                     </View>
-                    <Text style={styles.routeButton}>Route</Text>
+                    <Text style={[styles.routeButton, {backgroundColor: artColor}]}>Route</Text>
                   </View>
-                  <View style={styles.calloutArrow}></View>
+                  <View style={[styles.calloutArrow, {borderTopColor: artColor}]}></View>
                 </Callout>
               </Marker>
             )})
@@ -95,7 +94,9 @@ const styles = StyleSheet.create({
   },
   calloutText: {
     width: 300,
-    padding: 20
+    padding: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: 'white',
   },
   calloutTitle: {
     fontSize: 24,
@@ -108,7 +109,6 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   calloutArrow: {
-    borderTopColor: 'rgb(40, 40, 40)',
     borderTopWidth: 20,
     borderRightWidth: 15,
     borderLeftWidth: 15,
@@ -130,7 +130,6 @@ const styles = StyleSheet.create({
   routeButton: {
     textAlign: 'center',
     color: 'white',
-    opacity: 0.8,
     fontSize: 20,
     padding: 10
   }
