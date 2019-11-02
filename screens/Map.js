@@ -11,7 +11,6 @@ const getRandomColor = function () {
   return colors[Math.floor(Math.random() * colors.length)]
 }
 
-const origin = {latitude: 29.718261782636628, longitude: -95.40130750038287};
 const destination = {latitude: 29.716484587132125, longitude: -95.40425174120776};
 
 export default class MapScreen extends React.Component {
@@ -24,7 +23,7 @@ export default class MapScreen extends React.Component {
         latitude: 29.718261782636628,
         longitude: -95.40130750038287,
       },
-      showRoute: true
+      showRoute: false
     };
   }
   // Fires when componenet is initially set/mounted
@@ -33,12 +32,12 @@ export default class MapScreen extends React.Component {
       var lat = parseFloat(position.coords.latitude)
       var long = parseFloat(position.coords.longitude)
       console.log(lat, long);
-      this.setState(previousState => (
-        { userLocation: {
+      this.setState({
+        userLocation: {
           latitude: lat,
           longitude: long
-        }}
-      ))
+        }
+      })
     },
     (error) => alert(JSON.stringify(error)),
     {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});
@@ -86,7 +85,11 @@ export default class MapScreen extends React.Component {
                       <Text style={styles.calloutTitle}>{art.name}</Text>
                       <Text style={styles.calloutDescription}>{art.description}</Text>
                     </View>
-                    <Text style={[styles.routeButton, {backgroundColor: artColor}]}>Route</Text>
+                    <Text style={[styles.routeButton, {backgroundColor: artColor}]}
+                      onPress={() => this.setState({showRoute:true})}>
+                      {this.state.titleText}
+                      Route
+                    </Text>
                   </View>
                   <View style={[styles.calloutArrow, {borderTopColor: artColor}]}></View>
                 </Callout>
