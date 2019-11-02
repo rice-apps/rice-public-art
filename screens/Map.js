@@ -70,28 +70,28 @@ export default class MapScreen extends React.Component {
             longitudeDelta: 0.015,
           }}>
           {
-            this.state.data.map(art => 
-              {
-                const artColor = getRandomColor()
-                return (
-              <Marker
-                key={art.name}
-                coordinate={{ latitude: art.location.lat, longitude: art.location.lon }}
-                title={art.name}
-                image={require('../assets/Pin.png')}>
-                <Callout tooltip={true}>
-                  <View style={[styles.calloutView, {backgroundColor: artColor}]}>
-                    <Image style={styles.calloutImage} source={{ uri: art.image }} />
-                    <View style={styles.calloutText}>
-                      <Text style={styles.calloutTitle}>{art.name}</Text>
-                      <Text style={styles.calloutDescription}>{art.description}</Text>
+            this.state.data.map(art => {
+              const artColor = getRandomColor()
+              return (
+                <Marker
+                  key={art.name}
+                  coordinate={{ latitude: art.location.lat, longitude: art.location.lon }}
+                  title={art.name}
+                  image={require('../assets/Pin.png')}>
+                  <Callout tooltip={true}>
+                    <View style={[styles.calloutView, { backgroundColor: artColor }]}>
+                      <Image style={styles.calloutImage} source={{ uri: art.image }} />
+                      <View style={styles.calloutText}>
+                        <Text style={styles.calloutTitle}>{art.name}</Text>
+                        <Text style={styles.calloutDescription}>{art.description}</Text>
+                      </View>
+                      <Text style={[styles.routeButton, { backgroundColor: artColor }]}>Route</Text>
                     </View>
-                    <Text style={[styles.routeButton, {backgroundColor: artColor}]}>Route</Text>
-                  </View>
-                  <View style={[styles.calloutArrow, {borderTopColor: artColor}]}></View>
-                </Callout>
-              </Marker>
-            )})
+                    <View style={[styles.calloutArrow, { borderTopColor: artColor }]}></View>
+                  </Callout>
+                </Marker>
+              )
+            })
           }
           {this.state.showRoute ? 
             <MapViewDirections
