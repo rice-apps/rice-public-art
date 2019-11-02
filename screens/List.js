@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, Button, FlatList, ActivityIndicator} from 'react-native';
-import Art from '../source/Art.js';
-import Card from '../source/Card.js';
-
+import Card from './Card.js';
+import { TouchableHighlight } from 'react-native-gesture-handler';
+ 
 export default class HomeScreen extends React.Component {
   // Set default state for Homescreen (no data, and loading)
   constructor(props) {
@@ -46,13 +46,12 @@ export default class HomeScreen extends React.Component {
           artDescription = this.state.data.data[i].description
           artImage = this.state.data.data[i].image
           artLocation = this.state.data.data[i].location
-          artText.push(<Card key={i} name={artName} description={artDescription} image={artImage} location={artLocation} text={artText}> </Card>)
+          artText.push(<TouchableHighlight 
+            style = {styles.container}
+            onPress={() => 
+              this.props.navigation.navigate('Details',this.state.data.data[i])
+            }><Card key={i} name={artName} description={artDescription} image={artImage} location={artLocation} text={artText}> </Card></TouchableHighlight>)
           console.log(this.state.data[i])
-          artText.push(<Button key={i + "aa"} title="Details" onPress={() => 
-            this.props.navigation.navigate('Details',this.state.data.data[i])
-          } />)
-          //component = <Text key={i}>{this.state.data.data[i].name}</Text>
-          //artText.push(component)
         }
         return(
           <ScrollView style={styles.scrollView}>

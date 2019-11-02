@@ -7,10 +7,9 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 ////import { createStackNavigator } from 'react-navigation-stack';
 
 //Screens
-import HomeScreen from './screens/Home'
+import HomeScreen from './screens/HomeIndex.js'
 import MapScreen from './screens/Map'
-import DetailsScreen from './screens/Details.js'
-import AnnounceScreen from './screens/Announce.js'
+import AnnounceScreen from './screens/Announce'
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -50,12 +49,7 @@ const TabNavigator = createBottomTabNavigator({
         />
       )
     }
-  },
-  //Hidden boy
-  Details: {
-    screen:DetailsScreen
   }
-
 }, {
   tabBarOptions: {
     showLabel: false,

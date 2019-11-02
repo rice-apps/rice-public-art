@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Button } from 'react-native';
+import { StyleSheet, Text, View, Image, Icon, TouchableOpacity } from 'react-native';
 
 
-export default class AnnounceScreen extends React.Component {
+export default class DetailsScreen extends React.Component {
     getParam(param,def){
         return this.props.navigation.getParam(param,def)
     }
