@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Button, FlatList, ActivityIndicator} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, Button, FlatList, ActivityIndicator} from 'react-native';
 import Art from '../source/Art.js';
 import Card from '../source/Card.js';
 
@@ -55,9 +55,9 @@ export default class HomeScreen extends React.Component {
           //artText.push(component)
         }
         return(
-          <View style={styles.container}>
+          <ScrollView style={styles.scrollView}>
             {artText}
-         </View>
+         </ScrollView>
         );
       }
     }
@@ -69,5 +69,9 @@ export default class HomeScreen extends React.Component {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
+    },
+    scrollView: {
+      padding: 30,
+      flex: 5,
     },
   });
