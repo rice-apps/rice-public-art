@@ -1,14 +1,15 @@
 //
 import React from 'react';
 import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
 import { StyleSheet, Text, View, Image, Button } from 'react-native';
 //added bottom tab navigator
 import { createBottomTabNavigator } from 'react-navigation-tabs';
+////import { createStackNavigator } from 'react-navigation-stack';
 
 //Screens
 import HomeScreen from './screens/Home'
 import MapScreen from './screens/Map'
+import DetailsScreen from './screens/Details.js'
 import AnnounceScreen from './screens/Announce.js'
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -49,7 +50,12 @@ const TabNavigator = createBottomTabNavigator({
         />
       )
     }
+  },
+  //Hidden boy
+  Details: {
+    screen:DetailsScreen
   }
+
 }, {
   tabBarOptions: {
     showLabel: false,

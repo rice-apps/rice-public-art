@@ -37,7 +37,7 @@ export default class HomeScreen extends React.Component {
       )} else {
         // We got the data
           // Here we have to do somoething with this.state.data to reflect in the return statement
-        // console.log("loaded data:",this.state.data);
+        //console.log("loaded data:",this.state.data);
         // Return display formating data into Piece componenets
         let artText = []
         //let component
@@ -47,6 +47,10 @@ export default class HomeScreen extends React.Component {
           artImage = this.state.data.data[i].image
           artLocation = this.state.data.data[i].location
           artText.push(<Card key={i} name={artName} description={artDescription} image={artImage} location={artLocation} text={artText}> </Card>)
+          console.log(this.state.data[i])
+          artText.push(<Button title="Details" onPress={() => 
+            this.props.navigation.navigate('Details',this.state.data.data[i])
+          } />)
           //component = <Text key={i}>{this.state.data.data[i].name}</Text>
           //artText.push(component)
         }
