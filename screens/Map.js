@@ -23,7 +23,11 @@ export default class MapScreen extends React.Component {
         latitude: 29.718261782636628,
         longitude: -95.40130750038287,
       },
-      showRoute: false
+      destination: {
+        latitude: 29.718261782636628,
+        longitude: -95.40130750038287,
+      },
+      showRoute: false,
     };
   }
   // Fires when componenet is initially set/mounted
@@ -69,25 +73,35 @@ export default class MapScreen extends React.Component {
             longitudeDelta: 0.015,
           }}>
           {
-            this.state.data.map(art => {
-              const artColor = getRandomColor()
-              return (
-                <Marker
-                  key={art.name}
-                  coordinate={{ latitude: art.location.lat, longitude: art.location.lon }}
-                  title={art.name}
-                  image={require('../assets/Pin.png')}>
-                  <Callout tooltip={true}>
-                    <View style={[styles.calloutView, { backgroundColor: artColor }]}>
-                      <Image style={styles.calloutImage} source={{ uri: art.image }} />
-                      <View style={styles.calloutText}>
-                        <Text style={styles.calloutTitle}>{art.name}</Text>
-                        <Text style={styles.calloutDescription}>{art.description}</Text>
-                      </View>
-                      <Text style={[styles.routeButton, { backgroundColor: artColor }]}
-                        onPress={() => this.setState({ showRoute: true })}>
-                        {this.state.titleText}
-                        Route
+            this.state.data.map(art => 
+              {
+                const artColor = getRandomColor()
+                return (
+              <Marker
+                key={art.name}
+                coordinate={{ latitude: art.location.lat, longitude: art.location.lon }}
+                title={art.name}
+                image={require('../assets/Pin.png')}>
+                <Callout tooltip={true}>
+                  <View style={[styles.calloutView, {backgroundColor: artColor}]}>
+                    <Image style={styles.calloutImage} source={{ uri: art.image }} />
+                    <View style={styles.calloutText}>
+                      <Text style={styles.calloutTitle}>{art.name}</Text>
+                      <Text style={styles.calloutDescription}>{art.description}</Text>
+                    </View>
+                    <Text style={[styles.routeButton, {backgroundColor: artColor}]}
+                      onPress={() => {
+                        this.setState({
+                        showRoute: true, 
+                        destination: {
+                          latitude: art.location.lat, 
+                          longitude: art.location.lon
+                          }
+                        });
+                      }}
+                    >
+                      {this.state.titleText}
+                      Route
                     </Text>
                     </View>
                     <View style={[styles.calloutArrow, { borderTopColor: artColor }]}></View>
@@ -99,7 +113,7 @@ export default class MapScreen extends React.Component {
           {this.state.showRoute ?
             <MapViewDirections
               origin={this.state.userLocation}
-              destination={destination}
+              destination={this.state.destination}
               apikey={GOOGLE_MAPS_APIKEY}
               strokeWidth={7}
               strokeColor='rgb(100, 100, 200)'
