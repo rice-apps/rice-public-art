@@ -48,7 +48,7 @@ export default class HomeScreen extends React.Component {
           artLocation = this.state.data.data[i].location
           artText.push(<Card key={i} name={artName} description={artDescription} image={artImage} location={artLocation} text={artText}> </Card>)
           console.log(this.state.data[i])
-          artText.push(<Button title="Details" onPress={() => 
+          artText.push(<Button key={i + "aa"} title="Details" onPress={() => 
             this.props.navigation.navigate('Details',this.state.data.data[i])
           } />)
           //component = <Text key={i}>{this.state.data.data[i].name}</Text>

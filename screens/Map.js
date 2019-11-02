@@ -71,7 +71,6 @@ export default class MapScreen extends React.Component {
           }}>
           {
             this.state.data.map(art => 
-              
               {
                 const artColor = getRandomColor()
                 return (
