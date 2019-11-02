@@ -11,7 +11,7 @@ const getRandomColor = function () {
   return colors[Math.floor(Math.random() * colors.length)]
 }
 
-const destination = {latitude: 29.716484587132125, longitude: -95.40425174120776};
+const destination = { latitude: 29.716484587132125, longitude: -95.40425174120776 };
 
 export default class MapScreen extends React.Component {
   constructor(props) {
@@ -39,8 +39,8 @@ export default class MapScreen extends React.Component {
         }
       })
     },
-    (error) => alert(JSON.stringify(error)),
-    {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});
+      (error) => alert(JSON.stringify(error)),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 });
 
     //Make a fetch call
     fetch('http://moody-backend.herokuapp.com/campusArt/allArt', { method: 'GET' })
@@ -84,7 +84,11 @@ export default class MapScreen extends React.Component {
                         <Text style={styles.calloutTitle}>{art.name}</Text>
                         <Text style={styles.calloutDescription}>{art.description}</Text>
                       </View>
-                      <Text style={[styles.routeButton, { backgroundColor: artColor }]}>Route</Text>
+                      <Text style={[styles.routeButton, { backgroundColor: artColor }]}
+                        onPress={() => this.setState({ showRoute: true })}>
+                        {this.state.titleText}
+                        Route
+                    </Text>
                     </View>
                     <View style={[styles.calloutArrow, { borderTopColor: artColor }]}></View>
                   </Callout>
@@ -92,7 +96,7 @@ export default class MapScreen extends React.Component {
               )
             })
           }
-          {this.state.showRoute ? 
+          {this.state.showRoute ?
             <MapViewDirections
               origin={this.state.userLocation}
               destination={destination}
@@ -101,9 +105,9 @@ export default class MapScreen extends React.Component {
               strokeColor='rgb(100, 100, 200)'
               mode='WALKING'
             /> : null
-         }
+          }
         </MapView>
-      </View>
+      </View >
     );
   }
 }
