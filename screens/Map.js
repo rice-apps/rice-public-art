@@ -1,4 +1,5 @@
 import React from 'react';
+import { createStackNavigator } from 'react-navigation-stack'
 import MapView, { Callout } from 'react-native-maps';
 import { Marker } from 'react-native-maps';
 import { StyleSheet, Text, View, Image, Button, Dimensions } from 'react-native';
@@ -11,9 +12,10 @@ const getRandomColor = function () {
   return colors[Math.floor(Math.random() * colors.length)]
 }
 
-const destination = { latitude: 29.716484587132125, longitude: -95.40425174120776 };
-
-export default class MapScreen extends React.Component {
+class MapScreen extends React.Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: "Map",
+  })
   constructor(props) {
     super(props);
     this.state = {
@@ -73,36 +75,31 @@ export default class MapScreen extends React.Component {
             longitudeDelta: 0.015,
           }}>
           {
-            this.state.data.map(art => 
-              {
-                const artColor = getRandomColor()
-                return (
-              <Marker
-                key={art.name}
-                coordinate={{ latitude: art.location.lat, longitude: art.location.lon }}
-                title={art.name}
-                image={require('../assets/Pin.png')}>
-                <Callout tooltip={true}>
-                  <View style={[styles.calloutView, {backgroundColor: artColor}]}>
-                    <Image style={styles.calloutImage} source={{ uri: art.image }} />
-                    <View style={styles.calloutText}>
-                      <Text style={styles.calloutTitle}>{art.name}</Text>
-                      <Text style={styles.calloutDescription}>{art.description}</Text>
-                    </View>
-                    <Text style={[styles.routeButton, {backgroundColor: artColor}]}
-                      onPress={() => {
-                        this.setState({
-                        showRoute: true, 
-                        destination: {
-                          latitude: art.location.lat, 
-                          longitude: art.location.lon
-                          }
-                        });
-                      }}
-                    >
-                      {this.state.titleText}
-                      Route
-                    </Text>
+            this.state.data.map(art => {
+              const artColor = getRandomColor()
+              console.log("Making marker")
+              return (
+                <Marker
+                  key={art.name}
+                  coordinate={{ latitude: art.location.lat, longitude: art.location.lon }}
+                  title={art.name}
+                  image={require('../assets/Pin.png')}
+                  onPress={() =>
+                    this.setState({
+                      destination: {
+                        latitude: art.location.lat,
+                        longitude: art.location.lon
+                      }
+                    })
+                  }
+                >
+                  <Callout onPress={() => console.log('Callout pressed')} tooltip={true}>
+                    <View style={[styles.calloutView, { backgroundColor: artColor }]}>
+                      <Image style={styles.calloutImage} source={{ uri: art.image }} />
+                      <View style={styles.calloutText}>
+                        <Text style={styles.calloutTitle}>{art.name}</Text>
+                        <Text style={styles.calloutDescription}>{art.description}</Text>
+                      </View>
                     </View>
                     <View style={[styles.calloutArrow, { borderTopColor: artColor }]}></View>
                   </Callout>
@@ -121,10 +118,30 @@ export default class MapScreen extends React.Component {
             /> : null
           }
         </MapView>
+        <View
+          style={styles.overMapView}
+        >
+          <Button
+            style={styles.actionButton}
+            title='Show Route'
+            onPress={() => {
+              console.log("PRESSED");
+              this.setState({
+                showRoute: !this.state.showRoute,
+              });
+            }} />
+        </View>
       </View >
     );
   }
 }
+
+const MapNavigator = createStackNavigator({
+  Home: {
+    screen: MapScreen,
+  },
+})
+export default MapNavigator;
 
 const styles = StyleSheet.create({
   container: {
@@ -136,6 +153,7 @@ const styles = StyleSheet.create({
   mapStyle: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
+    zIndex: -1
   },
   calloutView: {
     padding: 0,
@@ -143,7 +161,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden'
   },
   calloutText: {
-    width: 300,
+    width: 250,
     padding: 20,
     borderBottomWidth: 1,
     borderBottomColor: 'white',
@@ -171,16 +189,26 @@ const styles = StyleSheet.create({
     transform: [{ translateY: -2 }]
   },
   calloutImage: {
-    width: 300,
-    height: 250,
+    width: 250,
+    height: 125,
     marginLeft: 'auto',
     marginRight: 'auto',
     marginTop: 0
   },
-  routeButton: {
-    textAlign: 'center',
-    color: 'white',
-    fontSize: 20,
-    padding: 10
+  actionButton: {
+    position: 'absolute',
+    width: 20,
+    height: 20,
+    top: 10,
+    left: 10,
+    zIndex: 10,
+  },
+  overMapView: {
+    position: 'absolute',//use absolute position to show button on top of the map
+    bottom: '5%', //for center align
+    alignSelf: 'center', //for align to right
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 10,
   }
 });

@@ -4,11 +4,10 @@ import { createAppContainer } from 'react-navigation';
 import { StyleSheet, Text, View, Image, Button } from 'react-native';
 //added bottom tab navigator
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-////import { createStackNavigator } from 'react-navigation-stack';
 
 //Screens
 import HomeScreen from './screens/HomeIndex.js'
-import MapScreen from './screens/Map'
+import MapNavigator from './screens/Map'
 import AnnounceScreen from './screens/Announce'
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -27,7 +26,7 @@ const TabNavigator = createBottomTabNavigator({
     }
   },
   Map: {
-    screen: MapScreen,
+    screen: MapNavigator,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <Icon

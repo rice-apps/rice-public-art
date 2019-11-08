@@ -4,6 +4,10 @@ import Card from './Card.js';
 import { TouchableHighlight } from 'react-native-gesture-handler';
  
 export default class HomeScreen extends React.Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: "Art List",
+  })
+
   // Set default state for Homescreen (no data, and loading)
   constructor(props) {
     super(props);
@@ -47,11 +51,12 @@ export default class HomeScreen extends React.Component {
           artImage = this.state.data.data[i].image
           artLocation = this.state.data.data[i].location
           artText.push(<TouchableHighlight 
+            key={i}
             style = {styles.container}
             onPress={() => 
               this.props.navigation.navigate('Details',this.state.data.data[i])
-            }><Card key={i} name={artName} description={artDescription} image={artImage} location={artLocation} text={artText}> </Card></TouchableHighlight>)
-          console.log(this.state.data[i])
+            }><Card name={artName} description={artDescription} image={artImage} location={artLocation} text={artText}> </Card></TouchableHighlight>)
+          console.log(this.state.data.data[i])
         }
         return(
           <ScrollView style={styles.scrollView}>
