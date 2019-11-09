@@ -1,12 +1,17 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, Button, FlatList, ActivityIndicator} from 'react-native';
 import Card from '../components/Card.js';
+import Topbar from '../components/Topbar.js';
+
 import { createStackNavigator } from 'react-navigation-stack'
 import DetailsScreen from './Details.js';
 
 //import { TouchableHighlight } from 'react-native-gesture-handler';
  
 class HomeScreen extends React.Component {
+  static navigationOptions = ({ navigation }) => ({
+    headerLeft: <Topbar text="Home"/>,
+  })
   // Set default state for Homescreen (no data, and loading)
   constructor(props) {
     super(props);
