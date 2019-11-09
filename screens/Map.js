@@ -6,6 +6,7 @@ import { StyleSheet, Text, View, Image, Button, Dimensions } from 'react-native'
 import MapViewDirections from 'react-native-maps-directions';
 import { GOOGLE_MAPS_APIKEY } from '../AUTHENTICATION.js';
 
+const { width, height } = Dimensions.get('window');
 const colors = ["rgb(0, 50, 160)", "rgb(230, 60, 0)", "rgb(60, 160, 15)", "rgb(90, 165, 245)", "rgb(255, 135, 0)", "rgb(155, 210, 0)"]
 
 const getRandomColor = function () {
@@ -32,6 +33,7 @@ class MapScreen extends React.Component {
       showRoute: false,
       routeDuration: 0,
     };
+    this.mapView = null;
   }
   // Fires when componenet is initially set/mounted
   componentDidMount() {
@@ -69,6 +71,7 @@ class MapScreen extends React.Component {
         <MapView
           style={styles.mapStyle}
           showsUserLocation={true}
+          ref={c => this.mapView = c}
           initialRegion={{
             latitude: 29.717031,
             longitude: -95.402857,
@@ -120,6 +123,14 @@ class MapScreen extends React.Component {
                 this.setState({
                   routeDuration: Math.round( result.duration * 10) / 10 // round to one decimal place
                 })
+                this.mapView.fitToCoordinates(result.coordinates, {
+                  edgePadding: {
+                    right: (width / 20),
+                    bottom: (height / 20),
+                    left: (width / 20),
+                    top: (height / 20),
+                  }
+                });
               }}
             /> : null
           }
