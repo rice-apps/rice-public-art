@@ -25,7 +25,7 @@ export default class HomeScreen extends React.Component {
             // Adjust state to reflect loaded status / store data from response
             this.setState({
               loading: false,
-              data: responseJson
+              data: responseJson.data
            })
         })
         .catch(error=>console.log(error)) //to catch the errors if any
@@ -45,18 +45,17 @@ export default class HomeScreen extends React.Component {
         // Return display formating data into Piece componenets
         let artText = []
         //let component
-        for(let i = 0; i < this.state.data.data.length; i++){
-          artName = this.state.data.data[i].name
-          artDescription = this.state.data.data[i].description
-          artImage = this.state.data.data[i].image
-          artLocation = this.state.data.data[i].location
-          artText.push(<TouchableHighlight 
-            key={i}
-            style = {styles.container}
-            onPress={() => 
-              this.props.navigation.navigate('Details',this.state.data.data[i])
-            }><Card name={artName} description={artDescription} image={artImage} location={artLocation} text={artText}> </Card></TouchableHighlight>)
-          console.log(this.state.data.data[i])
+        for(let i = 0; i < this.state.data.length; i++){
+          var content = this.state.data[i]
+          artText.push(<Card 
+            key = {'card'+i} 
+            name={content.name} 
+            description={content.description} 
+            image={content.image} 
+            location={content.location} 
+            text={content.text} 
+            navigation = {this.props.navigation}> 
+          </Card>)
         }
         return(
           <ScrollView style={styles.scrollView}>
