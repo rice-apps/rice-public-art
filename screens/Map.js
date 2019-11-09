@@ -6,6 +6,7 @@ import { StyleSheet, Text, View, Image, Button, Dimensions } from 'react-native'
 import MapViewDirections from 'react-native-maps-directions';
 import { GOOGLE_MAPS_APIKEY } from '../AUTHENTICATION.js';
 import Topbar from '../components/Topbar.js';
+import DetailsScreen from './Details.js';
 
 const { width, height } = Dimensions.get('window');
 const colors = ["rgb(0, 50, 160)", "rgb(230, 60, 0)", "rgb(60, 160, 15)", "rgb(90, 165, 245)", "rgb(255, 135, 0)", "rgb(155, 210, 0)"]
@@ -98,12 +99,20 @@ class MapScreen extends React.Component {
                     })
                   }
                 >
-                  <Callout onPress={() => console.log('Callout pressed')} tooltip={true}>
+                  <Callout onPress={() => 
+                    this.props.navigation.navigate('Details', {
+                      name: art.name,
+                      description: art.description,
+                      image: art.image,
+                    })
+                  }
+                    tooltip={true}>
                     <View style={[styles.calloutView, { backgroundColor: artColor }]}>
                       <Image style={styles.calloutImage} source={{ uri: art.image }} />
                       <View style={styles.calloutText}>
                         <Text style={styles.calloutTitle}>{art.name}</Text>
                         <Text style={styles.calloutDescription}>{art.description}</Text>
+                        <Text style={styles.calloutMoreInfo}>{'\n'}Tap for more info</Text>
                       </View>
                     </View>
                     <View style={[styles.calloutArrow, { borderTopColor: artColor }]}></View>
@@ -158,6 +167,9 @@ const MapNavigator = createStackNavigator({
   Home: {
     screen: MapScreen,
   },
+  Details: {
+    screen: DetailsScreen,
+  }
 })
 export default MapNavigator;
 
@@ -194,6 +206,10 @@ const styles = StyleSheet.create({
   calloutDescription: {
     color: 'white'
   },
+  calloutMoreInfo: {
+    color: 'white',
+    textAlign: 'center'
+  },
   calloutArrow: {
     borderTopWidth: 20,
     borderRightWidth: 15,
@@ -228,13 +244,4 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
   },
-  // overMapViewRight: {
-  //   position: 'absolute',//use absolute position to show button on top of the map
-  //   bottom: '5%', //for center align
-  //   // alignSelf: 'flex-end', //for align to right
-  //   right: '10%',
-  //   backgroundColor: 'white',
-  //   borderRadius: 10,
-  //   padding: 10,
-  // }
 });
