@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, Button, FlatList, ActivityIndicator} from 'react-native';
-import Card from './Card.js';
-import { TouchableHighlight } from 'react-native-gesture-handler';
+import Card from '../../components/Card.js';
+//import { TouchableHighlight } from 'react-native-gesture-handler';
  
 export default class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -35,7 +35,7 @@ export default class HomeScreen extends React.Component {
       if(this.state.loading){
         // Display something to inform user data is loading
         return( 
-          <View style={styles.container}> 
+          <View> 
             <Text> Loading... </Text>
           </View>
       )} else {
@@ -43,11 +43,11 @@ export default class HomeScreen extends React.Component {
           // Here we have to do somoething with this.state.data to reflect in the return statement
         //console.log("loaded data:",this.state.data);
         // Return display formating data into Piece componenets
-        let artText = []
+        let artComponents = []
         //let component
         for(let i = 0; i < this.state.data.length; i++){
           var content = this.state.data[i]
-          artText.push(<Card 
+          artComponents.push(<Card 
             key = {'card'+i} 
             name={content.name} 
             description={content.description} 
@@ -58,15 +58,14 @@ export default class HomeScreen extends React.Component {
           </Card>)
         }
         return(
-          <ScrollView style={styles.scrollView}>
-            {artText}
+        <ScrollView style={styles.scrollView}>
+            {artComponents}
          </ScrollView>
         );
       }
     }
   }
   
-  // Style
   const styles = StyleSheet.create({
     container: {
       flex: 1,

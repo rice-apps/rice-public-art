@@ -1,11 +1,10 @@
 import React from 'react';
-import styles from '../source/stylesheets/DisplayArt.js';
-import { Text, View, Image, ImageBackground, TouchableHighlight} from 'react-native';
+import { Text, ImageBackground, StyleSheet, TouchableHighlight} from 'react-native';
 
 export default class Card extends React.Component {
     render() {
         return (
-          <TouchableHighlight style={styles.wrapper}
+          <TouchableHighlight style={styles.touchable}
             style = {styles.container}
             onPress={() => 
               this.props.navigation.navigate('Details',this.props)
@@ -20,3 +19,10 @@ export default class Card extends React.Component {
       }
     }
 
+const styles = StyleSheet.create({
+  touchable: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

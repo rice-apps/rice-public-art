@@ -6,7 +6,7 @@ import { StyleSheet, Text, View, Image, Button } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 //Screens
-import HomeScreen from './screens/HomeIndex.js'
+import HomeScreen from './screens/Home/index.js'
 import MapNavigator from './screens/Map'
 import AnnounceScreen from './screens/Announce'
 
