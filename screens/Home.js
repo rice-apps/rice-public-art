@@ -1,13 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, Button, FlatList, ActivityIndicator} from 'react-native';
-import Card from '../../components/Card.js';
+import Card from '../components/Card.js';
+import { createStackNavigator } from 'react-navigation-stack'
+import DetailsScreen from './Details.js';
+
 //import { TouchableHighlight } from 'react-native-gesture-handler';
  
-export default class HomeScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: "Art List",
-  })
-
+class HomeScreen extends React.Component {
   // Set default state for Homescreen (no data, and loading)
   constructor(props) {
     super(props);
@@ -64,8 +63,17 @@ export default class HomeScreen extends React.Component {
         );
       }
     }
-  }
-  
+}
+
+export default createStackNavigator({
+    List: {
+        screen: HomeScreen,
+    },    
+    Details: {
+        screen: DetailsScreen,
+    }
+});
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
