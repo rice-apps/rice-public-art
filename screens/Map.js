@@ -79,7 +79,8 @@ class MapScreen extends React.Component {
             longitude: -95.402857,
             latitudeDelta: 0.03,
             longitudeDelta: 0.015,
-          }}>
+          }}
+          >
           {
             this.state.data.map(art => {
               const artColor = getRandomColor()
@@ -145,7 +146,7 @@ class MapScreen extends React.Component {
             /> : null
           }
         </MapView>
-        <View style={styles.overMapView}>
+        <View style={[styles.overMapView, {bottom: '5%'}]}>
           <Button
             style={styles.actionButton}
             title={this.state.showRoute ? 'Hide Route' : 'Show Route'}
@@ -157,6 +158,14 @@ class MapScreen extends React.Component {
             }} 
           />
           {this.state.showRoute ? <Text>Distance: {this.state.routeDuration} min</Text> : null}
+        </View>
+        <View style={[styles.overMapView, {top: '3%', right: '5%'}]}>
+          <Button
+            title= 'Recenter'
+            onPress={() => {
+              this.mapView.animateToRegion(this.mapView.props.initialRegion)
+            }} 
+          />
         </View>
       </View >
     );
@@ -239,7 +248,6 @@ const styles = StyleSheet.create({
   },
   overMapView: {
     position: 'absolute',//use absolute position to show button on top of the map
-    bottom: '5%', //for center align
     backgroundColor: 'white',
     borderRadius: 10,
     padding: 10,
