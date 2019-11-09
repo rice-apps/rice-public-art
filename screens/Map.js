@@ -30,6 +30,7 @@ class MapScreen extends React.Component {
         longitude: -95.40130750038287,
       },
       showRoute: false,
+      routeDuration: 0,
     };
   }
   // Fires when componenet is initially set/mounted
@@ -115,21 +116,26 @@ class MapScreen extends React.Component {
               strokeWidth={7}
               strokeColor='rgb(100, 100, 200)'
               mode='WALKING'
+              onReady={result => {
+                this.setState({
+                  routeDuration: Math.round( result.duration * 10) / 10 // round to one decimal place
+                })
+              }}
             /> : null
           }
         </MapView>
-        <View
-          style={styles.overMapView}
-        >
+        <View style={styles.overMapView}>
           <Button
             style={styles.actionButton}
-            title='Show Route'
+            title={this.state.showRoute ? 'Hide Route' : 'Show Route'}
             onPress={() => {
               console.log("PRESSED");
               this.setState({
                 showRoute: !this.state.showRoute,
               });
-            }} />
+            }} 
+          />
+          {this.state.showRoute ? <Text>Distance: {this.state.routeDuration} min</Text> : null}
         </View>
       </View >
     );
@@ -206,9 +212,17 @@ const styles = StyleSheet.create({
   overMapView: {
     position: 'absolute',//use absolute position to show button on top of the map
     bottom: '5%', //for center align
-    alignSelf: 'center', //for align to right
     backgroundColor: 'white',
     borderRadius: 10,
     padding: 10,
-  }
+  },
+  // overMapViewRight: {
+  //   position: 'absolute',//use absolute position to show button on top of the map
+  //   bottom: '5%', //for center align
+  //   // alignSelf: 'flex-end', //for align to right
+  //   right: '10%',
+  //   backgroundColor: 'white',
+  //   borderRadius: 10,
+  //   padding: 10,
+  // }
 });
