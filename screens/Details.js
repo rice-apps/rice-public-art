@@ -1,8 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Icon, TouchableOpacity } from 'react-native';
-
+import Topbar from '../components/Topbar.js';
 
 export default class DetailsScreen extends React.Component {
+    static navigationOptions = ({ navigation }) => ({
+      headerLeft: <Topbar text="Details"/>,
+    })
     getParam(param,def){
         return this.props.navigation.getParam(param,def)
     }
