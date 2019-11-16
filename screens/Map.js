@@ -56,7 +56,10 @@ class MapScreen extends React.Component {
         // Adjust state to reflect loaded status / store data from response
         this.setState({
           loading: false,
-          data: responseJson.data
+          data: responseJson.data.map(art => {
+            art.colorCode = getRandomColor();
+            return art;
+          })
         })
       })
       .catch(error => console.log(error)) //to catch the errors if any
@@ -78,7 +81,6 @@ class MapScreen extends React.Component {
           >
           {
             this.state.data.map(art => {
-              const artColor = getRandomColor()
               return (
                 <Marker
                   key={art.name}
@@ -103,7 +105,7 @@ class MapScreen extends React.Component {
                     })
                   }
                     tooltip={true}>
-                    <View style={[styles.calloutView, { backgroundColor: artColor }]}>
+                    <View style={[styles.calloutView, { backgroundColor: art.colorCode }]}>
                       <Image style={styles.calloutImage} source={{ uri: art.image }} />
                       <View style={styles.calloutText}>
                         <Text style={styles.calloutTitle}>{art.name}</Text>
@@ -111,7 +113,7 @@ class MapScreen extends React.Component {
                         <Text style={styles.calloutMoreInfo}>{'\n'}Tap for more info</Text>
                       </View>
                     </View>
-                    <View style={[styles.calloutArrow, { borderTopColor: artColor }]}></View>
+                    <View style={[styles.calloutArrow, { borderTopColor: art.colorCode }]}></View>
                   </Callout>
                 </Marker>
               )
