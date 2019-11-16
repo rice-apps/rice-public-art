@@ -1,32 +1,37 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Icon, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import Topbar from '../components/Topbar.js';
+import { Dimensions } from 'react-native';
+import Image from 'react-native-scalable-image'
 
 export default class DetailsScreen extends React.Component {
-    static navigationOptions = ({ navigation }) => ({
-      headerTitle: <Topbar text="Details" isCenter = {true} />,
-      headerTintColor: 'rgb(216,93,45)',
-    })
     getParam(param,def){
-        return this.props.navigation.getParam(param,def)
+      return this.props.navigation.getParam(param,def)
+    } 
+    static navigationOptions = ({ navigation }) => {
+      return {
+        headerTitle: <Topbar text = "Art Details" isCenter = {true}/>,
+        headerTintColor: 'rgb(216,93,45)'
+      }
     }
     render() {
       return (
-        <View style={styles.art_container}>
-          <Text> Details </Text>
-            <Text> {this.getParam("name","defualt name")} </Text>
+        <ScrollView style={styles.scrollView}>
+            <Image  
+              width={Dimensions.get('window').width}
+              source={{uri: this.getParam("image","default image")}}
+            />
+            <Text style ={{fontWeight: 'bold', fontSize: 25}}> {this.getParam("name","Title")} </Text>
             <Text> {this.getParam("description","default desc")} </Text>
-            <Image style={{width: 250, height: 250}} source={{uri: this.getParam("image","default image")}}/>
-            <Text> {this.getParam("location","default location")} </Text>
-        </View>  
+        </ScrollView>  
       );
     }
   }
 
 const styles = StyleSheet.create({
-    art_container: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
+  scrollView: {
+    marginLeft:"auto", 
+    marginRight:"auto",
+    width:"100%"
+  },
 });
