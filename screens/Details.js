@@ -4,7 +4,8 @@ import Topbar from '../components/Topbar.js';
 
 export default class DetailsScreen extends React.Component {
     static navigationOptions = ({ navigation }) => ({
-      headerTitle: <Topbar text="Details" isCenter = {true} />
+      headerTitle: <Topbar text="Details" isCenter = {true} />,
+      headerTintColor: 'rgb(216,93,45)',
     })
     getParam(param,def){
         return this.props.navigation.getParam(param,def)
