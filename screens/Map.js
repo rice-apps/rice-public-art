@@ -24,25 +24,20 @@ class MapScreen extends React.Component {
     this.state = {
       loading: false,
       data: [],
-      userLocation: {
-        latitude: 29.718261782636628,
-        longitude: -95.40130750038287,
-      },
-      destination: {
-        latitude: 29.718261782636628,
-        longitude: -95.40130750038287,
-      },
+      userLocation: null,
+      destination: null,
       showRoute: false,
       routeDuration: 0,
     };
     this.mapView = null;
   }
-  // Fires when componenet is initially set/mounted
+
   componentDidMount() {
     navigator.geolocation.getCurrentPosition((position) => {
       var lat = parseFloat(position.coords.latitude)
       var long = parseFloat(position.coords.longitude)
       console.log(lat, long);
+     
       this.setState({
         userLocation: {
           latitude: lat,
@@ -84,7 +79,6 @@ class MapScreen extends React.Component {
           {
             this.state.data.map(art => {
               const artColor = getRandomColor()
-              console.log("Making marker")
               return (
                 <Marker
                   key={art.name}
@@ -93,6 +87,7 @@ class MapScreen extends React.Component {
                   image={require('../assets/Pin.png')}
                   onPress={() =>
                     this.setState({
+                      showRoute: false,
                       destination: {
                         latitude: art.location.lat,
                         longitude: art.location.lon
@@ -136,29 +131,30 @@ class MapScreen extends React.Component {
                 })
                 this.mapView.fitToCoordinates(result.coordinates, {
                   edgePadding: {
-                    right: (width / 20),
-                    bottom: (height / 20),
-                    left: (width / 20),
-                    top: (height / 20),
+                    right: (width / 15),
+                    bottom: (height / 15),
+                    left: (width / 15),
+                    top: (height / 15),
                   }
                 });
               }}
             /> : null
           }
         </MapView>
-        <View style={[styles.overMapView, {bottom: '5%'}]}>
-          <Button
-            style={styles.actionButton}
-            title={this.state.showRoute ? 'Hide Route' : 'Show Route'}
-            onPress={() => {
-              console.log("PRESSED");
-              this.setState({
-                showRoute: !this.state.showRoute,
-              });
-            }} 
-          />
-          {this.state.showRoute ? <Text>Distance: {this.state.routeDuration} min</Text> : null}
-        </View>
+        {(this.state.userLocation != null && this.state.destination != null) ?
+          <View style={[styles.overMapView, {bottom: '5%'}]}>
+            <Button
+              style={styles.actionButton}
+              title={this.state.showRoute ? 'Hide Route' : 'Show Route'}
+              onPress={() => {
+                this.setState({
+                  showRoute: !this.state.showRoute,
+                });
+              }} 
+            />
+            {this.state.showRoute ? <Text>Distance: {this.state.routeDuration} min</Text> : null}
+          </View> : null
+        }
         <View style={[styles.overMapView, {top: '3%', right: '5%'}]}>
           <Button
             title= 'Recenter'
