@@ -1,4 +1,3 @@
-//
 import React from 'react';
 import { createAppContainer } from 'react-navigation';
 import { StyleSheet, Text, View, Image, Button } from 'react-native';
@@ -6,19 +5,19 @@ import { StyleSheet, Text, View, Image, Button } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 //Screens
-import HomeScreen from './screens/Home'
+import EventsNavigator from './screens/Events'
 import MapNavigator from './screens/Map'
-import AnnounceScreen from './screens/Announce'
+import ArtNavigator from './screens/Art'
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const TabNavigator = createBottomTabNavigator({
-  Home: {
-    screen: HomeScreen,
+  Events: {
+    screen: EventsNavigator,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <Icon
-          name="home"
+          name="calendar-check"
           color={tintColor}
           size={30}
         />
@@ -37,20 +36,21 @@ const TabNavigator = createBottomTabNavigator({
       )
     }
   },
-  Announcements: {
-    screen: AnnounceScreen,
+  Art: {
+    screen: ArtNavigator,
     navigationOptions: {
-      tabBarIcon: ({ tintColor }) => (
-        <Icon
-          name="bullhorn"
-          color={tintColor}
-          size={30}
-        />
-      )
+      tabBarIcon: ({focused, tintColor}) => {
+        return (
+          <Image
+            style={{ width: 35, height: 35, tintColor: focused ? 'rgb(90, 165, 245)': 'white'}}
+            source={require('./images/moodyLogo.png')} 
+          />
+        )
+      }
     }
   }
-}, {
-  tabBarOptions: {
+},
+  {tabBarOptions: {
     showLabel: false,
     activeTintColor: 'rgb(90, 165, 245)',
     inactiveTintColor: 'white',

@@ -28,6 +28,8 @@ class MapScreen extends React.Component {
       destination: null,
       showRoute: false,
       routeDuration: 0,
+      showCallout: false,
+      calloutIndx: null
     };
     this.mapView = null;
   }
@@ -37,7 +39,7 @@ class MapScreen extends React.Component {
       var lat = parseFloat(position.coords.latitude)
       var long = parseFloat(position.coords.longitude)
       console.log(lat, long);
-     
+
       this.setState({
         userLocation: {
           latitude: lat,
@@ -66,6 +68,31 @@ class MapScreen extends React.Component {
   }
 
   render() {
+    let markers = []
+
+    for (let i = 0; i < this.state.data.length; i++) {
+      const art = this.state.data[i];
+      markers.push(
+        <Marker
+          key={art.name}
+          coordinate={{ latitude: art.location.lat, longitude: art.location.lon }}
+          title={art.name}
+          image={require('../assets/Pin.png')}
+          onPress={() =>
+            this.setState({
+              showRoute: false,
+              showCallout: true,
+              calloutIndx: i,
+              destination: {
+                latitude: art.location.lat,
+                longitude: art.location.lon
+              }
+            })
+          }
+        />
+      )
+    }
+
     return (
       <View style={styles.container}>
         <MapView
@@ -78,91 +105,75 @@ class MapScreen extends React.Component {
             latitudeDelta: 0.03,
             longitudeDelta: 0.015,
           }}
-          >
+        >
+          {markers}
+
           {
-            this.state.data.map(art => {
-              return (
-                <Marker
-                  key={art.name}
-                  coordinate={{ latitude: art.location.lat, longitude: art.location.lon }}
-                  title={art.name}
-                  image={require('../assets/Pin.png')}
-                  onPress={() =>
-                    this.setState({
-                      showRoute: false,
-                      destination: {
-                        latitude: art.location.lat,
-                        longitude: art.location.lon
-                      }
-                    })
-                  }
-                >
-                  <Callout onPress={() => 
-                    this.props.navigation.navigate('Details', {
-                      name: art.name,
-                      description: art.description,
-                      image: art.image,
-                    })
-                  }
-                    tooltip={true}>
-                    <View style={[styles.calloutView, { backgroundColor: art.colorCode }]}>
-                      <Image style={styles.calloutImage} source={{ uri: art.image }} />
-                      <View style={styles.calloutText}>
-                        <Text style={styles.calloutTitle}>{art.name}</Text>
-                        <Text style={styles.calloutDescription}>{art.description}</Text>
-                        <Text style={styles.calloutMoreInfo}>{'\n'}Tap for more info</Text>
-                      </View>
-                    </View>
-                    <View style={[styles.calloutArrow, { borderTopColor: art.colorCode }]}></View>
-                  </Callout>
-                </Marker>
-              )
-            })
-          }
-          {this.state.showRoute ?
-            <MapViewDirections
-              origin={this.state.userLocation}
-              destination={this.state.destination}
-              apikey={GOOGLE_MAPS_APIKEY}
-              strokeWidth={7}
-              strokeColor='rgb(100, 100, 200)'
-              mode='WALKING'
-              onReady={result => {
-                this.setState({
-                  routeDuration: Math.round( result.duration * 10) / 10 // round to one decimal place
-                })
-                this.mapView.fitToCoordinates(result.coordinates, {
-                  edgePadding: {
-                    right: (width / 15),
-                    bottom: (height / 15),
-                    left: (width / 15),
-                    top: (height / 15),
-                  }
-                });
-              }}
-            /> : null
+            this.state.showRoute ?
+              <MapViewDirections
+                origin={this.state.userLocation}
+                destination={this.state.destination}
+                apikey={GOOGLE_MAPS_APIKEY}
+                strokeWidth={7}
+                strokeColor='rgb(100, 100, 200)'
+                mode='WALKING'
+                onReady={result => {
+                  this.setState({
+                    routeDuration: Math.round(result.duration * 10) / 10 // round to one decimal place
+                  })
+                }}
+              /> : null
           }
         </MapView>
-        {(this.state.userLocation != null && this.state.destination != null) ?
-          <View style={[styles.overMapView, {bottom: '5%'}]}>
-            <Button
-              style={styles.actionButton}
-              title={this.state.showRoute ? 'Hide Route' : 'Show Route'}
-              onPress={() => {
-                this.setState({
-                  showRoute: !this.state.showRoute,
-                });
-              }} 
-            />
-            {this.state.showRoute ? <Text>Distance: {this.state.routeDuration} min</Text> : null}
-          </View> : null
+        {
+          this.state.showCallout ? (
+            <View style={[styles.calloutContainer]}>
+              <View style={[styles.closeCallout]}>
+                <Button title={"X"} onPress={() => this.setState({showCallout: false})}/>
+              </View>
+              <View style={[styles.calloutView, { backgroundColor: this.state.data[this.state.calloutIndx].colorCode }]}>
+                <Image style={styles.calloutImage} source={{ uri: this.state.data[this.state.calloutIndx].image }} />
+                <View style={styles.calloutText}>
+                  <Text style={styles.calloutTitle}>{this.state.data[this.state.calloutIndx].name}</Text>
+                  <Text style={styles.calloutDescription}>{this.state.data[this.state.calloutIndx].description}</Text>
+                  <Text style={styles.calloutMoreInfo} onPress={() =>
+                    this.props.navigation.navigate('Details', {
+                      name: this.state.data[this.state.calloutIndx].name,
+                      description: this.state.data[this.state.calloutIndx].description,
+                      image: this.state.data[this.state.calloutIndx].image,
+                    })
+                  }>{'\n'}Tap for more info</Text>
+                  {(this.state.userLocation != null && this.state.destination != null) ?
+                    <View style={styles.routeButton}>
+                      <Button
+                        style={{ margin: 0, padding: 0 }}
+                        title={this.state.showRoute ? 'Hide Route' : 'Show Route'}
+                        onPress={() => {
+                          this.setState({
+                            showRoute: !this.state.showRoute,
+                          });
+                        }}
+                      />
+                      {this.state.showRoute ?
+                        <Text style={{ textAlign: 'center', margin: 0, padding: 0 }}>
+                          Distance: {this.state.routeDuration} min
+                      </Text> : null}
+                    </View> : null
+                  }
+                </View>
+              </View>
+            </View>
+
+          ) : (
+              null
+            )
         }
-        <View style={[styles.overMapView, {top: '3%', right: '5%'}]}>
+        <View style={[styles.overMapView, { top: '3%', right: '5%' }]}>
           <Button
-            title= 'Recenter'
+            title='Recenter'
             onPress={() => {
               this.mapView.animateToRegion(this.mapView.props.initialRegion)
-            }} 
+            }}
           />
         </View>
       </View >
@@ -192,16 +203,26 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height,
     zIndex: -1
   },
+  calloutContainer: {
+    bottom: 15,
+    position: 'absolute'
+
+  },
   calloutView: {
     padding: 0,
     borderRadius: 10,
-    overflow: 'hidden'
+    overflow: 'hidden',
+  },
+  closeCallout: {
+    backgroundColor: 'white',
+    borderRadius: 40,
+    height: 40,
+    width: 40,
+    marginBottom: 10
   },
   calloutText: {
-    width: 250,
+    width: 340,
     padding: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: 'white',
   },
   calloutTitle: {
     fontSize: 24,
@@ -215,34 +236,24 @@ const styles = StyleSheet.create({
   },
   calloutMoreInfo: {
     color: 'white',
-    textAlign: 'center'
-  },
-  calloutArrow: {
-    borderTopWidth: 20,
-    borderRightWidth: 15,
-    borderLeftWidth: 15,
-    width: 10,
-    borderLeftColor: 'transparent',
-    borderBottomColor: 'transparent',
-    borderRightColor: 'transparent',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    transform: [{ translateY: -2 }]
+    textAlign: 'center',
+    marginBottom: 10
   },
   calloutImage: {
-    width: 250,
+    width: 340,
     height: 125,
     marginLeft: 'auto',
     marginRight: 'auto',
     marginTop: 0
   },
-  actionButton: {
-    position: 'absolute',
-    width: 20,
-    height: 20,
-    top: 10,
-    left: 10,
-    zIndex: 10,
+  routeButton: {
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 10,
+    // height: 60,
+    width: 200,
+    marginLeft: 'auto',
+    marginRight: 'auto'
   },
   overMapView: {
     position: 'absolute',//use absolute position to show button on top of the map
