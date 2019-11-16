@@ -10,7 +10,7 @@ export default class DetailsScreen extends React.Component {
     } 
     static navigationOptions = ({ navigation }) => {
       return {
-        headerTitle: <Topbar text = "Art Details" isCenter = {true}/>,
+        headerTitle: <Topbar text = "Art" isCenter = {true}/>,
         headerTintColor: 'rgb(216,93,45)'
       }
     }
