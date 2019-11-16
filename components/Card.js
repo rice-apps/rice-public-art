@@ -9,9 +9,9 @@ export default class Card extends React.Component {
             onPress={() => 
               this.props.navigation.navigate('Details',this.props)
             }>
-            <ImageBackground style={{borderRadius:100, width: 300, height: 200}}  imageStyle={{ borderRadius: 25 }} source={{uri: this.props.image}}>
-              <Text> {this.props.name} </Text>
-              <Text> {this.props.description} </Text>
+            <ImageBackground style={{borderRadius:100, height: 200, width:"100%", marginTop:10}}  imageStyle={{ borderRadius: 25, width:"100%"}} source={{uri: this.props.image}}>
+              <Text style={{textAlign: "left", color:"white", textTransform: "uppercase", fontSize: 30, marginTop:10, marginLeft:10}}> {this.props.name} </Text>
+              {/* <Text> {this.props.description} </Text> */}
               <Text> {this.props.location} </Text>
             </ImageBackground>
           </TouchableHighlight>

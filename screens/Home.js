@@ -10,7 +10,7 @@ import DetailsScreen from './Details.js';
  
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    headerLeft: <Topbar text="Home"/>,
+    headerLeft: <Topbar text="Art"/>,
   })
   // Set default state for Homescreen (no data, and loading)
   constructor(props) {
@@ -81,12 +81,12 @@ export default createStackNavigator({
 
   const styles = StyleSheet.create({
     container: {
-      flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
     },
     scrollView: {
-      padding: 30,
-      flex: 5,
+      marginLeft:"auto", 
+      marginRight:"auto",
+      width:"95%"
     },
   });
