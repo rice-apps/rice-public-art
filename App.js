@@ -12,16 +12,17 @@ import ArtNavigator from './screens/Art'
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const TabNavigator = createBottomTabNavigator({
-  Events: {
-    screen: EventsNavigator,
+  Art: {
+    screen: ArtNavigator,
     navigationOptions: {
-      tabBarIcon: ({ tintColor }) => (
-        <Icon
-          name="calendar-check"
-          color={tintColor}
-          size={30}
-        />
-      )
+      tabBarIcon: ({focused, tintColor}) => {
+        return (
+          <Image
+            style={{ width: 35, height: 35, tintColor: focused ? 'rgb(90, 165, 245)': 'white'}}
+            source={require('./images/moodyLogo.png')} 
+          />
+        )
+      }
     }
   },
   Map: {
@@ -36,19 +37,18 @@ const TabNavigator = createBottomTabNavigator({
       )
     }
   },
-  Art: {
-    screen: ArtNavigator,
+  Events: {
+    screen: EventsNavigator,
     navigationOptions: {
-      tabBarIcon: ({focused, tintColor}) => {
-        return (
-          <Image
-            style={{ width: 35, height: 35, tintColor: focused ? 'rgb(90, 165, 245)': 'white'}}
-            source={require('./images/moodyLogo.png')} 
-          />
-        )
-      }
+      tabBarIcon: ({ tintColor }) => (
+        <Icon
+          name="calendar-check"
+          color={tintColor}
+          size={30}
+        />
+      )
     }
-  }
+  },
 },
   {tabBarOptions: {
     showLabel: false,
