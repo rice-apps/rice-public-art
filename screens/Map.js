@@ -90,7 +90,7 @@ class MapScreen extends React.Component {
           }
           centerOffset={{x: 24, y: -24}}
         >
-          <Image source={require('../images/moodyLogo.png')} style={{height: 50, width:50}} />
+          <Image source={require('../images/moodyLogo.png')} style={{height: 50, width:50, tintColor:art.colorCode}} />
         </Marker>
 
       )
