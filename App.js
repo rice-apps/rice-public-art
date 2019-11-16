@@ -13,12 +13,12 @@ import AnnounceScreen from './screens/Announce'
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const TabNavigator = createBottomTabNavigator({
-  Home: {
-    screen: HomeScreen,
+  Events: {
+    screen: AnnounceScreen,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <Icon
-          name="home"
+          name="calendar-check"
           color={tintColor}
           size={30}
         />
@@ -37,20 +37,21 @@ const TabNavigator = createBottomTabNavigator({
       )
     }
   },
-  Announcements: {
-    screen: AnnounceScreen,
+  Art: {
+    screen: HomeScreen,
     navigationOptions: {
-      tabBarIcon: ({ tintColor }) => (
-        <Icon
-          name="bullhorn"
-          color={tintColor}
-          size={30}
-        />
-      )
+      tabBarIcon: ({focused, tintColor}) => {
+        return (
+          <Image
+            style={{ width: 35, height: 35, tintColor: focused ? 'rgb(90, 165, 245)': 'white'}}
+            source={require('./images/moodyLogo.png')} 
+          />
+        )
+      }
     }
   }
-}, {
-  tabBarOptions: {
+},
+  {tabBarOptions: {
     showLabel: false,
     activeTintColor: 'rgb(90, 165, 245)',
     inactiveTintColor: 'white',
