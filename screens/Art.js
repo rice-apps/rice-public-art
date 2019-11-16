@@ -6,7 +6,6 @@ import Topbar from '../components/Topbar.js';
 import { createStackNavigator } from 'react-navigation-stack'
 import DetailsScreen from './Details.js';
 
-//import { TouchableHighlight } from 'react-native-gesture-handler';
  
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({

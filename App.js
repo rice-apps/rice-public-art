@@ -1,4 +1,3 @@
-//
 import React from 'react';
 import { createAppContainer } from 'react-navigation';
 import { StyleSheet, Text, View, Image, Button } from 'react-native';
@@ -6,15 +5,15 @@ import { StyleSheet, Text, View, Image, Button } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 //Screens
-import HomeScreen from './screens/Home'
+import EventsNavigator from './screens/Events'
 import MapNavigator from './screens/Map'
-import AnnounceScreen from './screens/Announce'
+import ArtNavigator from './screens/Art'
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const TabNavigator = createBottomTabNavigator({
   Events: {
-    screen: AnnounceScreen,
+    screen: EventsNavigator,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <Icon
@@ -38,7 +37,7 @@ const TabNavigator = createBottomTabNavigator({
     }
   },
   Art: {
-    screen: HomeScreen,
+    screen: ArtNavigator,
     navigationOptions: {
       tabBarIcon: ({focused, tintColor}) => {
         return (
