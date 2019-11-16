@@ -77,7 +77,6 @@ class MapScreen extends React.Component {
           key={art.name}
           coordinate={{ latitude: art.location.lat, longitude: art.location.lon }}
           title={art.name}
-          image={require('../assets/Pin.png')}
           onPress={() =>
             this.setState({
               showRoute: false,
@@ -89,7 +88,11 @@ class MapScreen extends React.Component {
               }
             })
           }
-        />
+          centerOffset={{x: 24, y: -24}}
+        >
+          <Image source={require('../images/moodyLogo.png')} style={{height: 50, width:50}} />
+        </Marker>
+
       )
     }
 
