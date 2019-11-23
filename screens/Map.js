@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from 'react-navigation-stack'
 import MapView, { Callout } from 'react-native-maps';
 import { Marker } from 'react-native-maps';
-import { StyleSheet, Text, View, Image, Button, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import MapViewDirections from 'react-native-maps-directions';
 import { GOOGLE_MAPS_APIKEY } from '../AUTHENTICATION.js';
 import Topbar from '../components/Topbar.js';
@@ -134,42 +134,44 @@ class MapScreen extends React.Component {
               <View style={[styles.closeCallout]}>
                 <Button title={"X"} onPress={() => this.setState({showCallout: false})}/>
               </View>
-              <View style={[styles.calloutView, { backgroundColor: this.state.data[this.state.calloutIndx].colorCode }]}>
-                <Image style={styles.calloutImage} source={{ uri: this.state.data[this.state.calloutIndx].image }} />
-                <View style={styles.calloutText}>
-                  <Text style={styles.calloutTitle}>{this.state.data[this.state.calloutIndx].name}</Text>
-                  <Text style={styles.calloutDescription}>{this.state.data[this.state.calloutIndx].description}</Text>
-                  <Text style={styles.calloutMoreInfo} onPress={() =>
-                    this.props.navigation.navigate('Details', {
-                      name: this.state.data[this.state.calloutIndx].name,
-                      description: this.state.data[this.state.calloutIndx].description,
-                      image: this.state.data[this.state.calloutIndx].image,
-                    })
-                  }>{'\n'}Tap for more info</Text>
-                  {(this.state.userLocation != null && this.state.destination != null) ?
-                    <View style={styles.routeButton}>
-                      <Button
-                        style={{ margin: 0, padding: 0 }}
-                        title={this.state.showRoute ? 'Hide Route' : 'Show Route'}
-                        onPress={() => {
-                          this.setState({
-                            showRoute: !this.state.showRoute,
-                          });
-                        }}
-                      />
-                      {this.state.showRoute ?
-                        <Text style={{ textAlign: 'center', margin: 0, padding: 0 }}>
-                          Distance: {this.state.routeDuration} min
-                      </Text> : null}
-                    </View> : null
-                  }
+              <TouchableWithoutFeedback 
+                onPress={() =>
+                  // console.log("PRESSED")
+                  this.props.navigation.navigate('Details', {
+                    name: this.state.data[this.state.calloutIndx].name,
+                    description: this.state.data[this.state.calloutIndx].description,
+                    image: this.state.data[this.state.calloutIndx].image,
+                  })
+                }
+              >
+                <View style={[styles.calloutView, { backgroundColor: this.state.data[this.state.calloutIndx].colorCode }]}>
+                  <Image style={styles.calloutImage} source={{ uri: this.state.data[this.state.calloutIndx].image }} />
+                  <View style={styles.calloutText}>
+                    <Text style={styles.calloutTitle}>{this.state.data[this.state.calloutIndx].name}</Text>
+                    <Text style={styles.calloutDescription}>{this.state.data[this.state.calloutIndx].description}</Text>
+                    <Text style={styles.calloutMoreInfo}>{'\n'}Tap for more info</Text>
+                    {(this.state.userLocation != null && this.state.destination != null) ?
+                      <View style={styles.routeButton}>
+                        <Button
+                          style={{ margin: 0, padding: 0 }}
+                          title={this.state.showRoute ? 'Hide Route' : 'Show Route'}
+                          onPress={() => {
+                            this.setState({
+                              showRoute: !this.state.showRoute,
+                            });
+                          }}
+                        />
+                        {this.state.showRoute ?
+                          <Text style={{ textAlign: 'center', margin: 0, padding: 0 }}>
+                            Distance: {this.state.routeDuration} min
+                        </Text> : null}
+                      </View> : null
+                    }
+                  </View>
                 </View>
-              </View>
+              </TouchableWithoutFeedback>
             </View>
-
-          ) : (
-              null
-            )
+          ) : null
         }
         <View style={[styles.overMapView, { top: '3%', right: '5%' }]}>
           <Button
@@ -209,7 +211,6 @@ const styles = StyleSheet.create({
   calloutContainer: {
     bottom: 15,
     position: 'absolute'
-
   },
   calloutView: {
     padding: 0,
