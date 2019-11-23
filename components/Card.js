@@ -22,7 +22,7 @@ export default class Card extends React.Component {
                 colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, .1)', 'rgba(0, 0, 0, .5)', 'rgba(0, 0, 0, .9)']}
                 style={{ padding: 15, flex: 1, justifyContent: 'flex-end', borderRadius: 5 }}
               > 
-              <Text style={{textAlign: "right", color:"white", fontSize: 20, marginBottom:0, marginRight:0}}>10min 🕒 </Text>
+              <Text style={{textAlign: "right", color:"white", fontSize: 20, marginBottom:0, marginRight:0}}>{this.props.distance}</Text>
               </LinearGradient>
             </ImageBackground>
           </TouchableHighlight>

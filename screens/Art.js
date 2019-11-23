@@ -5,7 +5,7 @@ import Topbar from '../components/Topbar.js';
 
 import { createStackNavigator } from 'react-navigation-stack'
 import DetailsScreen from './Details.js';
-
+import distance from '../util/distance.js'
  
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -16,7 +16,8 @@ class HomeScreen extends React.Component {
     super(props);
     this.state = {
       loading: true,
-      data:[]
+      data:[],
+      userLocation: null
      };
    }
    // Fires when componenet is initially set/mounted
@@ -30,8 +31,24 @@ class HomeScreen extends React.Component {
               loading: false,
               data: responseJson.data
            })
+           console.log(responseJson.data)
         })
         .catch(error=>console.log(error)) //to catch the errors if any
+
+        navigator.geolocation.getCurrentPosition((position) => {
+          var lat = parseFloat(position.coords.latitude)
+          var long = parseFloat(position.coords.longitude)
+          console.log("GOT LOCATION", lat, long);
+    
+          this.setState({
+            userLocation: {
+              latitude: lat,
+              longitude: long
+            }
+          })
+        },
+        (error) => alert(JSON.stringify(error)),
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 });
     }
     render() {
       // Check if data is loaded
@@ -43,26 +60,27 @@ class HomeScreen extends React.Component {
           </View>
       )} else {
         // We got the data
-          // Here we have to do somoething with this.state.data to reflect in the return statement
-        //console.log("loaded data:",this.state.data);
+        // Here we have to do somoething with this.state.data to reflect in the return statement
         // Return display formating data into Piece componenets
-        let artComponents = []
-        //let component
-        for(let i = 0; i < this.state.data.length; i++){
-          var content = this.state.data[i]
-          artComponents.push(<Card 
-            key = {'card'+i} 
-            name={content.name} 
-            description={content.description} 
-            image={content.image} 
-            location={content.location} 
-            text={content.text} 
-            navigation = {this.props.navigation}> 
-          </Card>)
-        }
         return(
         <ScrollView style={styles.scrollView}>
-            {artComponents}
+            {this.state.data.map((content, i) => 
+              <Card 
+                key = {'card'+i} 
+                name={content.name} 
+                description={content.description} 
+                image={content.image} 
+                location={content.location} 
+                // Assume a 20 min. per mile walking speed
+                // This is on the high end because we are using a straight line approximation for the route
+                // which underestimates the total distance
+                distance={this.state.userLocation != null ?
+                          Math.round(distance(this.state.userLocation.latitude, this.state.userLocation.longitude,
+                                              content.location.lat, content.location.lon) * 20) + " min. 🕒"
+                          : null}
+                navigation = {this.props.navigation}
+              />
+              )}
          </ScrollView>
         );
       }
