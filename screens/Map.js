@@ -122,7 +122,7 @@ class MapScreen extends React.Component {
                 mode='WALKING'
                 onReady={result => {
                   this.setState({
-                    routeDuration: Math.round(result.duration * 10) / 10 // round to one decimal place
+                    routeDuration: Math.round(result.duration)
                   })
                 }}
               /> : null
