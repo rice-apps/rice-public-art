@@ -12,10 +12,6 @@ import DetailsScreen from './Details.js';
 const { width, height } = Dimensions.get('window');
 const colors = ["rgb(0, 50, 160)", "rgb(230, 60, 0)", "rgb(60, 160, 15)", "rgb(90, 165, 245)", "rgb(255, 135, 0)", "rgb(155, 210, 0)"]
 
-const getRandomColor = function () {
-  return colors[Math.floor(Math.random() * colors.length)]
-}
-
 class MapScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerLeft: <Topbar text="Campus"></Topbar>
@@ -59,8 +55,8 @@ class MapScreen extends React.Component {
         // Adjust state to reflect loaded status / store data from response
         this.setState({
           loading: false,
-          data: responseJson.data.map(art => {
-            art.colorCode = getRandomColor();
+          data: responseJson.data.map((art, i) => {
+            art.colorCode = colors[i % colors.length];
             art.abbreviatedName = art.name
             if (art.name.length > 15) {
               art.abbreviatedName = art.name.substring(0, 15) + '...'
