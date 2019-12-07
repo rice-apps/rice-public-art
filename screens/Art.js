@@ -52,7 +52,7 @@ class HomeScreen extends React.Component {
     }
     render() {
       // Check if data is loaded
-      if(this.state.loading){
+      if(this.state.loading){ 
         // Display something to inform user data is loading
         return( 
           <View> 
