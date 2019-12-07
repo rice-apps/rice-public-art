@@ -53,11 +53,12 @@ const styles = StyleSheet.create({
     marginLeft:20
   },
   secondaryText:{
-    fontWeight: 200
+    fontWeight: 200,
+    fontSize: 18
   },
   calendar:{
-    borderWidth:1,
-    borderRadius:5,
+    justifyContent: 'center',
+    alignItems: 'center',
     aspectRatio: 1,
     width:50,
   },

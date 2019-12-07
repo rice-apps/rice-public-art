@@ -102,6 +102,6 @@ export default createStackNavigator({
     scrollView: {
       marginLeft:"auto", 
       marginRight:"auto",
-      width:"95%"
+      width:"100%"
     },
   });
