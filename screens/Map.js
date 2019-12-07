@@ -48,7 +48,7 @@ class MapScreen extends React.Component {
       })
     },
       (error) => alert(JSON.stringify(error)),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 });
+      { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 });
 
     //Make a fetch call
     fetch('http://moody-backend.herokuapp.com/campusArt/allArt', { method: 'GET' })
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     zIndex: -1
   },
   calloutContainer: {
-    bottom: 15,
+    bottom: 0,
     position: 'absolute'
   },
   calloutView: {

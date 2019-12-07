@@ -35,20 +35,20 @@ class HomeScreen extends React.Component {
         })
         .catch(error=>console.log(error)) //to catch the errors if any
 
-        navigator.geolocation.getCurrentPosition((position) => {
-          var lat = parseFloat(position.coords.latitude)
-          var long = parseFloat(position.coords.longitude)
-          console.log("GOT LOCATION", lat, long);
-    
-          this.setState({
-            userLocation: {
-              latitude: lat,
-              longitude: long
-            }
-          })
-        },
-        (error) => alert(JSON.stringify(error)),
-        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 });
+      navigator.geolocation.getCurrentPosition((position) => {
+        var lat = parseFloat(position.coords.latitude)
+        var long = parseFloat(position.coords.longitude)
+        console.log("GOT LOCATION", lat, long);
+  
+        this.setState({
+          userLocation: {
+            latitude: lat,
+            longitude: long
+          }
+        })
+      },
+      (error) => alert(JSON.stringify(error)),
+      { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 });
     }
     render() {
       // Check if data is loaded
