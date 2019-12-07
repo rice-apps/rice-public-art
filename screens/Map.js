@@ -1,4 +1,5 @@
 import React from 'react';
+import {ImageBackground} from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack'
 import MapView, { Callout } from 'react-native-maps';
 import { Marker } from 'react-native-maps';
@@ -60,6 +61,10 @@ class MapScreen extends React.Component {
           loading: false,
           data: responseJson.data.map(art => {
             art.colorCode = getRandomColor();
+            art.abbreviatedName = art.name
+            if (art.name.length > 15) {
+              art.abbreviatedName = art.name.substring(0, 15) + '...'
+            } 
             return art;
           })
         })
@@ -77,7 +82,7 @@ class MapScreen extends React.Component {
           key={art.name}
           coordinate={{ latitude: art.location.lat, longitude: art.location.lon }}
           title={art.name}
-          onPress={() =>
+          onPress={() => {
             this.setState({
               showRoute: false,
               showCallout: true,
@@ -87,10 +92,16 @@ class MapScreen extends React.Component {
                 longitude: art.location.lon
               }
             })
-          }
-          centerOffset={{x: 24, y: -24}}
+            this.mapView.animateToRegion({
+              latitude: art.location.lat - this.mapView.props.initialRegion.latitudeDelta * 0.08,
+              longitude: art.location.lon,
+              latitudeDelta: this.mapView.props.initialRegion.latitudeDelta * 0.8,
+              longitudeDelta: this.mapView.props.initialRegion.longitudeDelta * 0.8
+            });
+          }}
+          centerOffset={{x: 0, y: -25}}
         >
-          <Image source={require('../images/moodyLogo.png')} style={{height: 50, width:50, tintColor:art.colorCode}} />
+          <Image source={require('../images/mapIcon.png')} style={{height: 50, width:50, tintColor:art.colorCode}} />
         </Marker>
 
       )
@@ -110,7 +121,6 @@ class MapScreen extends React.Component {
           }}
         >
           {markers}
-
           {
             this.state.showRoute ?
               <MapViewDirections
@@ -131,25 +141,30 @@ class MapScreen extends React.Component {
         {
           this.state.showCallout ? (
             <View style={[styles.calloutContainer]}>
-              <View style={[styles.closeCallout]}>
-                <Button title={"X"} onPress={() => this.setState({showCallout: false})}/>
-              </View>
-              <TouchableWithoutFeedback 
-                onPress={() =>
-                  // console.log("PRESSED")
-                  this.props.navigation.navigate('Details', {
-                    name: this.state.data[this.state.calloutIndx].name,
-                    description: this.state.data[this.state.calloutIndx].description,
-                    image: this.state.data[this.state.calloutIndx].image,
-                  })
-                }
-              >
                 <View style={[styles.calloutView, { backgroundColor: this.state.data[this.state.calloutIndx].colorCode }]}>
-                  <Image style={styles.calloutImage} source={{ uri: this.state.data[this.state.calloutIndx].image }} />
+                  <ImageBackground style={styles.calloutImage} source={{ uri: this.state.data[this.state.calloutIndx].image }}>
+                    <View style={{flexDirection:'row', justifyContent: 'space-between'}}>
+                      <View style={[styles.closeCallout, {marginLeft: 10}]}>
+                        <Button title={"X"} onPress={() => this.setState({showCallout: false})}/>
+                      </View>
+                      <Text style={styles.calloutTitle}>
+                        {this.state.data[this.state.calloutIndx].abbreviatedName}
+                      </Text>
+                      <View style={[styles.closeCallout, {marginRight: 10}]}>
+                        <Button
+                          title={"i"} 
+                          onPress={() => {
+                            this.props.navigation.navigate('Details', {
+                              name: this.state.data[this.state.calloutIndx].name,
+                              description: this.state.data[this.state.calloutIndx].description,
+                              image: this.state.data[this.state.calloutIndx].image,
+                            })
+                          }}
+                        />
+                      </View>
+                    </View>
+                  </ImageBackground>
                   <View style={styles.calloutText}>
-                    <Text style={styles.calloutTitle}>{this.state.data[this.state.calloutIndx].name}</Text>
-                    <Text style={styles.calloutDescription}>{this.state.data[this.state.calloutIndx].description}</Text>
-                    <Text style={styles.calloutMoreInfo}>{'\n'}Tap for more info</Text>
                     {(this.state.userLocation != null && this.state.destination != null) ?
                       <View style={styles.routeButton}>
                         <Button
@@ -169,7 +184,6 @@ class MapScreen extends React.Component {
                     }
                   </View>
                 </View>
-              </TouchableWithoutFeedback>
             </View>
           ) : null
         }
@@ -222,7 +236,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     height: 40,
     width: 40,
-    marginBottom: 10
+    marginTop: 10,
   },
   calloutText: {
     width: 340,
@@ -231,21 +245,13 @@ const styles = StyleSheet.create({
   calloutTitle: {
     fontSize: 24,
     color: 'white',
-    marginBottom: 5,
+    marginTop: 5,
     textAlign: 'center',
     textTransform: 'uppercase'
   },
-  calloutDescription: {
-    color: 'white'
-  },
-  calloutMoreInfo: {
-    color: 'white',
-    textAlign: 'center',
-    marginBottom: 10
-  },
   calloutImage: {
-    width: 340,
-    height: 125,
+    width: width * 0.95,
+    height: 150,
     marginLeft: 'auto',
     marginRight: 'auto',
     marginTop: 0
@@ -257,7 +263,7 @@ const styles = StyleSheet.create({
     // height: 60,
     width: 200,
     marginLeft: 'auto',
-    marginRight: 'auto'
+    marginRight: 'auto',
   },
   overMapView: {
     position: 'absolute',//use absolute position to show button on top of the map
