@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import Topbar from '../components/Topbar.js';
 import { Dimensions } from 'react-native';
-import Image from 'react-native-scalable-image'
+import Image from 'react-native-scalable-image';
 
 export default class EventDetailsScreen extends React.Component {
     getParam(param,def){

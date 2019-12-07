@@ -7,13 +7,19 @@ import MapViewDirections from 'react-native-maps-directions';
 import { GOOGLE_MAPS_APIKEY } from '../AUTHENTICATION.js';
 import Topbar from '../components/Topbar.js';
 import DetailsScreen from './Details.js';
+import { colors } from '../COLORS.js';
+
+var index = -1
+function getColor() {
+  index += 1
+  if (index > colors.length()) {
+      index = 0
+  }
+  console.log(colors[index])
+  return colors[index]
+}
 
 const { width, height } = Dimensions.get('window');
-const colors = ["rgb(0, 50, 160)", "rgb(230, 60, 0)", "rgb(60, 160, 15)", "rgb(90, 165, 245)", "rgb(255, 135, 0)", "rgb(155, 210, 0)"]
-
-const getRandomColor = function () {
-  return colors[Math.floor(Math.random() * colors.length)]
-}
 
 class MapScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -59,7 +65,7 @@ class MapScreen extends React.Component {
         this.setState({
           loading: false,
           data: responseJson.data.map(art => {
-            art.colorCode = getRandomColor();
+            art.colorCode = getColor();
             return art;
           })
         })

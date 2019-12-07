@@ -2,11 +2,11 @@ import React from 'react';
 import { StyleSheet, Text, View, ScrollView} from 'react-native';
 import EventCard from '../components/EventCard.js';
 import Topbar from '../components/Topbar.js';
+import {colors} from '../COLORS.js';
+console.log(colors);
 
 import { createStackNavigator } from 'react-navigation-stack'
 import EventDetailsScreen from './EventDetails.js';
-import { red } from 'ansi-colors';
-
  
 class EventsScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -22,7 +22,6 @@ class EventsScreen extends React.Component {
              time: "6:00PM - 8:00PM",
              description: "colors are very cool!",
              location: "Moody Center",
-             color: 'red',
              image: "https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg",
             }, 
             {name:"The Skyfall",
@@ -30,7 +29,6 @@ class EventsScreen extends React.Component {
             time: "11:00PM - 4:00AM",
             description: "your soul will be sold",
             location: "Sky Space",
-            color: 'blue',
             image: "https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
            }, 
           ]
@@ -73,7 +71,7 @@ class EventsScreen extends React.Component {
             image={content.image} 
             time={content.time} 
             location={content.location} 
-            color={content.color} 
+            color = {colors[i%colors.length]}
             date = {content.date}
             navigation = {this.props.navigation}> 
           </EventCard>)
