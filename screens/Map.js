@@ -44,7 +44,7 @@ class MapScreen extends React.Component {
         }
       })
     },
-      (error) => alert(JSON.stringify(error)),
+      (error) => console.log(JSON.stringify(error)),
       { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 });
 
     //Make a fetch call
