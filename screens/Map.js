@@ -8,9 +8,9 @@ import MapViewDirections from 'react-native-maps-directions';
 import { GOOGLE_MAPS_APIKEY } from '../AUTHENTICATION.js';
 import Topbar from '../components/Topbar.js';
 import DetailsScreen from './Details.js';
+import { colors } from '../COLORS.js';
 
 const { width, height } = Dimensions.get('window');
-const colors = ["rgb(0, 50, 160)", "rgb(230, 60, 0)", "rgb(60, 160, 15)", "rgb(90, 165, 245)", "rgb(255, 135, 0)", "rgb(155, 210, 0)"]
 
 class MapScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
