@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     marginLeft:20
   },
   secondaryText:{
-    fontWeight: 200,
+    fontWeight: '200',
     fontSize: 18
   },
   calendar:{
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   calendarText:{
     textAlign: "center",
     fontSize: 25,
-    fontWeight: 600
+    fontWeight: '600'
   },
   extraInfo:{
     marginLeft:10
