@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, ScrollView} from 'react-native';
 import Card from '../components/Card.js';
 import Topbar from '../components/Topbar.js';
+import {LIGHT_ORANGE} from '../COLORS.js'
 
 import { createStackNavigator } from 'react-navigation-stack'
 import DetailsScreen from './Details.js';
@@ -10,6 +11,9 @@ import distance from '../util/distance.js'
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerLeft: <Topbar text="Art"/>,
+    headerStyle: {
+      backgroundColor: LIGHT_ORANGE,
+    },
   })
   // Set default state for Homescreen (no data, and loading)
   constructor(props) {
@@ -52,7 +56,7 @@ class HomeScreen extends React.Component {
     }
     render() {
       // Check if data is loaded
-      if(this.state.loading){ 
+      if(this.state.loading){
         // Display something to inform user data is loading
         return( 
           <View> 

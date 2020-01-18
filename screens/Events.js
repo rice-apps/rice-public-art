@@ -2,15 +2,17 @@ import React from 'react';
 import { StyleSheet, Text, View, ScrollView} from 'react-native';
 import EventCard from '../components/EventCard.js';
 import Topbar from '../components/Topbar.js';
-import {colors} from '../COLORS.js';
-console.log(colors);
+import {COLORS, LIGHT_GREEN} from '../COLORS.js';
 
 import { createStackNavigator } from 'react-navigation-stack'
 import EventDetailsScreen from './EventDetails.js';
  
 class EventsScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    headerLeft: <Topbar text="Events"/>,
+    headerLeft: <Topbar text="Events"></Topbar>,
+    headerStyle: {
+      backgroundColor: LIGHT_GREEN,
+    },
   })
   // Set default state (no data, and loading)
   constructor(props) {
@@ -71,7 +73,7 @@ class EventsScreen extends React.Component {
             image={content.image} 
             time={content.time} 
             location={content.location} 
-            color = {colors[i%colors.length]}
+            color = {COLORS[i%COLORS.length]}
             date = {content.date}
             navigation = {this.props.navigation}> 
           </EventCard>)
