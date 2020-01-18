@@ -4,6 +4,8 @@ import Card from '../components/Card.js';
 import Topbar from '../components/Topbar.js';
 import { LIGHT_ORANGE } from '../COLORS.js'
 
+import * as Font from 'expo-font';
+
 import { createStackNavigator } from 'react-navigation-stack'
 import DetailsScreen from './Details.js';
 import distance from '../util/distance.js'
@@ -22,6 +24,7 @@ class HomeScreen extends React.Component {
       loading: true,
       data: [],
       userLocation: null
+
     };
   }
   // Fires when componenet is initially set/mounted
@@ -31,6 +34,7 @@ class HomeScreen extends React.Component {
       .then(response => response.json()) // Get json of response
       .then((responseJson) => {
         // Adjust state to reflect loaded status / store data from response
+
         this.setState({
           loading: false,
           data: responseJson.data
