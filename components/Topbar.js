@@ -15,7 +15,6 @@ export default class Topbar extends React.Component {
           left: leftDisplacement, 
  
           flexDirection: 'row'}}>
-          {icon}
           <Text style={{left:leftDisplacement, fontFamily: 'aktiv-grotesk-bold', fontSize: 30}} > {this.props.text} </Text>
          
         </View>
