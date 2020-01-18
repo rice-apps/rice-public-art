@@ -1,7 +1,9 @@
 import React from 'react';
 import { Text, StyleSheet, View, Image} from 'react-native';
+import * as Font from 'expo-font';
 
 export default class Card extends React.Component {
+  
 
   render() {
       let icon;
@@ -15,7 +17,7 @@ export default class Card extends React.Component {
           left: leftDisplacement, 
           flexDirection: 'row'}}>
           {icon}
-          <Text style={{left:leftDisplacement, fontWeight: 'bold', fontSize: 30}} > {this.props.text} </Text>
+          <Text style={{left:leftDisplacement, fontFamily: 'aktiv-grotesk-bold', fontSize: 30}} > {this.props.text} </Text>
         </View>
       );
     }

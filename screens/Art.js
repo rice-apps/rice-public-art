@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, ScrollView} from 'react-native';
 import Card from '../components/Card.js';
 import Topbar from '../components/Topbar.js';
 
+import * as Font from 'expo-font';
+
 import { createStackNavigator } from 'react-navigation-stack'
 import DetailsScreen from './Details.js';
 import distance from '../util/distance.js'
@@ -22,6 +24,13 @@ class HomeScreen extends React.Component {
    }
    // Fires when componenet is initially set/mounted
     componentDidMount(){
+
+      // Load custom fonts
+      Font.loadAsync({
+        'aktiv-grotesk-regular': require('../assets/fonts/AktivGrotesk-Regular.ttf'),
+        'aktiv-grotesk-bold': require('../assets/fonts/AktivGrotesk-Bold.ttf'),
+      });
+
       //Make a fetch call
       fetch('http://moody-backend.herokuapp.com/campusArt/allArt', {method: 'GET'})
         .then(response => response.json()) // Get json of response
