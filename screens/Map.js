@@ -1,5 +1,5 @@
 import React from 'react';
-import {ImageBackground} from 'react-native';
+import { ImageBackground } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack'
 import MapView, { Callout } from 'react-native-maps';
 import { Marker } from 'react-native-maps';
@@ -35,7 +35,6 @@ class MapScreen extends React.Component {
     navigator.geolocation.getCurrentPosition((position) => {
       var lat = parseFloat(position.coords.latitude)
       var long = parseFloat(position.coords.longitude)
-      console.log(lat, long);
 
       this.setState({
         userLocation: {
@@ -51,8 +50,6 @@ class MapScreen extends React.Component {
     fetch('http://moody-backend.herokuapp.com/campusArt/allArt', { method: 'GET' })
       .then(response => response.json()) // Get json of response
       .then((responseJson) => {
-        console.log("response", responseJson.data)
-        // Adjust state to reflect loaded status / store data from response
         this.setState({
           loading: false,
           data: responseJson.data.map((art, i) => {
@@ -60,7 +57,7 @@ class MapScreen extends React.Component {
             art.abbreviatedName = art.name
             if (art.name.length > 15) {
               art.abbreviatedName = art.name.substring(0, 15) + '...'
-            } 
+            }
             return art;
           })
         })
@@ -95,9 +92,9 @@ class MapScreen extends React.Component {
               longitudeDelta: this.mapView.props.initialRegion.longitudeDelta * 0.8
             });
           }}
-          centerOffset={{x: 0, y: -25}}
+          centerOffset={{ x: 0, y: -25 }}
         >
-          <Image source={require('../images/mapIcon.png')} style={{height: 50, width:50, tintColor:art.colorCode}} />
+          <Image source={require('../images/mapIcon.png')} style={{ height: 50, width: 50, tintColor: art.colorCode }} />
         </Marker>
 
       )
@@ -137,49 +134,49 @@ class MapScreen extends React.Component {
         {
           this.state.showCallout ? (
             <View style={[styles.calloutContainer]}>
-                <View style={[styles.calloutView, { backgroundColor: this.state.data[this.state.calloutIndx].colorCode }]}>
-                  <ImageBackground style={styles.calloutImage} source={{ uri: this.state.data[this.state.calloutIndx].image }}>
-                    <View style={{flexDirection:'row', justifyContent: 'space-between'}}>
-                      <View style={[styles.closeCallout, {marginLeft: 10}]}>
-                        <Button title={"X"} onPress={() => this.setState({showCallout: false})}/>
-                      </View>
-                      <Text style={styles.calloutTitle}>
-                        {this.state.data[this.state.calloutIndx].abbreviatedName}
-                      </Text>
-                      <View style={[styles.closeCallout, {marginRight: 10}]}>
-                        <Button
-                          title={"i"} 
-                          onPress={() => {
-                            this.props.navigation.navigate('Details', {
-                              name: this.state.data[this.state.calloutIndx].name,
-                              description: this.state.data[this.state.calloutIndx].description,
-                              image: this.state.data[this.state.calloutIndx].image,
-                            })
-                          }}
-                        />
-                      </View>
+              <View style={[styles.calloutView, { backgroundColor: this.state.data[this.state.calloutIndx].colorCode }]}>
+                <ImageBackground style={styles.calloutImage} source={{ uri: this.state.data[this.state.calloutIndx].image }}>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={[styles.closeCallout, { marginLeft: 10 }]}>
+                      <Button title={"X"} onPress={() => this.setState({ showCallout: false })} />
                     </View>
-                  </ImageBackground>
-                  <View style={styles.calloutText}>
-                    {(this.state.userLocation != null && this.state.destination != null) ?
-                      <View style={styles.routeButton}>
-                        <Button
-                          style={{ margin: 0, padding: 0 }}
-                          title={this.state.showRoute ? 'Hide Route' : 'Show Route'}
-                          onPress={() => {
-                            this.setState({
-                              showRoute: !this.state.showRoute,
-                            });
-                          }}
-                        />
-                        {this.state.showRoute ?
-                          <Text style={{ textAlign: 'center', margin: 0, padding: 0 }}>
-                            Distance: {this.state.routeDuration} min
-                        </Text> : null}
-                      </View> : null
-                    }
+                    <Text style={styles.calloutTitle}>
+                      {this.state.data[this.state.calloutIndx].abbreviatedName}
+                    </Text>
+                    <View style={[styles.closeCallout, { marginRight: 10 }]}>
+                      <Button
+                        title={"i"}
+                        onPress={() => {
+                          this.props.navigation.navigate('Details', {
+                            name: this.state.data[this.state.calloutIndx].name,
+                            description: this.state.data[this.state.calloutIndx].description,
+                            image: this.state.data[this.state.calloutIndx].image,
+                          })
+                        }}
+                      />
+                    </View>
                   </View>
+                </ImageBackground>
+                <View style={styles.calloutText}>
+                  {(this.state.userLocation != null && this.state.destination != null) ?
+                    <View style={styles.routeButton}>
+                      <Button
+                        style={{ margin: 0, padding: 0 }}
+                        title={this.state.showRoute ? 'Hide Route' : 'Show Route'}
+                        onPress={() => {
+                          this.setState({
+                            showRoute: !this.state.showRoute,
+                          });
+                        }}
+                      />
+                      {this.state.showRoute ?
+                        <Text style={{ textAlign: 'center', margin: 0, padding: 0 }}>
+                          Distance: {this.state.routeDuration} min
+                        </Text> : null}
+                    </View> : null
+                  }
                 </View>
+              </View>
             </View>
           ) : null
         }
