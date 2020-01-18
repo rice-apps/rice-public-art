@@ -1,32 +1,44 @@
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, TouchableHighlight } from 'react-native';
 
-function EventCard(props) {
-  dayOfWeek = ["SUN", "MON", "TUES", "WED", "THURS", "FRI", "SAT"][props.date.getDay()];
-  dayOfMonth = props.date.getDate();
-  accent = props.color;
+class EventCard extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  render () {
+  dayOfWeek = ["SUN", "MON", "TUES", "WED", "THURS", "FRI", "SAT"][this.props.date.getDay()];
+  dayOfMonth = this.props.date.getDate();
+  accent = this.props.color;
   return (
-    <View style={[styles.card, { borderColor: accent }]}>
-      {/*Image &  Title*/}
-      <ImageBackground style={styles.image} imageStyle={{ borderRadius: 10 }} source={{ uri: props.image }}>
-      </ImageBackground>
-      <Text style={[styles.title, { color: accent }]}> {props.title} </Text>
-      <View style={styles.bottom}>
-        {/* Calendar bit */}
-        <View style={styles.calendar}>
-          <Text style={[styles.secondaryText, { fontSize: 15, textAlign: 'center' }]} > {dayOfWeek} </Text>
-          <Text style={styles.calendarText}> {dayOfMonth} </Text>
-        </View>
-        {/* Extra info bit*/}
-        <View style={styles.extraInfo}>
-          <Text style={styles.secondaryText}> {props.time}  </Text>
-          <Text style={styles.secondaryText} > {props.location}  </Text>
-        </View>
-      </View>
-    </View>
+    <TouchableHighlight style={[styles.card, { borderColor: accent }]}
+            underlayColor="transparent"
+            style = {styles.container}
+            onPress={() => 
+              console.log("click") //("//this.props.navigation.navigate('Details',this.props)
+            }>
+            <>
+            <ImageBackground style={styles.image} imageStyle={{ borderRadius: 10 }} source={{ uri: this.props.image }}>
+            </ImageBackground>
+            <Text style={[styles.title, { color: accent }]}> {this.props.title} </Text>
+            <View style={styles.bottom}>
+              {/* Calendar bit */}
+              <View style={styles.calendar}>
+                <Text style={[styles.secondaryText, { fontSize: 15, textAlign: 'center' }]} > {dayOfWeek} </Text>
+                <Text style={styles.calendarText}> {dayOfMonth} </Text>
+              </View>
+              {/* Extra info bit*/}
+              <View style={styles.extraInfo}>
+                <Text style={styles.secondaryText}> {this.props.time}  </Text>
+                <Text style={styles.secondaryText} > {this.props.location}  </Text>
+              </View>
+            </View>
+            </>
+    </TouchableHighlight>
   );
 }
-
+}
 
 const styles = StyleSheet.create({
   card: {
