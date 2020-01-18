@@ -8,13 +8,16 @@ import MapViewDirections from 'react-native-maps-directions';
 import { GOOGLE_MAPS_APIKEY } from '../AUTHENTICATION.js';
 import Topbar from '../components/Topbar.js';
 import DetailsScreen from './Details.js';
-import { colors } from '../COLORS.js';
+import { COLORS, BLUE } from '../COLORS.js';
 
 const { width, height } = Dimensions.get('window');
 
 class MapScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    headerLeft: <Topbar text="Campus"></Topbar>
+    headerLeft: <Topbar text="Campus"></Topbar>,
+    headerStyle: {
+      backgroundColor: BLUE,
+    },
   })
   constructor(props) {
     super(props);
@@ -53,7 +56,7 @@ class MapScreen extends React.Component {
         this.setState({
           loading: false,
           data: responseJson.data.map((art, i) => {
-            art.colorCode = colors[i % colors.length];
+            art.colorCode = COLORS[i % COLORS.length];
             art.abbreviatedName = art.name
             if (art.name.length > 15) {
               art.abbreviatedName = art.name.substring(0, 15) + '...'
