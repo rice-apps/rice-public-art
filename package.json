@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@types/react-native-snap-carousel": "^3.7.4",
     "expo": "^35.0.0",
     "expo-linear-gradient": "~7.0.0",
     "react": "16.8.3",
@@ -20,6 +21,7 @@
     "react-native-reanimated": "~1.2.0",
     "react-native-scalable-image": "^1.0.0",
     "react-native-screens": "~1.0.0-alpha.23",
+    "react-native-snap-carousel": "^3.8.4",
     "react-native-vector-icons": "^6.6.0",
     "react-native-web": "^0.11.7",
     "react-navigation": "^4.0.10",
