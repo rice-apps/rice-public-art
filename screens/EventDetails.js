@@ -15,7 +15,7 @@ export default class EventDetailsScreen extends React.Component {
         headerTitle: <Topbar text = "Event" isCenter = {true}/>,
         headerTintColor: 'white',
         headerStyle: {
-          backgroundColor: accent,
+          backgroundColor: LIGHT_GREEN,
         },
       }
     }
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
     marginTop: -10,
-    marginLeft: 20
+    marginLeft: 5
   },
   secondaryText: {
     fontWeight: '200',
@@ -88,6 +88,6 @@ const styles = StyleSheet.create({
   },
   bottom: {
     flexDirection: "row",
-    margin: 15,
+    margin: 10,
   }
 });
