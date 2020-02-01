@@ -21,7 +21,8 @@ const TabNavigator = createBottomTabNavigator({
         return (
           <Image
             style={{ width: 35, height: 35, tintColor: focused ? 'rgb(90, 165, 245)': 'white'}}
-            source={require('./images/moodyLogo.png')} 
+            source={require('./images/moodyOutlineLogo.png')} 
+            color = {tintColor}
           />
         )
       }
@@ -30,13 +31,15 @@ const TabNavigator = createBottomTabNavigator({
   Map: {
     screen: MapNavigator,
     navigationOptions: {
-      tabBarIcon: ({ tintColor }) => (
-        <Icon
-          name="map-marked-alt"
-          color={tintColor}
-          size={30}
-        />
-      )
+      tabBarIcon: ({focused, tintColor}) => {
+        return (
+          <Image
+            style={{ width: 35, height: 35, tintColor: focused ? 'rgb(90, 165, 245)': 'white'}}
+            source={require('./images/mapIconOutline.png')} 
+            color = {tintColor}
+          />
+        )
+      }
     }
   },
   Events: {
@@ -57,7 +60,7 @@ const TabNavigator = createBottomTabNavigator({
     activeTintColor: 'rgb(90, 165, 245)',
     inactiveTintColor: 'white',
     style: {
-      backgroundColor: 'rgb(40, 40, 40)',
+      backgroundColor: 'rgb(230, 230, 230)',
     }
   }
 });

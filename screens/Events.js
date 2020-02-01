@@ -7,6 +7,8 @@ import { COLORS, LIGHT_GREEN } from '../COLORS.js';
 import { createStackNavigator } from 'react-navigation-stack'
 import EventDetailsScreen from './EventDetails.js';
 
+import TextCarousel from "../components/Carousel"
+
 class EventsScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerLeft: <Topbar text="Events"></Topbar>,
@@ -23,6 +25,7 @@ class EventsScreen extends React.Component {
       ]
     };
   }
+
   // Fires when componenet is initially set/mounted
   componentDidMount() {
     fetch('http://moody-backend.herokuapp.com/general/events', { method: 'GET' })
@@ -67,9 +70,12 @@ class EventsScreen extends React.Component {
         </EventCard>)
       }
       return (
-        <ScrollView style={styles.scrollView}>
-          {artComponents}
-        </ScrollView>
+        <View>
+          <TextCarousel/>
+          <ScrollView style={styles.scrollView}>
+            {artComponents}
+          </ScrollView>
+        </View>
       );
     }
   }

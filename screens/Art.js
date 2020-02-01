@@ -9,10 +9,11 @@ import * as Font from 'expo-font';
 import { createStackNavigator } from 'react-navigation-stack'
 import DetailsScreen from './Details.js';
 import distance from '../util/distance.js'
+import { withOrientation } from 'react-navigation';
 
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    headerLeft: <Topbar text="Art" />,
+    headerLeft: <Topbar text="Art"/>,
     headerStyle: {
       backgroundColor: LIGHT_ORANGE,
     },
@@ -113,4 +114,5 @@ const styles = StyleSheet.create({
     marginRight: "auto",
     width: "95%"
   },
+
 });
