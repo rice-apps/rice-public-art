@@ -1,6 +1,6 @@
 import React from 'react';
 import { createAppContainer } from 'react-navigation';
-import { StyleSheet, Text, View, Image, Button } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, StatusBar } from 'react-native';
 //added bottom tab navigator
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import * as Font from 'expo-font';
@@ -85,6 +85,7 @@ export default class App extends React.Component {
   }
 
   render() {
+    StatusBar.setBarStyle('light-content', true);
     const {assetsLoaded} = this.state;
     if( assetsLoaded ) {
       return (
