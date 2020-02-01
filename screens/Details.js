@@ -26,15 +26,18 @@ export default class DetailsScreen extends React.Component {
       //Navigates to previous page in stack navigation when you jump back to the page
       //prevents details page from being there when you go back
       const didFocus = this.props.navigation.addListener(
-        'didFocus',
+        'willFocus',
         payload => {
-          console.debug('didFocus', payload);
+          //If you click on the bottom bar from another page
           if (payload.action.type == "Navigation/JUMP_TO") {
             
-            const popAction = StackActions.pop({
-              n: 1,
+            const resetAction = StackActions.reset({
+              index: 0,
+              //Navigates to Home when you click back to Art or Map
+              actions: [NavigationActions.navigate({ routeName: 'Home' })],
             });
-            this.props.navigation.dispatch(popAction);
+            //this runs the action
+            this.props.navigation.dispatch(resetAction);
           }
         }
       );

@@ -96,7 +96,7 @@ class HomeScreen extends React.Component {
 }
 
 export default createStackNavigator({
-  List: {
+  Home: {
     screen: HomeScreen,
   },
   Details: {
