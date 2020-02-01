@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
   scrollView: {
     marginLeft: "auto",
     marginRight: "auto",
+    height: "100%",
     width: "100%"
   },
 });
