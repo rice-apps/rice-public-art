@@ -22,8 +22,14 @@ class EventsScreen extends React.Component {
     this.state = {
       loading: false,
       data: [
-      ]
+      ],
+      month: 0
     };
+  }
+
+  setMonth(newMonth) {
+    console.log(newMonth);
+    //this.setState({month: newMonth});
   }
 
   // Fires when componenet is initially set/mounted
@@ -51,13 +57,13 @@ class EventsScreen extends React.Component {
       // We got the data! 
       // Here we have to do somoething with this.state.data to reflect in the return statement
       // Return display formating data into Piece componenets
-      let artComponents = []
+      let eventComponenents = []
       //let component
       for (let i = 0; i < this.state.data.length; i++) {
         var content = this.state.data[i]
         const date = new Date(content.date + 'T06:00:00');
         console.log(date.toString())
-        artComponents.push(<EventCard
+        eventComponenents.push(<EventCard
           key={'card' + i}
           title={content.title}
           description={content.description}
@@ -71,9 +77,9 @@ class EventsScreen extends React.Component {
       }
       return (
         <View>
-          <TextCarousel/>
+          <TextCarousel setMonth={this.setMonth.bind(this)}/>
           <ScrollView style={styles.scrollView}>
-            {artComponents}
+            {eventComponenents}
           </ScrollView>
         </View>
       );

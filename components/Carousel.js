@@ -13,6 +13,7 @@ export default class TextCarousel extends React.Component {
                 renderItem={this._renderItem}
                 sliderWidth={400}
                 itemWidth={120}
+                onSnapToItem = {(index)=> {console.log(index)}}
             />
         )
 
