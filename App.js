@@ -20,7 +20,7 @@ const TabNavigator = createBottomTabNavigator({
       tabBarIcon: ({focused, tintColor}) => {
         return (
           <Image
-            style={{ width: 35, height: 35, tintColor: focused ? 'rgb(90, 165, 245)': 'white'}}
+            style={{ width: 35, height: 35, tintColor: focused ? 'rgb(90, 165, 245)': 'grey'}}
             source={require('./images/moodyOutlineLogo.png')} 
             color = {tintColor}
           />
@@ -34,7 +34,7 @@ const TabNavigator = createBottomTabNavigator({
       tabBarIcon: ({focused, tintColor}) => {
         return (
           <Image
-            style={{ width: 35, height: 35, tintColor: focused ? 'rgb(90, 165, 245)': 'white'}}
+            style={{ width: 35, height: 35, tintColor: focused ? 'rgb(90, 165, 245)': 'grey'}}
             source={require('./images/mapIconOutline.png')} 
             color = {tintColor}
           />
@@ -49,19 +49,20 @@ const TabNavigator = createBottomTabNavigator({
         <Icon
           name="calendar-check"
           color={tintColor}
-          size={30}
+          size={35}
         />
       )
     }
   },
 },
   {tabBarOptions: {
-    showLabel: false,
+    showLabel: true,
     activeTintColor: 'rgb(90, 165, 245)',
-    inactiveTintColor: 'white',
+    inactiveTintColor: 'grey',
     style: {
-      backgroundColor: 'rgb(230, 230, 230)',
-    }
+      backgroundColor: 'white',
+      height: 70,
+    },
   }
 });
 
