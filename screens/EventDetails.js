@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import Topbar from '../components/Topbar.js';
 import { Dimensions } from 'react-native';
 import Image from 'react-native-scalable-image';
+import { COLORS, LIGHT_GREEN } from '../COLORS.js';
 
 export default class EventDetailsScreen extends React.Component {
     getParam(param,def){
@@ -11,7 +12,10 @@ export default class EventDetailsScreen extends React.Component {
     static navigationOptions = ({ navigation }) => {
       return {
         headerTitle: <Topbar text = "Art" isCenter = {true}/>,
-        headerTintColor: 'rgb(216,93,45)'
+        headerTintColor: 'white',
+        headerStyle: {
+          backgroundColor: LIGHT_GREEN,
+        },
       }
     }
     render() {

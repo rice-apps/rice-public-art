@@ -16,9 +16,9 @@ class EventCard extends React.Component {
             underlayColor="transparent"
             style = {styles.container}
             onPress={() => 
-              console.log("click") //("//this.props.navigation.navigate('Details',this.props)
+              this.props.navigation.navigate('Details',this.props)
             }>
-            <>
+            <View style={[styles.card, { borderColor: accent }]}>
             <ImageBackground style={styles.image} imageStyle={{ borderRadius: 10 }} source={{ uri: this.props.image }}>
             </ImageBackground>
             <Text style={[styles.title, { color: accent }]}> {this.props.title} </Text>
@@ -34,7 +34,7 @@ class EventCard extends React.Component {
                 <Text style={styles.secondaryText} > {this.props.location}  </Text>
               </View>
             </View>
-            </>
+            </View>
     </TouchableHighlight>
   );
 }
