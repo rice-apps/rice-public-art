@@ -35,6 +35,16 @@ class MapScreen extends React.Component {
   }
 
   componentDidMount() {
+    const didFocus = this.props.navigation.addListener(
+      'willFocus',
+      payload => {
+        console.debug('willFocus', payload);
+        this.setState({
+          showCallout: false
+        })
+      }
+    );
+
     navigator.geolocation.getCurrentPosition((position) => {
       var lat = parseFloat(position.coords.latitude)
       var long = parseFloat(position.coords.longitude)
