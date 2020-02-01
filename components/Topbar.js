@@ -1,5 +1,7 @@
 import React from 'react';
 import { Text, StyleSheet, View, Image} from 'react-native';
+import * as Font from 'expo-font';
+
 
 export default class Topbar extends React.Component {
 
@@ -11,9 +13,10 @@ export default class Topbar extends React.Component {
       return (
         <View style={{
           left: leftDisplacement, 
-          flexDirection: 'row'
-        }}>
-          <Text style={{left:leftDisplacement, fontWeight: 'bold', fontSize: 30, color: 'white'}} > {this.props.text} </Text>
+ 
+          flexDirection: 'row'}}>
+          <Text style={{left:leftDisplacement, fontFamily: 'aktiv-grotesk-bold', fontSize: 30}} > {this.props.text} </Text>
+         
         </View>
       );
     }

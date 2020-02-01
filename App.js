@@ -3,6 +3,8 @@ import { createAppContainer } from 'react-navigation';
 import { StyleSheet, Text, View, Image, Button } from 'react-native';
 //added bottom tab navigator
 import { createBottomTabNavigator } from 'react-navigation-tabs';
+import * as Font from 'expo-font';
+
 
 //Screens
 import EventsNavigator from './screens/Events'
@@ -60,4 +62,43 @@ const TabNavigator = createBottomTabNavigator({
   }
 });
 
-export default createAppContainer(TabNavigator);
+
+const AppContainer = createAppContainer(TabNavigator);
+
+
+export default class App extends React.Component {
+
+  state = {
+    assetsLoaded: false,
+  };
+
+  async componentDidMount(){
+    // Load custom fonts
+    await Font.loadAsync({
+      'aktiv-grotesk-regular': require('./assets/fonts/AktivGrotesk-Regular.ttf'),
+      'aktiv-grotesk-bold': require('./assets/fonts/AktivGrotesk-Bold.ttf'),
+    });
+    this.setState({ assetsLoaded: true });
+  }
+
+  render() {
+    const {assetsLoaded} = this.state;
+    if( assetsLoaded ) {
+      return (
+          <AppContainer
+              ref={nav => {
+                  this.navigator = nav;
+              }}
+          />
+      );
+    }
+    else {
+        return (
+            <View >
+               
+            </View>
+        );
+    }
+    }
+}
+// export default createAppContainer(App);
