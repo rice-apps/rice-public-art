@@ -6,12 +6,13 @@ import Image from 'react-native-scalable-image';
 import { COLORS, LIGHT_GREEN } from '../COLORS.js';
 
 export default class EventDetailsScreen extends React.Component {
+    accent = this.props.color;
     getParam(param,def){
       return this.props.navigation.getParam(param,def)
     } 
     static navigationOptions = ({ navigation }) => {
       return {
-        headerTitle: <Topbar text = "Art" isCenter = {true}/>,
+        headerTitle: <Topbar text = "Event" isCenter = {true}/>,
         headerTintColor: 'white',
         headerStyle: {
           backgroundColor: LIGHT_GREEN,
@@ -25,8 +26,25 @@ export default class EventDetailsScreen extends React.Component {
               width={Dimensions.get('window').width}
               source={{uri: this.getParam("image","default image")}}
             />
-            <Text style ={{fontWeight: 'bold', fontSize: 25}}> {this.getParam("name","Title")} </Text>
-            <Text> {this.getParam("description","default desc")} </Text>
+            {/* Spacer */}
+            <Text>  </Text> 
+            {/* Title */}
+            <Text style={[styles.title, { color: accent }]}> {this.getParam('title')} </Text>
+            <View style={styles.bottom}>
+              {/* Calendar bit */}
+              <View style={styles.calendar}>
+                <Text style={[styles.secondaryText, { fontSize: 15, textAlign: 'center' }]} > {dayOfWeek} </Text>
+                <Text style={styles.calendarText}> {dayOfMonth} </Text>
+              </View>
+              {/* Extra info bit*/}
+              <View style={styles.extraInfo}>
+                <Text style={styles.secondaryText}> {this.getParam('time')}  </Text>
+                <Text style={styles.secondaryText} > {this.getParam('location')}  </Text>
+              </View>
+            </View>
+            <View style = {styles.innerView}>
+              <Text> {this.getParam("description","default desc")} </Text>
+            </View>
         </ScrollView>  
       );
     }
@@ -38,4 +56,38 @@ const styles = StyleSheet.create({
     marginRight:"auto",
     width:"100%"
   },
+  innerView: {
+    marginLeft:"auto", 
+    marginRight:"auto",
+    width:"95%"
+  },
+  title: {
+    textAlign: "left",
+    fontWeight: "bold",
+    fontSize: 20,
+    marginTop: -10,
+    marginLeft: 5
+  },
+  secondaryText: {
+    fontWeight: '200',
+    fontSize: 18
+  },
+  calendar: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    aspectRatio: 1,
+    width: 50,
+  },
+  calendarText: {
+    textAlign: "center",
+    fontSize: 25,
+    fontWeight: '600'
+  },
+  extraInfo: {
+    marginLeft: 10
+  },
+  bottom: {
+    flexDirection: "row",
+    margin: 10,
+  }
 });
