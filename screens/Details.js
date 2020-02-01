@@ -4,8 +4,10 @@ import Topbar from '../components/Topbar.js';
 import { Dimensions } from 'react-native';
 import Image from 'react-native-scalable-image'
 import { COLORS, LIGHT_ORANGE } from '../COLORS.js';
+import { StackActions, NavigationActions } from 'react-navigation';
 
-//controls
+
+//controls from Art and Map
 export default class DetailsScreen extends React.Component {
     getParam(param,def){
       return this.props.navigation.getParam(param,def)
@@ -19,6 +21,25 @@ export default class DetailsScreen extends React.Component {
         },
       }
     }
+
+    componentDidMount() {
+      //Navigates to previous page in stack navigation when you jump back to the page
+      //prevents details page from being there when you go back
+      const didFocus = this.props.navigation.addListener(
+        'didFocus',
+        payload => {
+          console.debug('didFocus', payload);
+          if (payload.action.type == "Navigation/JUMP_TO") {
+            
+            const popAction = StackActions.pop({
+              n: 1,
+            });
+            this.props.navigation.dispatch(popAction);
+          }
+        }
+      );
+    }
+
     render() {
       return (
         <ScrollView style={styles.scrollView}>
