@@ -78,7 +78,9 @@ class HomeScreen extends React.Component {
               name={content.name}
               description={content.description}
               image={content.image}
+              artist={content.artist}
               location={content.location}
+              year={content.year}
               // Assume a 20 min. per mile walking speed
               // This is on the high end because we are using a straight line approximation for the route
               // which underestimates the total distance
