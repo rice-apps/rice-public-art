@@ -50,8 +50,22 @@ export default class DetailsScreen extends React.Component {
               width={Dimensions.get('window').width}
               source={{uri: this.getParam("image","default image")}}
             />
-            <Text style ={{fontWeight: 'bold', fontSize: 25}}> {this.getParam("name","Title")} </Text>
-            <Text> {this.getParam("description","default desc")} </Text>
+            {/* Spacer */}
+            <Text>  </Text> 
+            <Text>  </Text> 
+            {/* Title */}
+            <Text style ={[styles.title, {color: LIGHT_ORANGE}]}> {this.getParam("name","Title")} </Text>
+            <View style={styles.bottom}>
+              {/* Artist and Year*/}
+              <View>
+                <Text style={styles.artist}> {this.getParam("artist","Artist")} </Text>
+                <Text style={styles.year}> {this.getParam("year","Year Created")} </Text>
+              </View>
+              <Text> </Text>
+              <View>
+                <Text style={styles.description}> {this.getParam("description","default desc")} </Text>
+              </View>
+            </View>
         </ScrollView>  
       );
     }
@@ -62,5 +76,29 @@ const styles = StyleSheet.create({
     marginLeft:"auto", 
     marginRight:"auto",
     width:"100%"
+  },
+  title: {
+    textAlign: "left",
+    fontWeight: "bold",
+    fontSize: 25,
+    marginTop: -10,
+    marginLeft: 20,
+  },
+  bottom: {
+    marginLeft: 20,
+    marginRight: 20,
+    textAlign: "left",
+  },
+  artist: {
+    fontWeight: '300',
+    fontSize: 16,
+  },
+  year: {
+    fontWeight: '300',
+    fontSize: 16,
+  },
+  description: {
+    fontWeight: '300',
+    fontSize: 14,
   },
 });
