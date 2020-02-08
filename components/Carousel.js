@@ -34,13 +34,16 @@ export default class TextCarousel extends React.Component {
                 onSnapToItem = {(index)=> {this.props.requestData(getMonth(index),getYear(index))}}
             />
         )
-    }
-
+    }    
     _renderItem = ({item, index}) => {
         return (
             <View >
                 <Button title = {item}
-                    onPress = {()=>this._carousel.snapToItem(index, animated = true, fireCallback = true)}
+                    //onPress = {()=> {
+                            //this.props.requestData(getMonth(index),getYear(index))
+                           // this._carousel.snapToItem(index, animated = true, fireCallback = true)
+                        //}
+                    //}
                 ></Button>
             </View>
         );
