@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Image, Button, StatusBar } from 'react-native';
 //added bottom tab navigator
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import * as Font from 'expo-font';
+import { LIGHT_ORANGE, BLUE, LIGHT_GREEN } from './COLORS.js'
 
 
 //Screens
@@ -20,7 +21,7 @@ const TabNavigator = createBottomTabNavigator({
       tabBarIcon: ({focused, tintColor}) => {
         return (
           <Image
-            style={{ width: 35, height: 35, tintColor: focused ? 'rgb(90, 165, 245)': 'grey'}}
+            style={{ width: 35, height: 35, tintColor: focused ? LIGHT_ORANGE: 'grey'}}
             source={require('./images/moodyOutlineLogo.png')} 
             color = {tintColor}
           />
@@ -34,7 +35,7 @@ const TabNavigator = createBottomTabNavigator({
       tabBarIcon: ({focused, tintColor}) => {
         return (
           <Image
-            style={{ width: 35, height: 35, tintColor: focused ? 'rgb(90, 165, 245)': 'grey'}}
+            style={{ width: 35, height: 35, tintColor: focused ? BLUE : 'grey'}}
             source={require('./images/mapIconOutline.png')} 
             color = {tintColor}
           />
@@ -45,10 +46,10 @@ const TabNavigator = createBottomTabNavigator({
   Events: {
     screen: EventsNavigator,
     navigationOptions: {
-      tabBarIcon: ({ tintColor }) => (
+      tabBarIcon: ({ focused, tintColor }) => (
         <Icon
           name="calendar-check"
-          color={tintColor}
+          color={focused ? LIGHT_GREEN : 'grey'}
           size={35}
         />
       )
@@ -57,7 +58,7 @@ const TabNavigator = createBottomTabNavigator({
 },
   {tabBarOptions: {
     showLabel: true,
-    activeTintColor: 'rgb(90, 165, 245)',
+    activeTintColor: 'grey',
     inactiveTintColor: 'grey',
     style: {
       backgroundColor: 'white',

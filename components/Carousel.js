@@ -2,7 +2,24 @@ import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 
-let data = ["JANUARY", "FEBRUARY", "MARCH","APRIL","MAY","JUNE","JULY","AUGUST","OCTOBER","NOVEMBER","DECEMBER"];
+let currentDate = new Date()
+let currentMonth = currentDate.getMonth()
+let currentYear = currentDate.getFullYear()
+let data = ["JANUARY", "FEBRUARY", "MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER","JANUARY", "FEBRUARY", "MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER","JANUARY", "FEBRUARY", "MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
+
+function getMonth(index) {
+    // janurary = 1
+    return index%12+1
+}
+
+function getYear(index){
+    return Math.floor(index/12) + currentYear - 1
+}
+
+function getIndex(month,year){
+    index = (year-currentYear + 1)*12 + month
+    return index
+}
 
 export default class TextCarousel extends React.Component {
     constructor(props) {
@@ -13,11 +30,12 @@ export default class TextCarousel extends React.Component {
                 renderItem={this._renderItem}
                 sliderWidth={400}
                 itemWidth={120}
-                onSnapToItem = {(index)=> {console.log(index)}}
+                firstItem={getIndex(currentMonth,currentYear)}
+                onSnapToItem = {(index)=> {this.props.requestData(getMonth(index),getYear(index))}}
             />
         )
-
     }
+
     _renderItem = ({item, index}) => {
         return (
             <View >
