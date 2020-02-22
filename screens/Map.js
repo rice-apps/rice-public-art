@@ -27,7 +27,7 @@ class MapScreen extends React.Component {
       userLocation: null,
       destination: null,
       showRoute: false,
-      routeDuration: 0,
+      routeDuration: null,
       showCallout: false,
       calloutIndx: null
     };
@@ -92,6 +92,7 @@ class MapScreen extends React.Component {
             this.setState({
               showRoute: false,
               showCallout: true,
+              routeDuration: null,
               calloutIndx: i,
               destination: {
                 latitude: art.location.lat,
@@ -182,7 +183,7 @@ class MapScreen extends React.Component {
                           });
                         }}
                       />
-                      {this.state.showRoute ?
+                      {this.state.showRoute && this.state.routeDuration != null?
                         <Text style={{ textAlign: 'center', margin: 0, padding: 0 }}>
                           Distance: {this.state.routeDuration} min
                         </Text> : null}
