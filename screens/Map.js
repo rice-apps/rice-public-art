@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageBackground } from 'react-native';
+import { ImageBackground, TouchableHighlight } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack'
 import MapView, { Callout } from 'react-native-maps';
 import { Marker } from 'react-native-maps';
@@ -9,6 +9,8 @@ import { GOOGLE_MAPS_APIKEY } from '../AUTHENTICATION.js';
 import Topbar from '../components/Topbar.js';
 import DetailsScreen from './Details.js';
 import { COLORS, BLUE } from '../COLORS.js';
+import { withRouter } from 'react-router-dom';
+import { withOrientation } from 'react-navigation';
 
 const { width, height } = Dimensions.get('window');
 
@@ -148,7 +150,7 @@ class MapScreen extends React.Component {
         {
           this.state.showCallout ? (
             <View style={[styles.calloutContainer]}>
-              <View style={[styles.calloutView, { backgroundColor: this.state.data[this.state.calloutIndx].colorCode }]}>
+              <View style={styles.calloutView}>
                 <ImageBackground style={styles.calloutImage} source={{ uri: this.state.data[this.state.calloutIndx].image }}>
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <View style={[styles.closeCallout, { marginLeft: 10 }]}>
@@ -171,25 +173,25 @@ class MapScreen extends React.Component {
                     </View>
                   </View>
                 </ImageBackground>
-                <View style={styles.calloutText}>
-                  {(this.state.userLocation != null && this.state.destination != null) ?
-                    <View style={styles.routeButton}>
-                      <Button
-                        style={{ margin: 0, padding: 0 }}
-                        title={this.state.showRoute ? 'Hide Route' : 'Show Route'}
-                        onPress={() => {
-                          this.setState({
-                            showRoute: !this.state.showRoute,
-                          });
-                        }}
-                      />
-                      {this.state.showRoute && this.state.routeDuration != null?
-                        <Text style={{ textAlign: 'center', margin: 0, padding: 0 }}>
-                          Distance: {this.state.routeDuration} min
-                        </Text> : null}
-                    </View> : null
-                  }
-                </View>
+                
+                <TouchableHighlight 
+                  onPress={() => {
+                    this.setState({
+                      showRoute: !this.state.showRoute,
+                    });
+                  }}
+                  underlayColor = {'#eeeeee'}
+                >
+                  <View style={styles.calloutButtonView}>
+                  <Text style={{fontSize: 18,fontWeight: 'bold'}}>
+                    {this.state.showRoute ? 'Hide Route' : 'Show Route'}
+                    </Text>
+                  {this.state.showRoute && this.state.routeDuration != null?
+                      <Text style={{ textAlign: 'center', margin: 0, padding: 0 }}>
+                        Distance: {this.state.routeDuration} min
+                      </Text> : null}
+                  </View>
+                </TouchableHighlight>
               </View>
             </View>
           ) : null
@@ -230,12 +232,13 @@ const styles = StyleSheet.create({
     zIndex: -1
   },
   calloutContainer: {
-    bottom: 0,
+    bottom: 10,
     position: 'absolute'
   },
   calloutView: {
     padding: 0,
     borderRadius: 10,
+    backgroundColor: 'white',
     overflow: 'hidden',
   },
   closeCallout: {
@@ -245,9 +248,10 @@ const styles = StyleSheet.create({
     width: 40,
     marginTop: 10,
   },
-  calloutText: {
-    width: 340,
-    padding: 20,
+  calloutButtonView: {
+    height:55,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   calloutTitle: {
     fontSize: 24,
@@ -258,19 +262,10 @@ const styles = StyleSheet.create({
   },
   calloutImage: {
     width: width * 0.95,
-    height: 150,
+    height: 200,
     marginLeft: 'auto',
     marginRight: 'auto',
     marginTop: 0
-  },
-  routeButton: {
-    backgroundColor: 'white',
-    padding: 10,
-    borderRadius: 10,
-    // height: 60,
-    width: 200,
-    marginLeft: 'auto',
-    marginRight: 'auto',
   },
   overMapView: {
     position: 'absolute',//use absolute position to show button on top of the map
