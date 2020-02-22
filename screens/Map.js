@@ -80,7 +80,6 @@ class MapScreen extends React.Component {
 
   render() {
     let markers = []
-
     for (let i = 0; i < this.state.data.length; i++) {
       const art = this.state.data[i];
       markers.push(
