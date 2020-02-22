@@ -32,13 +32,13 @@ class EventsScreen extends React.Component {
     switch(action){
       case 'left':{
         if (this.carousel){
-          this.carousel.snapToNext();
+          //this.carousel._carousel.snapToNext();
         }
         break;
       }
        case 'right':{
         if (this.carousel){
-          this.carousel.snapToPrev();
+          //this.carousel._carousel.snapToPrev();
         }
         break;
       }
@@ -47,7 +47,6 @@ class EventsScreen extends React.Component {
   // Set default state (no data, and loading)
   constructor(props) {
     super(props);
-    this.carousel = null;
     this.state = {
       loading: true,
       data: []
@@ -77,12 +76,11 @@ class EventsScreen extends React.Component {
 
   render() {
     // Check if data is loaded    
-    carousel_component = <TextCarousel ref ={(c)=> {this.carousel=c}} requestData={this.requestData.bind(this)}/>
     if (this.state.loading) {
       // Display something to inform user data is loading
       return (
       <View>
-        {carousel_component}
+        <TextCarousel ref ={(c)=> {this.carousel=c}} requestData={this.requestData.bind(this)}/>
         <View style={styles.loadView}>
           <ActivityIndicator size="large" color="#000000" />
         </View>
@@ -111,7 +109,7 @@ class EventsScreen extends React.Component {
           return (
             <View>
               <SwipeGesture gestureStyle={styles.swipesGestureContainer} onSwipePerformed={this.onSwipePerformed}>
-                {carousel_component}
+              <TextCarousel ref ={(c)=> {this.carousel=c}} requestData={this.requestData.bind(this)}/>
                 <ScrollView style={styles.scrollView}>
                   {eventComponenents}
                 </ScrollView>
@@ -122,7 +120,7 @@ class EventsScreen extends React.Component {
           return (
             <View>
               <SwipeGesture gestureStyle={styles.swipesGestureContainer} onSwipePerformed={this.onSwipePerformed}>
-                {carousel_component}
+              <TextCarousel ref ={(c)=> {this.carousel=c}} requestData={this.requestData.bind(this)}/>
                 <ScrollView style={styles.scrollView}>
                   <Text> No events :( </Text>
                 </ScrollView>
