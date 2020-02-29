@@ -31,6 +31,7 @@ class MapScreen extends React.Component {
       showRoute: false,
       routeDuration: null,
       showCallout: false,
+      expandCallout: false,
       calloutIndx: null
     };
     this.mapView = null;
@@ -154,30 +155,67 @@ class MapScreen extends React.Component {
                 <ImageBackground style={styles.calloutImage} source={{ uri: this.state.data[this.state.calloutIndx].image }}>
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <View style={[styles.closeCallout, { marginLeft: 10 }]}>
-                      <Button title={"X"} onPress={() => this.setState({ showCallout: false })} />
+                      <Button title={"X"} onPress={() => this.setState({ showCallout: false, expandCallout: false})} / >
                     </View>
-                    <Text style={styles.calloutTitle}>
-                      {this.state.data[this.state.calloutIndx].abbreviatedName}
-                    </Text>
-                    <View style={[styles.closeCallout, { marginRight: 10 }]}>
-                      <Button
-                        title={"i"}
-                        onPress={() => {
-                          this.props.navigation.navigate('Details', {
-                            name: this.state.data[this.state.calloutIndx].name,
-                            description: this.state.data[this.state.calloutIndx].description,
-                            image: this.state.data[this.state.calloutIndx].image,
-                          })
-                        }}
-                      />
-                    </View>
+                    {
+                      this.state.expandCallout ? null : (
+                        <Text style={styles.calloutTitle}>
+                          {this.state.data[this.state.calloutIndx].abbreviatedName}
+                        </Text>
+                      )
+                    }
+                    {
+                      this.state.expandCallout ? null : (
+                        <View style={[styles.closeCallout, { marginRight: 10 }]}>
+                          <Button
+                            title={"i"}
+                            onPress={() => this.setState({ expandCallout: true })}
+                            // onPress={() => {
+                            //   this.props.navigation.navigate('Details', {
+                            //     name: this.state.data[this.state.calloutIndx].name,
+                            //     description: this.state.data[this.state.calloutIndx].description,
+                            //     image: this.state.data[this.state.calloutIndx].image,
+                            //   })
+                            // }}
+                          />
+                        </View>
+                      )
+                    }
+
                   </View>
                 </ImageBackground>
-                
-                <TouchableHighlight 
+                {
+                  this.state.expandCallout ? (
+                    <View style={styles.calloutExpandedText}>
+                      <Text style ={styles.expandedCalloutTitle}> {this.state.data[this.state.calloutIndx].name} </Text>
+                      <View style={styles.expandedCalloutBottom}>
+                        {/* Artist and Year*/}
+                        <View>
+                          <Text style={styles.expandedCalloutArtist}> {this.state.data[this.state.calloutIndx].artist}, {this.state.data[this.state.calloutIndx].year} </Text>
+                          <Text style={styles.expandedCalloutYear}>  </Text>
+                        </View>
+                        <Text> </Text>
+                        <View>
+                          {/* Materials */}
+                          <Text style={styles.expandedCalloutDescription}> Stuff </Text>
+                          <Text> </Text>
+                          {/* Location */}
+                          <Text style={styles.expandedCalloutDescription}> Somewhere on Rice campus </Text>
+                          <Text> </Text>
+                          {/* Donor */}
+                          <Text style={styles.expandedCalloutDescription}> Some rich person that was able to afford this</Text>
+                        </View>
+                      </View>
+                    </View>
+                  ) : null
+                }
+
+
+                <TouchableHighlight
                   onPress={() => {
                     this.setState({
                       showRoute: !this.state.showRoute,
+                      expandCallout: false,
                     });
                   }}
                   underlayColor = {'#eeeeee'}
@@ -232,7 +270,7 @@ const styles = StyleSheet.create({
     zIndex: -1
   },
   calloutContainer: {
-    bottom: 10,
+    bottom: 20,
     position: 'absolute'
   },
   calloutView: {
@@ -243,13 +281,18 @@ const styles = StyleSheet.create({
   },
   closeCallout: {
     backgroundColor: 'white',
-    borderRadius: 40,
-    height: 40,
-    width: 40,
+    borderRadius: 30,
+    height: 30,
+    width: 30,
     marginTop: 10,
   },
   calloutButtonView: {
     height:55,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  calloutExpandedText: {
+    height:300,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -261,7 +304,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase'
   },
   calloutImage: {
-    width: width * 0.95,
+    width: width * 0.88,
     height: 200,
     marginLeft: 'auto',
     marginRight: 'auto',
@@ -272,5 +315,26 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 10,
     padding: 10,
+  },
+  expandedCalloutTitle: {
+    textAlign: "left",
+    fontWeight: "bold",
+    fontSize: 25,
+    marginTop: -10,
+  },
+  expandedCalloutBottom: {
+    textAlign: "left",
+  },
+  expandedCalloutArtist: {
+    fontWeight: '300',
+    fontSize: 16,
+  },
+  expandedCalloutYear: {
+    fontWeight: '300',
+    fontSize: 16,
+  },
+  expandedCalloutDescription: {
+    fontWeight: '300',
+    fontSize: 14,
   },
 });

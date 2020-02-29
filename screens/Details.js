@@ -11,7 +11,7 @@ import { StackActions, NavigationActions } from 'react-navigation';
 export default class DetailsScreen extends React.Component {
     getParam(param,def){
       return this.props.navigation.getParam(param,def)
-    } 
+    }
     static navigationOptions = ({ navigation }) => {
       return {
         headerTitle: <Topbar text = "Art" isCenter = {true}/>,
@@ -30,7 +30,7 @@ export default class DetailsScreen extends React.Component {
         payload => {
           //If you click on the bottom bar from another page
           if (payload.action.type == "Navigation/JUMP_TO") {
-            
+
             const resetAction = StackActions.reset({
               index: 0,
               //Navigates to Home when you click back to Art or Map
@@ -46,13 +46,13 @@ export default class DetailsScreen extends React.Component {
     render() {
       return (
         <ScrollView style={styles.scrollView}>
-            <Image  
+            <Image
               width={Dimensions.get('window').width}
               source={{uri: this.getParam("image","default image")}}
             />
             {/* Spacer */}
-            <Text>  </Text> 
-            <Text>  </Text> 
+            <Text>  </Text>
+            <Text>  </Text>
             {/* Title */}
             <Text style ={[styles.title, {color: LIGHT_ORANGE}]}> {this.getParam("name","Title")} </Text>
             <View style={styles.bottom}>
@@ -66,14 +66,14 @@ export default class DetailsScreen extends React.Component {
                 <Text style={styles.description}> {this.getParam("description","default desc")} </Text>
               </View>
             </View>
-        </ScrollView>  
+        </ScrollView>
       );
     }
   }
 
 const styles = StyleSheet.create({
   scrollView: {
-    marginLeft:"auto", 
+    marginLeft:"auto",
     marginRight:"auto",
     width:"100%"
   },
