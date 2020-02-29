@@ -112,8 +112,8 @@ class EventsScreen extends React.Component {
         if (eventComponenents.length > 0){
           return (
             <View>
-              <SwipeGesture gestureStyle={styles.swipesGestureContainer} onSwipePerformed={this.onSwipePerformed}>
               {carousel_component}
+              <SwipeGesture gestureStyle={styles.swipesGestureContainer} onSwipePerformed={this.onSwipePerformed}>
                 <ScrollView style={styles.scrollView}>
                   {eventComponenents}
                 </ScrollView>
