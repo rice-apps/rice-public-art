@@ -21,6 +21,8 @@ class EventsScreen extends React.Component {
     this.state = {
       loading: true,
       data: [],
+      carouselComponent: <TextCarousel ref ={(c)=> {this.carousel=c}} requestData={this.requestData.bind(this)}/>
+
     };
     this.carousel = null;
   }
@@ -72,12 +74,13 @@ class EventsScreen extends React.Component {
 
   // Fires when componenet is initially set/mounted
   componentDidMount() {
+    
     this.requestData(currentMonth,currentYear)
   }
 
   render() {
-    carousel_component = <TextCarousel ref ={(c)=> {this.carousel=c}} requestData={this.requestData.bind(this)}/>
     // Check if data is loaded
+    let carousel_component = this.state.carouselComponent
     if (this.state.loading) {
       // Display something to inform user data is loading
       return (
