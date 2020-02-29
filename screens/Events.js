@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, ActivityIndicator} from 'react-native';
 import EventCard from '../components/EventCard.js';
 import Topbar from '../components/Topbar.js';
 import { COLORS, LIGHT_GREEN } from '../COLORS.js';
@@ -8,6 +8,10 @@ import { createStackNavigator } from 'react-navigation-stack'
 import EventDetailsScreen from './EventDetails.js';
 
 import TextCarousel from "../components/Carousel"
+
+let currentDate = new Date()
+let currentMonth = currentDate.getMonth() + 1
+let currentYear = currentDate.getFullYear()
 
 class EventsScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -20,15 +24,18 @@ class EventsScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false,
-      data: [
-      ]
+      loading: true,
+      data: []
     };
   }
 
-  // Fires when componenet is initially set/mounted
-  componentDidMount() {
-    fetch('http://moody-backend.herokuapp.com/general/events', { method: 'GET' })
+  requestData(month,year){
+    console.log("Requesting:",month,year);
+    this.setState({
+      loading:true,
+      data: []
+    })
+    fetch(`http://moody-backend.herokuapp.com/general/events?month=${month}&year=${year}`, { method: 'GET'})
       .then(response => response.json()) // Get json of response
       .then((responseJson) => {
         this.setState({
@@ -36,28 +43,34 @@ class EventsScreen extends React.Component {
           data: responseJson.data
         })
       })
-      .catch(error => console.log(error)) //to catch the errors if any
+    .catch(error => console.log(error)) //to catch the errors if any
   }
+
+  // Fires when componenet is initially set/mounted
+  componentDidMount() {
+    this.requestData(currentMonth,currentYear)
+  }
+
   render() {
     // Check if data is loaded
     if (this.state.loading) {
       // Display something to inform user data is loading
       return (
-        <View>
-          <Text> Loading... </Text>
+      <View>
+        <TextCarousel requestData={this.requestData.bind(this)}/>
+        <View style={styles.loadView}>
+          <ActivityIndicator size="large" color="#000000" />
         </View>
+      </View>
       )
     } else {
       // We got the data! 
-      // Here we have to do somoething with this.state.data to reflect in the return statement
-      // Return display formating data into Piece componenets
-      let artComponents = []
+      let eventComponenents = []
       //let component
       for (let i = 0; i < this.state.data.length; i++) {
         var content = this.state.data[i]
         const date = new Date(content.date + 'T06:00:00');
-        console.log(date.toString())
-        artComponents.push(<EventCard
+        eventComponenents.push(<EventCard
           key={'card' + i}
           title={content.title}
           description={content.description}
@@ -69,16 +82,27 @@ class EventsScreen extends React.Component {
           navigation={this.props.navigation}>
         </EventCard>)
       }
-      return (
-        <View>
-          <TextCarousel/>
-          <ScrollView style={styles.scrollView}>
-            {artComponents}
-          </ScrollView>
-        </View>
-      );
+        if (eventComponenents.length > 0){
+          return (
+            <View>
+              <TextCarousel requestData={this.requestData.bind(this)}/>
+              <ScrollView style={styles.scrollView}>
+                {eventComponenents}
+              </ScrollView>
+            </View>
+          );
+        } else {
+          return (
+            <View>
+              <TextCarousel requestData={this.requestData.bind(this)}/>
+              <ScrollView style={styles.scrollView}>
+                <Text> No events :( </Text>
+              </ScrollView>
+            </View>
+          );
+        }
+      }
     }
-  }
 }
 
 export default createStackNavigator({
@@ -101,4 +125,10 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%"
   },
+  loadView: {
+    height: "100%",
+    width: "100%",
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
 });
