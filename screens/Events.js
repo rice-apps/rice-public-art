@@ -15,6 +15,15 @@ let currentMonth = currentDate.getMonth() + 1
 let currentYear = currentDate.getFullYear()
 
 class EventsScreen extends React.Component {
+  // Set default state (no data, and loading)
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: true,
+      data: [],
+    };
+    this.carousel = null;
+  }
   //Navigation Handling
   static navigationOptions = ({ navigation }) => ({
     headerLeft: <Topbar text="Events"></Topbar>,
@@ -28,30 +37,22 @@ class EventsScreen extends React.Component {
     /// action : 'right' for right swipe
     /// action : 'up' for up swipe
     /// action : 'down' for down swipe
-    
     switch(action){
       case 'left':{
         if (this.carousel){
-          //this.carousel._carousel.snapToNext();
+          this.carousel._carousel.snapToNext();
         }
         break;
       }
        case 'right':{
         if (this.carousel){
-          //this.carousel._carousel.snapToPrev();
+          this.carousel._carousel.snapToPrev();
         }
         break;
       }
     }
   }
-  // Set default state (no data, and loading)
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: true,
-      data: []
-    };
-  }
+
   requestData(month,year){
     console.log("Requesting:",month,year);
     this.setState({
@@ -75,12 +76,12 @@ class EventsScreen extends React.Component {
   }
 
   render() {
-    // Check if data is loaded    
+    carousel_component = <TextCarousel ref ={(c)=> {this.carousel=c}} requestData={this.requestData.bind(this)}/>
+    // Check if data is loaded
     if (this.state.loading) {
       // Display something to inform user data is loading
       return (
       <View>
-        <TextCarousel ref ={(c)=> {this.carousel=c}} requestData={this.requestData.bind(this)}/>
         <View style={styles.loadView}>
           <ActivityIndicator size="large" color="#000000" />
         </View>
@@ -109,7 +110,7 @@ class EventsScreen extends React.Component {
           return (
             <View>
               <SwipeGesture gestureStyle={styles.swipesGestureContainer} onSwipePerformed={this.onSwipePerformed}>
-              <TextCarousel ref ={(c)=> {this.carousel=c}} requestData={this.requestData.bind(this)}/>
+              {carousel_component}
                 <ScrollView style={styles.scrollView}>
                   {eventComponenents}
                 </ScrollView>
@@ -120,10 +121,10 @@ class EventsScreen extends React.Component {
           return (
             <View>
               <SwipeGesture gestureStyle={styles.swipesGestureContainer} onSwipePerformed={this.onSwipePerformed}>
-              <TextCarousel ref ={(c)=> {this.carousel=c}} requestData={this.requestData.bind(this)}/>
-                <ScrollView style={styles.scrollView}>
-                  <Text> No events :( </Text>
-                </ScrollView>
+                  {carousel_component}
+                  <ScrollView style={styles.loadView}>
+                      <Text> No events for this month </Text>
+                  </ScrollView>
               </SwipeGesture>
             </View>
           );

@@ -6,6 +6,7 @@ let currentDate = new Date()
 let currentMonth = currentDate.getMonth()
 let currentYear = currentDate.getFullYear()
 let data = ["JANUARY", "FEBRUARY", "MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER","JANUARY", "FEBRUARY", "MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER","JANUARY", "FEBRUARY", "MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
+let true_index = 0
 
 function getMonth(index) {
     // janurary = 1
@@ -21,34 +22,31 @@ function getIndex(month,year){
     return index
 }
 
+true_index = getIndex(currentMonth,currentYear)
+
 export default class TextCarousel extends React.Component {
     constructor(props) {
         super(props);
         this.carousel = (<Carousel 
+                firstItem={true_index}
                 ref={(c) => { this._carousel = c; }}
                 data={data}
                 renderItem={this._renderItem}
                 sliderWidth={400}
                 itemWidth={120}
-                firstItem={getIndex(currentMonth,currentYear)}
-                onSnapToItem = {(index)=> {this.props.requestData(getMonth(index),getYear(index))}}
+                onBeforeSnapToItem = { (new_index) => {
+                    true_index = new_index
+                    this.props.requestData(getMonth(true_index),getYear(true_index))
+                    }
+                }
+                //onSnapToItem = {(index)=> {}}
             />
         )
     }    
 
     _renderItem = ({item, index}) => {
         return (
-            <View >
-                <Button title = {item}
-                    //onPress = {()=> {
-                            //this.props.requestData(getMonth(index),getYear(index))
-                           // this._carousel.snapToItem(index, animated = true, fireCallback = true)
-                            //this._carousel.snapToNext()
-                           // this._carousel.snapToPrev()
-                        //}
-                    //}
-                ></Button>
-            </View>
+            <Text> ({index}) {item} </Text>
         );
     }
     render () {
