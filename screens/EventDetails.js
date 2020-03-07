@@ -4,7 +4,6 @@ import Topbar from '../components/Topbar.js';
 import { Dimensions } from 'react-native';
 import Image from 'react-native-scalable-image';
 import { COLORS, LIGHT_GREEN } from '../COLORS.js';
-import { StackActions, NavigationActions } from 'react-navigation';
 
 export default class EventDetailsScreen extends React.Component {
     accent = this.props.color;
@@ -19,26 +18,6 @@ export default class EventDetailsScreen extends React.Component {
           backgroundColor: LIGHT_GREEN,
         },
       }
-    }
-    componentDidMount() {
-      //Navigates to previous page in stack navigation when you jump back to the page
-      //prevents details page from being there when you go back
-      const didFocus = this.props.navigation.addListener(
-        'willFocus',
-        payload => {
-          //If you click on the bottom bar from another page
-          if (payload.action.type == "Navigation/JUMP_TO") {
-            
-            const resetAction = StackActions.reset({
-              index: 0,
-              //Navigates to Home when you click back to Art or Map
-              actions: [NavigationActions.navigate({ routeName: 'List' })],
-            });
-            //this runs the action
-            this.props.navigation.dispatch(resetAction);
-          }
-        }
-      );
     }
     render() {
       return (

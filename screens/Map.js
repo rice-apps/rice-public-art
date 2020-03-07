@@ -267,9 +267,8 @@ const styles = StyleSheet.create({
   mapStyle: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
-    zIndex: -1,
+    zIndex: -1
   },
-
   calloutContainer: {
     bottom: 20,
     position: 'absolute'
