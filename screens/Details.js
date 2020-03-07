@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Button } from 'react-native';
 import Topbar from '../components/Topbar.js';
 import { Dimensions } from 'react-native';
 import Image from 'react-native-scalable-image'
@@ -42,7 +42,21 @@ export default class DetailsScreen extends React.Component {
       );
     }
 
+    route(){
+      let location = this.getParam("location")
+      let index = this.getParam("index") // CAUTION: This might be deprecated with filtering!!!!
+
+      // console.log("LOCATION", location)
+      this.props.navigation.navigate("Map", {
+        "location": location,
+        "index": index      }
+      )
+      // let routing = this.getParam("routeTo_art")
+      // routing()
+    }
+
     render() {
+      
       return (
         <ScrollView style={styles.scrollView}>
             <Image  
@@ -64,6 +78,11 @@ export default class DetailsScreen extends React.Component {
               <View>
                 <Text style={styles.description}> {this.getParam("description","default desc")} </Text>
               </View>
+            </View>
+            <View>
+              <Button title="Route Me" onPress={() => this.route()}>
+                
+              </Button>
             </View>
         </ScrollView>  
       );

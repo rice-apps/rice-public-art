@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageBackground } from 'react-native';
+import { ImageBackground, TouchableHighlight } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack'
 import MapView, { Callout } from 'react-native-maps';
 import { Marker } from 'react-native-maps';
@@ -9,6 +9,8 @@ import { GOOGLE_MAPS_APIKEY } from '../AUTHENTICATION.js';
 import Topbar from '../components/Topbar.js';
 import DetailsScreen from './Details.js';
 import { COLORS, BLUE } from '../COLORS.js';
+import { withRouter } from 'react-router-dom';
+import { withOrientation } from 'react-navigation';
 
 const { width, height } = Dimensions.get('window');
 
@@ -19,15 +21,22 @@ class MapScreen extends React.Component {
       backgroundColor: BLUE,
     },
   })
+  getParam(param,def){
+    // console.log("getting param")
+    // console.log(param)
+    // console.log(this.props.navigation.getParam(param,def))
+    return this.props.navigation.getParam(param,def)
+  } 
   constructor(props) {
     super(props);
+    // console.log("propss", this.getParam("destination"))
     this.state = {
       loading: false,
       data: [],
       userLocation: null,
-      destination: null,
-      showRoute: false,
-      routeDuration: 0,
+      destination: this.getParam("destination"),
+      showRoute: this.getParam("showRoute",false),
+      routeDuration: null,
       showCallout: false,
       calloutIndx: null
     };
@@ -35,16 +44,36 @@ class MapScreen extends React.Component {
   }
 
   componentDidMount() {
+    
+
     const didFocus = this.props.navigation.addListener(
       'willFocus',
       payload => {
-        console.debug('willFocus', payload);
-        this.setState({
-          showCallout: false
-        })
+        console.debug('willFocus', payload.action.params);
+        let params = payload.action.params
+        
+
+        if(params) {
+          
+          this.setState({
+            showCallout: true,
+            fromDetails: true,
+            calloutIndx: params.index,
+            showRoute: true,
+            destination: {
+              latitude: params.location.lat,
+              longitude: params.location.lon
+            }
+                  })
+        } else {
+          this.setState({
+            showCallout: false
+                  })
+        }
+        
       }
     );
-
+    // console.log("passed props", this.props.navigation.state)
     navigator.geolocation.getCurrentPosition((position) => {
       var lat = parseFloat(position.coords.latitude)
       var long = parseFloat(position.coords.longitude)
@@ -72,14 +101,28 @@ class MapScreen extends React.Component {
               art.abbreviatedName = art.name.substring(0, 15) + '...'
             }
             return art;
-          })
+          }),
+          finished: true
+        }, () => {
+          if(this.state.fromDetails) {
+            console.log("Centering!")
+            let art = this.state.data[this.state.calloutIndx];
+            this.mapView.animateToRegion({
+              latitude: art.location.lat - this.mapView.props.initialRegion.latitudeDelta * 0.08,
+              longitude: art.location.lon,
+              latitudeDelta: this.mapView.props.initialRegion.latitudeDelta * 0.8,
+              longitudeDelta: this.mapView.props.initialRegion.longitudeDelta * 0.8
+            });
+          }
         })
       })
       .catch(error => console.log(error)) //to catch the errors if any
   }
 
   render() {
+    console.log("screen options", this.props.navigation.state)
     let markers = []
+
     for (let i = 0; i < this.state.data.length; i++) {
       const art = this.state.data[i];
       markers.push(
@@ -91,6 +134,7 @@ class MapScreen extends React.Component {
             this.setState({
               showRoute: false,
               showCallout: true,
+              routeDuration: null,
               calloutIndx: i,
               destination: {
                 latitude: art.location.lat,
@@ -111,8 +155,17 @@ class MapScreen extends React.Component {
 
       )
     }
+    // console.log("calloutInd", this.state.calloutIndx)
+    // console.log("data", this.state.data)
+    // console.log("finished", this.state.finished)
+    // console.log("show route", this.state.showRoute)
+    // console.log("location", this.state.location)
+
+
+    // let callout = 
 
     return (
+      
       <View style={styles.container}>
         <MapView
           style={styles.mapStyle}
@@ -127,7 +180,7 @@ class MapScreen extends React.Component {
         >
           {markers}
           {
-            this.state.showRoute ?
+            this.state.showRoute  ?
               <MapViewDirections
                 origin={this.state.userLocation}
                 destination={this.state.destination}
@@ -144,9 +197,9 @@ class MapScreen extends React.Component {
           }
         </MapView>
         {
-          this.state.showCallout ? (
+          (this.state.showCallout && this.state.finished) ? (
             <View style={[styles.calloutContainer]}>
-              <View style={[styles.calloutView, { backgroundColor: this.state.data[this.state.calloutIndx].colorCode }]}>
+              <View style={styles.calloutView}>
                 <ImageBackground style={styles.calloutImage} source={{ uri: this.state.data[this.state.calloutIndx].image }}>
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <View style={[styles.closeCallout, { marginLeft: 10 }]}>
@@ -169,25 +222,25 @@ class MapScreen extends React.Component {
                     </View>
                   </View>
                 </ImageBackground>
-                <View style={styles.calloutText}>
-                  {(this.state.userLocation != null && this.state.destination != null) ?
-                    <View style={styles.routeButton}>
-                      <Button
-                        style={{ margin: 0, padding: 0 }}
-                        title={this.state.showRoute ? 'Hide Route' : 'Show Route'}
-                        onPress={() => {
-                          this.setState({
-                            showRoute: !this.state.showRoute,
-                          });
-                        }}
-                      />
-                      {this.state.showRoute ?
-                        <Text style={{ textAlign: 'center', margin: 0, padding: 0 }}>
-                          Distance: {this.state.routeDuration} min
-                        </Text> : null}
-                    </View> : null
-                  }
-                </View>
+                
+                <TouchableHighlight 
+                  onPress={() => {
+                    this.setState({
+                      showRoute: !this.state.showRoute,
+                    });
+                  }}
+                  underlayColor = {'#eeeeee'}
+                >
+                  <View style={styles.calloutButtonView}>
+                  <Text style={{fontSize: 18,fontWeight: 'bold'}}>
+                    {this.state.showRoute ? 'Hide Route' : 'Show Route'}
+                    </Text>
+                  {this.state.showRoute && this.state.routeDuration != null?
+                      <Text style={{ textAlign: 'center', margin: 0, padding: 0 }}>
+                        Distance: {this.state.routeDuration} min
+                      </Text> : null}
+                  </View>
+                </TouchableHighlight>
               </View>
             </View>
           ) : null
@@ -228,12 +281,13 @@ const styles = StyleSheet.create({
     zIndex: -1
   },
   calloutContainer: {
-    bottom: 0,
+    bottom: 10,
     position: 'absolute'
   },
   calloutView: {
     padding: 0,
     borderRadius: 10,
+    backgroundColor: 'white',
     overflow: 'hidden',
   },
   closeCallout: {
@@ -243,9 +297,10 @@ const styles = StyleSheet.create({
     width: 40,
     marginTop: 10,
   },
-  calloutText: {
-    width: 340,
-    padding: 20,
+  calloutButtonView: {
+    height:55,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   calloutTitle: {
     fontSize: 24,
@@ -256,19 +311,10 @@ const styles = StyleSheet.create({
   },
   calloutImage: {
     width: width * 0.95,
-    height: 150,
+    height: 200,
     marginLeft: 'auto',
     marginRight: 'auto',
     marginTop: 0
-  },
-  routeButton: {
-    backgroundColor: 'white',
-    padding: 10,
-    borderRadius: 10,
-    // height: 60,
-    width: 200,
-    marginLeft: 'auto',
-    marginRight: 'auto',
   },
   overMapView: {
     position: 'absolute',//use absolute position to show button on top of the map
