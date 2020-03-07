@@ -22,7 +22,7 @@ class EventsScreen extends React.Component {
   }
   //Navigation Handling
   static navigationOptions = ({ navigation }) => ({
-    headerLeft: <Topbar text="Events"></Topbar>,
+    headerLeft: <Topbar text = 'Events'></Topbar>,
     headerStyle: {
       backgroundColor: LIGHT_GREEN,
     },
