@@ -123,17 +123,6 @@ class MapScreen extends React.Component {
     console.log("screen options", this.props.navigation.state)
     let markers = []
 
-    
-    // if(this.state.finished) {
-    //   console.log("Centering!")
-    //   let art = this.state.data[this.state.calloutIndx];
-    //   this.mapView.animateToRegion({
-    //     latitude: art.location.lat - this.mapView.props.initialRegion.latitudeDelta * 0.08,
-    //     longitude: art.location.lon,
-    //     latitudeDelta: this.mapView.props.initialRegion.latitudeDelta * 0.8,
-    //     longitudeDelta: this.mapView.props.initialRegion.longitudeDelta * 0.8
-    //   });
-    // }
     for (let i = 0; i < this.state.data.length; i++) {
       const art = this.state.data[i];
       markers.push(

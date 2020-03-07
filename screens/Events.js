@@ -3,32 +3,43 @@ import { StyleSheet, Text, View, ScrollView, ActivityIndicator} from 'react-nati
 import EventCard from '../components/EventCard.js';
 import Topbar from '../components/Topbar.js';
 import { COLORS, LIGHT_GREEN } from '../COLORS.js';
+import SwipeGesture from '../swipe-gesture'
 
 import { createStackNavigator } from 'react-navigation-stack'
 import EventDetailsScreen from './EventDetails.js';
-
-import TextCarousel from "../components/Carousel"
-
-let currentDate = new Date()
-let currentMonth = currentDate.getMonth() + 1
-let currentYear = currentDate.getFullYear()
+import DiscreteCarousel from '../components/DiscreteCarousel'
+import {currentMonth,currentYear,getMonth,getYear} from '../util/datelogic.js'
 
 class EventsScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
-    headerLeft: <Topbar text="Events"></Topbar>,
-    headerStyle: {
-      backgroundColor: LIGHT_GREEN,
-    },
-  })
   // Set default state (no data, and loading)
   constructor(props) {
     super(props);
     this.state = {
+      index: 0,
       loading: true,
-      data: []
+      data: [],
     };
   }
-
+  //Navigation Handling
+  static navigationOptions = ({ navigation }) => ({
+    headerLeft: <Topbar text = 'Events'></Topbar>,
+    headerStyle: {
+      backgroundColor: LIGHT_GREEN,
+    },
+  })
+  //Swiping
+  onSwipePerformed = (action) => {
+    switch(action){
+      case 'left':{
+        this.increment(1)
+        break;
+      }
+       case 'right':{
+        this.increment(-1)
+        break;
+      }
+    }
+  }
   requestData(month,year){
     console.log("Requesting:",month,year);
     this.setState({
@@ -45,19 +56,30 @@ class EventsScreen extends React.Component {
       })
     .catch(error => console.log(error)) //to catch the errors if any
   }
+  increment(delta){
+    this.setState({index: this.state.index+delta})
+  }
 
   // Fires when componenet is initially set/mounted
   componentDidMount() {
-    this.requestData(currentMonth,currentYear)
+    this.requestData(currentMonth+1,currentYear)
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    let i = this.state.index
+    if (prevState.index  !=  i){
+      this.requestData(getMonth(i+1),getYear(i))
+    }
   }
 
   render() {
     // Check if data is loaded
+    let carousel_component = <DiscreteCarousel index = {this.state.index} increment={this.increment.bind(this)}></DiscreteCarousel>
     if (this.state.loading) {
       // Display something to inform user data is loading
       return (
       <View>
-        <TextCarousel requestData={this.requestData.bind(this)}/>
+        {carousel_component}
         <View style={styles.loadView}>
           <ActivityIndicator size="large" color="#000000" />
         </View>
@@ -85,19 +107,23 @@ class EventsScreen extends React.Component {
         if (eventComponenents.length > 0){
           return (
             <View>
-              <TextCarousel requestData={this.requestData.bind(this)}/>
-              <ScrollView style={styles.scrollView}>
-                {eventComponenents}
-              </ScrollView>
+              {carousel_component}
+              <SwipeGesture gestureStyle={styles.swipesGestureContainer} onSwipePerformed={this.onSwipePerformed}>
+                <ScrollView style={styles.scrollView}>
+                  {eventComponenents}
+                </ScrollView>
+              </SwipeGesture>
             </View>
           );
         } else {
           return (
             <View>
-              <TextCarousel requestData={this.requestData.bind(this)}/>
-              <ScrollView style={styles.scrollView}>
-                <Text> No events :( </Text>
-              </ScrollView>
+              <SwipeGesture gestureStyle={styles.swipesGestureContainer} onSwipePerformed={this.onSwipePerformed}>
+                  {carousel_component}
+                  <ScrollView style={styles.loadView}>
+                      <Text> No events for this month </Text>
+                  </ScrollView>
+              </SwipeGesture>
             </View>
           );
         }
@@ -120,6 +146,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   scrollView: {
+    top: 10,
     marginLeft: "auto",
     marginRight: "auto",
     height: "100%",

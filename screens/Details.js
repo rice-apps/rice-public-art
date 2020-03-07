@@ -6,7 +6,6 @@ import Image from 'react-native-scalable-image'
 import { COLORS, LIGHT_ORANGE } from '../COLORS.js';
 import { StackActions, NavigationActions } from 'react-navigation';
 
-
 //controls from Art and Map
 export default class DetailsScreen extends React.Component {
     getParam(param,def){
