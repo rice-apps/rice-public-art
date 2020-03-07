@@ -7,24 +7,18 @@ import SwipeGesture from '../swipe-gesture'
 
 import { createStackNavigator } from 'react-navigation-stack'
 import EventDetailsScreen from './EventDetails.js';
-
-import TextCarousel from "../components/Carousel"
-
-let currentDate = new Date()
-let currentMonth = currentDate.getMonth() + 1
-let currentYear = currentDate.getFullYear()
+import DiscreteCarousel from '../components/DiscreteCarousel'
+import {currentMonth,currentYear,getMonth,getYear} from '../util/datelogic.js'
 
 class EventsScreen extends React.Component {
   // Set default state (no data, and loading)
   constructor(props) {
     super(props);
     this.state = {
+      index: 0,
       loading: true,
       data: [],
-      carouselComponent: <TextCarousel ref ={(c)=> {this.carousel=c}} requestData={this.requestData.bind(this)}/>
-
     };
-    this.carousel = null;
   }
   //Navigation Handling
   static navigationOptions = ({ navigation }) => ({
@@ -35,26 +29,17 @@ class EventsScreen extends React.Component {
   })
   //Swiping
   onSwipePerformed = (action) => {
-    /// action : 'left' for left swipe
-    /// action : 'right' for right swipe
-    /// action : 'up' for up swipe
-    /// action : 'down' for down swipe
     switch(action){
       case 'left':{
-        if (this.carousel){
-          this.carousel._carousel.snapToNext();
-        }
+        this.increment(1)
         break;
       }
        case 'right':{
-        if (this.carousel){
-          this.carousel._carousel.snapToPrev();
-        }
+        this.increment(-1)
         break;
       }
     }
   }
-
   requestData(month,year){
     console.log("Requesting:",month,year);
     this.setState({
@@ -71,20 +56,30 @@ class EventsScreen extends React.Component {
       })
     .catch(error => console.log(error)) //to catch the errors if any
   }
+  increment(delta){
+    this.setState({index: this.state.index+delta})
+  }
 
   // Fires when componenet is initially set/mounted
   componentDidMount() {
-    
-    this.requestData(currentMonth,currentYear)
+    this.requestData(currentMonth+1,currentYear)
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    let i = this.state.index
+    if (prevState.index  !=  i){
+      this.requestData(getMonth(i+1),getYear(i))
+    }
   }
 
   render() {
     // Check if data is loaded
-    let carousel_component = this.state.carouselComponent
+    let carousel_component = <DiscreteCarousel index = {this.state.index} increment={this.increment.bind(this)}></DiscreteCarousel>
     if (this.state.loading) {
       // Display something to inform user data is loading
       return (
       <View>
+        {carousel_component}
         <View style={styles.loadView}>
           <ActivityIndicator size="large" color="#000000" />
         </View>
@@ -151,6 +146,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   scrollView: {
+    top: 10,
     marginLeft: "auto",
     marginRight: "auto",
     height: "100%",
