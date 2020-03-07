@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 export default class Card extends React.Component {
     render() {
+        // console.log("route function", this.props.routeTo_art())
         return (
           <TouchableHighlight style={styles.touchable}
             underlayColor="transparent"
