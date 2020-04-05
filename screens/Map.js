@@ -21,14 +21,21 @@ class MapScreen extends React.Component {
       backgroundColor: BLUE,
     },
   })
+  getParam(param,def){
+    // console.log("getting param")
+    // console.log(param)
+    // console.log(this.props.navigation.getParam(param,def))
+    return this.props.navigation.getParam(param,def)
+  } 
   constructor(props) {
     super(props);
+    // console.log("propss", this.getParam("destination"))
     this.state = {
       loading: false,
       data: [],
       userLocation: null,
-      destination: null,
-      showRoute: false,
+      destination: this.getParam("destination"),
+      showRoute: this.getParam("showRoute",false),
       routeDuration: null,
       showCallout: false,
       calloutIndx: null
@@ -37,16 +44,36 @@ class MapScreen extends React.Component {
   }
 
   componentDidMount() {
+    
+
     const didFocus = this.props.navigation.addListener(
       'willFocus',
       payload => {
-        console.debug('willFocus', payload);
-        this.setState({
-          showCallout: false
-        })
+        console.debug('willFocus', payload.action.params);
+        let params = payload.action.params
+        
+
+        if(params) {
+          
+          this.setState({
+            showCallout: true,
+            fromDetails: true,
+            calloutIndx: params.index,
+            showRoute: true,
+            destination: {
+              latitude: params.location.lat,
+              longitude: params.location.lon
+            }
+                  })
+        } else {
+          this.setState({
+            showCallout: false
+                  })
+        }
+        
       }
     );
-
+    // console.log("passed props", this.props.navigation.state)
     navigator.geolocation.getCurrentPosition((position) => {
       var lat = parseFloat(position.coords.latitude)
       var long = parseFloat(position.coords.longitude)
@@ -74,13 +101,26 @@ class MapScreen extends React.Component {
               art.abbreviatedName = art.name.substring(0, 15) + '...'
             }
             return art;
-          })
+          }),
+          finished: true
+        }, () => {
+          if(this.state.fromDetails) {
+            console.log("Centering!")
+            let art = this.state.data[this.state.calloutIndx];
+            this.mapView.animateToRegion({
+              latitude: art.location.lat - this.mapView.props.initialRegion.latitudeDelta * 0.08,
+              longitude: art.location.lon,
+              latitudeDelta: this.mapView.props.initialRegion.latitudeDelta * 0.8,
+              longitudeDelta: this.mapView.props.initialRegion.longitudeDelta * 0.8
+            });
+          }
         })
       })
       .catch(error => console.log(error)) //to catch the errors if any
   }
 
   render() {
+    console.log("screen options", this.props.navigation.state)
     let markers = []
 
     for (let i = 0; i < this.state.data.length; i++) {
@@ -115,8 +155,17 @@ class MapScreen extends React.Component {
 
       )
     }
+    // console.log("calloutInd", this.state.calloutIndx)
+    // console.log("data", this.state.data)
+    // console.log("finished", this.state.finished)
+    // console.log("show route", this.state.showRoute)
+    // console.log("location", this.state.location)
+
+
+    // let callout = 
 
     return (
+      
       <View style={styles.container}>
         <MapView
           style={styles.mapStyle}
@@ -131,7 +180,7 @@ class MapScreen extends React.Component {
         >
           {markers}
           {
-            this.state.showRoute ?
+            this.state.showRoute  ?
               <MapViewDirections
                 origin={this.state.userLocation}
                 destination={this.state.destination}
@@ -148,7 +197,7 @@ class MapScreen extends React.Component {
           }
         </MapView>
         {
-          this.state.showCallout ? (
+          (this.state.showCallout && this.state.finished) ? (
             <View style={[styles.calloutContainer]}>
               <View style={styles.calloutView}>
                 <ImageBackground style={styles.calloutImage} source={{ uri: this.state.data[this.state.calloutIndx].image }}>

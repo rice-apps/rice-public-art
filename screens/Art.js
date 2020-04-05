@@ -64,6 +64,9 @@ class HomeScreen extends React.Component {
       (error) => console.log(JSON.stringify(error)),
       { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 });
   }
+
+  
+
   render() {
     // Check if data is loaded
     if (this.state.loading) {
@@ -88,6 +91,7 @@ class HomeScreen extends React.Component {
               artist={content.artist}
               location={content.location}
               year={content.year}
+              index={i} // !!!!!!!!CAUTION: This might be deprecated if filtering is added!!!!!!!!
               // Assume a 20 min. per mile walking speed
               // This is on the high end because we are using a straight line approximation for the route
               // which underestimates the total distance
