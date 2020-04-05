@@ -71,11 +71,7 @@ class EventsScreen extends React.Component {
     }
   }
   
-  
-
   render() {
-   
-
     // Check if data is loaded
     let carousel_component = <DiscreteCarousel index = {this.state.index} increment={this.increment.bind(this)}></DiscreteCarousel>
     if (this.state.loading) {
@@ -112,14 +108,12 @@ class EventsScreen extends React.Component {
             <View>
               {carousel_component}
               <SwipeGesture gestureStyle={styles.swipesGestureContainer} onSwipePerformed={this.onSwipePerformed}>
-              
                 <ScrollView contentContainerStyle={{
-    top: 10,
-    marginLeft: "auto",
-    marginRight: "auto",
-    height: "100%",
-    width: "100%"
-  }}>
+                  top:5,
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  width: "95%",
+                }}>
                   {eventComponenents}
                 </ScrollView>
               </SwipeGesture>
@@ -131,11 +125,11 @@ class EventsScreen extends React.Component {
               <SwipeGesture gestureStyle={styles.swipesGestureContainer} onSwipePerformed={this.onSwipePerformed}>
                   {carousel_component}
                   <ScrollView contentContainerStyle={{
-    height: "100%",
-    width: "100%",
-    alignItems: 'center',
-    justifyContent: 'center'
-  }}>
+                    height: "100%",
+                    width: "100%",
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
                       <Text> No events for this month </Text>
                   </ScrollView>
               </SwipeGesture>
