@@ -58,6 +58,7 @@ class HomeScreen extends React.Component {
         installation: true,
         drawingAndPrints: true,
         indoors: true,
+        outdoors: true,
       }
     };
   }
@@ -98,6 +99,27 @@ class HomeScreen extends React.Component {
     this.setState({filters: filters})
   }
 
+  showArtWithFilter(content) {
+
+    // console.log("********** FILTERING ***********")
+    // console.log(content);
+    if (content.indoors == false) {
+      content.outdoors = true;
+    }
+    const filters = ['sculpture', 'painting', 'film', 'photography', 'installation', 'drawingAndPrints', 'indoors', 'outdoors'];
+    var passedFilter = false
+    var allFiltersTrue = true
+    filters.forEach(filter => {
+      console.log(filter, this.state.filters[filter], content[filter]);
+      if (this.state.filters[filter] && content[filter]) {
+        passedFilter = true;
+      }
+      if (!this.state.filters[filter]) allFiltersTrue = false;
+    })
+    if (allFiltersTrue) return true; // don't exclude anything if nothing is filtered out
+    return passedFilter;
+  }
+
   render() {
     // Check if data is loaded
     if (this.state.loading) {
@@ -115,6 +137,7 @@ class HomeScreen extends React.Component {
         <View>
           <ScrollView style={styles.scrollView}>
             {this.state.data.map((content, i) =>
+              this.showArtWithFilter(content) ?
               <Card
                 key={'card' + i}
                 name={content.name}
@@ -132,7 +155,7 @@ class HomeScreen extends React.Component {
                     content.location.lat, content.location.lon) * 20) + " min. 🕒"
                   : null}
                 navigation={this.props.navigation}
-              />
+              /> : null
             )}
           </ScrollView>
           <Modal
@@ -182,6 +205,12 @@ class HomeScreen extends React.Component {
                 title='Indoors'
                 checked={this.state.filters.indoors}
                 onPress={() => this.toggleFilter('indoors')}
+                containerStyle = {{width: 225}}
+              />
+              <CheckBox
+                title='Outdoors'
+                checked={this.state.filters.indoors}
+                onPress={() => this.toggleFilter('outdoors')}
                 containerStyle = {{width: 225}}
               />
               <Button testID={'close-button'} onPress={() => this.setState({showFilterMenu: false})} title="Close" />
