@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, ActivityIndicator} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, ActivityIndicator, Image} from 'react-native';
 import EventCard from '../components/EventCard.js';
 import Topbar from '../components/Topbar.js';
 import { COLORS, LIGHT_GREEN } from '../COLORS.js';
@@ -129,14 +129,10 @@ class EventsScreen extends React.Component {
               <SwipeGesture gestureStyle={styles.swipesGestureContainer} onSwipePerformed={this.onSwipePerformed}>
                   {carousel_component}
                   <View style = {styles.lowerView}>
-                    <ScrollView contentContainerStyle={{
-                      height: "100%",
-                      width: "100%",
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}>
-                        <Text> No events for this month </Text>
-                    </ScrollView>
+                    <View style={styles.loadView}>
+                          <Image source={require('../assets/nothing.png')} style={{width: 40, height: 40, opacity:.5}}/>
+                          <Text>No Scheduled Events</Text>
+                    </View>
                   </View>
               </SwipeGesture>
             </View>
@@ -177,6 +173,7 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    bottom: 80,
   }
 });
