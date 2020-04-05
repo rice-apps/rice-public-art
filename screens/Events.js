@@ -108,14 +108,16 @@ class EventsScreen extends React.Component {
             <View>
               {carousel_component}
               <SwipeGesture gestureStyle={styles.swipesGestureContainer} onSwipePerformed={this.onSwipePerformed}>
-                <ScrollView contentContainerStyle={{
-                  top:5,
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                  width: "95%",
-                }}>
-                  {eventComponenents}
-                </ScrollView>
+                <View style = {{width:"100%",height:"100%"}}>
+                  <ScrollView contentContainerStyle={{
+                      top:5,
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                      width: "90%",
+                  }}>
+                    {eventComponenents}
+                  </ScrollView>
+                </View>
               </SwipeGesture>
             </View>
           );

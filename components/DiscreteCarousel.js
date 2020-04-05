@@ -44,7 +44,7 @@ export default class DiscreteCarousel extends React.Component {
           fontSize: 16
         },
         major: {
-            felx:1,
+            flex:1,
             fontWeight: '400',
             textAlign: "center",
             fontSize: 18
