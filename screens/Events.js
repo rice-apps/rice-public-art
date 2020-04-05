@@ -4,7 +4,6 @@ import EventCard from '../components/EventCard.js';
 import Topbar from '../components/Topbar.js';
 import { COLORS, LIGHT_GREEN } from '../COLORS.js';
 import SwipeGesture from '../swipe-gesture'
-
 import { createStackNavigator } from 'react-navigation-stack'
 import EventDetailsScreen from './EventDetails.js';
 import DiscreteCarousel from '../components/DiscreteCarousel'
