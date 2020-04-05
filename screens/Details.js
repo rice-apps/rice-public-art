@@ -10,7 +10,7 @@ import { StackActions, NavigationActions } from 'react-navigation';
 export default class DetailsScreen extends React.Component {
     getParam(param,def){
       return this.props.navigation.getParam(param,def)
-    } 
+    }
     static navigationOptions = ({ navigation }) => {
       return {
         headerTitle: <Topbar text = "Art" isCenter = {true}/>,
@@ -29,7 +29,7 @@ export default class DetailsScreen extends React.Component {
         payload => {
           //If you click on the bottom bar from another page
           if (payload.action.type == "Navigation/JUMP_TO") {
-            
+
             const resetAction = StackActions.reset({
               index: 0,
               //Navigates to Home when you click back to Art or Map
@@ -56,51 +56,63 @@ export default class DetailsScreen extends React.Component {
     }
 
     render() {
-      
+
       return (
         <ScrollView style={styles.scrollView}>
-            <Image  
+            <Image
               width={Dimensions.get('window').width}
               source={{uri: this.getParam("image","default image")}}
             />
             {/* Spacer */}
-            <Text>  </Text> 
-            <Text>  </Text> 
+            <Text>  </Text>
+            <Text>  </Text>
             {/* Title */}
-            <Text style ={[styles.title, {color: LIGHT_ORANGE}]}> {this.getParam("name","Title")} </Text>
+            <Text style ={[styles.title, {color: LIGHT_ORANGE}]}>{this.getParam("name","Title")} </Text>
             <View style={styles.bottom}>
               {/* Artist and Year*/}
               <View>
-                <Text style={styles.artist}> {this.getParam("artist","Artist")} </Text>
-                <Text style={styles.year}> {this.getParam("year","Year Created")} </Text>
+                <Text style={styles.artist}>{this.getParam("artist","Artist")} </Text>
+                <Text style={styles.year}>{this.getParam("year","Year Created")} </Text>
+              </View>
+              <Text></Text>
+              <View>
+                <Text style={styles.detail}>{this.getParam("detail")} </Text>
               </View>
               <Text> </Text>
+              <Text> </Text>
               <View>
-                <Text style={styles.description}> {this.getParam("description","default desc")} </Text>
+                <Text style={styles.description}>{this.getParam("description","default desc")} </Text>
               </View>
+              <Text> </Text>
+              <Text> </Text>
+              <View>
+                <Text style={styles.photographer}>Photo by {this.getParam("photographer")} </Text>
+              </View>
+              <Text> </Text>
             </View>
             <View>
               <Button title="Route Me" onPress={() => this.route()}>
-                
+
               </Button>
             </View>
-        </ScrollView>  
+        </ScrollView>
       );
     }
   }
 
 const styles = StyleSheet.create({
   scrollView: {
-    marginLeft:"auto", 
+    marginLeft:"auto",
     marginRight:"auto",
     width:"100%"
   },
   title: {
     textAlign: "left",
     fontWeight: "bold",
-    fontSize: 25,
+    fontSize:30,
     marginTop: -10,
     marginLeft: 20,
+    fontStyle: "italic",
   },
   bottom: {
     marginLeft: 20,
@@ -116,7 +128,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   description: {
-    fontWeight: '300',
-    fontSize: 14,
+    fontWeight: '400',
+    fontSize: 16,
   },
+  detail: {
+    fontWeight: '300',
+    fontSize: 13,
+  },
+  photographer: {
+    fontWeight: '300',
+    fontSize: 12,
+    textAlign: "right",
+  }
 });
