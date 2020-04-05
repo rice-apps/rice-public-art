@@ -79,9 +79,11 @@ class EventsScreen extends React.Component {
       return (
       <View>
         {carousel_component}
-        <View style={styles.loadView}>
-          <ActivityIndicator size="large" color="#000000" />
-        </View>
+        <View style = {styles.lowerView}>
+            <View style={styles.loadView}>
+              <ActivityIndicator size="large" color="#000000" />
+            </View>
+          </View>
       </View>
       )
     } else {
@@ -108,9 +110,9 @@ class EventsScreen extends React.Component {
             <View>
               {carousel_component}
               <SwipeGesture gestureStyle={styles.swipesGestureContainer} onSwipePerformed={this.onSwipePerformed}>
-                <View style = {{width:"100%",height:"100%"}}>
+                <View style = {styles.lowerView}>
                   <ScrollView contentContainerStyle={{
-                      top:5,
+                      top:10,
                       marginLeft: "auto",
                       marginRight: "auto",
                       width: "90%",
@@ -126,14 +128,16 @@ class EventsScreen extends React.Component {
             <View>
               <SwipeGesture gestureStyle={styles.swipesGestureContainer} onSwipePerformed={this.onSwipePerformed}>
                   {carousel_component}
-                  <ScrollView contentContainerStyle={{
-                    height: "100%",
-                    width: "100%",
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}>
-                      <Text> No events for this month </Text>
-                  </ScrollView>
+                  <View style = {styles.lowerView}>
+                    <ScrollView contentContainerStyle={{
+                      height: "100%",
+                      width: "100%",
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                        <Text> No events for this month </Text>
+                    </ScrollView>
+                  </View>
               </SwipeGesture>
             </View>
           );
@@ -152,6 +156,12 @@ export default createStackNavigator({
 });
 
 const styles = StyleSheet.create({
+  lowerView:{
+    backgroundColor:"#fcfcfc",
+    top:20,
+    width:"100%",
+    height:"100%"
+  },
   container: {
     alignItems: 'center',
     justifyContent: 'center',
