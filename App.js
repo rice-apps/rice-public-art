@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useEffect, Fragment} from 'react';
 import { createAppContainer } from 'react-navigation';
-import { StyleSheet, Text, View, Image, Button, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, StatusBar, Platform } from 'react-native';
 //added bottom tab navigator
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import * as Font from 'expo-font';
 import { LIGHT_ORANGE, BLUE, LIGHT_GREEN } from './COLORS.js'
+import { SplashScreen } from 'expo';
 
 
 //Screens
@@ -75,9 +76,15 @@ export default class App extends React.Component {
 
   state = {
     assetsLoaded: false,
+    //new
+    isReady: false,
   };
-
+  componentDidMount(){
+    SplashScreen.preventAutoHide();
+  }
   async componentDidMount(){
+    //new
+    //SplashScreen.preventAutoHide();
     // Load custom fonts
     await Font.loadAsync({
       'aktiv-grotesk-regular': require('./assets/fonts/AktivGrotesk-Regular.ttf'),
@@ -87,24 +94,45 @@ export default class App extends React.Component {
   }
 
   render() {
-    StatusBar.setBarStyle('light-content', true);
-    const {assetsLoaded} = this.state;
-    if( assetsLoaded ) {
+    //if (!this.state.isReady) {
       return (
+        console.log("hello"),
+        <View style={{ flex: 1 }}>
+          <Image
+            source={require('./assets/splash.gif')}
+            onLoad={this._cacheResourcesAsync}
+          />
+        </View>
+      );
+    //}
+    StatusBar.setBarStyle('light-content', true);
+    //const {assetsLoaded} = this.state;
+    //if( assetsLoaded ) {
+      return (
+        console.log("hi"),
           <AppContainer
               ref={nav => {
                   this.navigator = nav;
               }}
           />
       );
-    }
-    else {
-        return (
-            <View >
+    //}
+    // else {
+    //     return (
+    //         <View >
                
-            </View>
-        );
-    }
+    //         </View>
+    //     );
+    // }
     }
 }
+_cacheSplashResourcesAsync = async () => {
+  const gif = require('./assets/splash.gif');
+  return Asset.fromModule(gif).downloadAsync();
+};
+
+_cacheResourcesAsync = async () => {
+  SplashScreen.hide();
+  this.setState({ isReady: true });
+};
 // export default createAppContainer(App);
