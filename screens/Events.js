@@ -1,10 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, ActivityIndicator} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, ActivityIndicator, Image} from 'react-native';
 import EventCard from '../components/EventCard.js';
 import Topbar from '../components/Topbar.js';
 import { COLORS, LIGHT_GREEN } from '../COLORS.js';
 import SwipeGesture from '../swipe-gesture'
-
 import { createStackNavigator } from 'react-navigation-stack'
 import EventDetailsScreen from './EventDetails.js';
 import DiscreteCarousel from '../components/DiscreteCarousel'
@@ -72,11 +71,7 @@ class EventsScreen extends React.Component {
     }
   }
   
-  
-
   render() {
-   
-
     // Check if data is loaded
     let carousel_component = <DiscreteCarousel index = {this.state.index} increment={this.increment.bind(this)}></DiscreteCarousel>
     if (this.state.loading) {
@@ -84,9 +79,11 @@ class EventsScreen extends React.Component {
       return (
       <View>
         {carousel_component}
-        <View style={styles.loadView}>
-          <ActivityIndicator size="large" color="#000000" />
-        </View>
+        <View style = {styles.lowerView}>
+            <View style={styles.loadView}>
+              <ActivityIndicator size="large" color="#000000" />
+            </View>
+          </View>
       </View>
       )
     } else {
@@ -113,16 +110,16 @@ class EventsScreen extends React.Component {
             <View>
               {carousel_component}
               <SwipeGesture gestureStyle={styles.swipesGestureContainer} onSwipePerformed={this.onSwipePerformed}>
-              
-                <ScrollView contentContainerStyle={{
-    top: 10,
-    marginLeft: "auto",
-    marginRight: "auto",
-    height: "100%",
-    width: "100%"
-  }}>
-                  {eventComponenents}
-                </ScrollView>
+                <View style = {styles.lowerView}>
+                  <ScrollView contentContainerStyle={{
+                      top:10,
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                      width: "90%",
+                  }}>
+                    {eventComponenents}
+                  </ScrollView>
+                </View>
               </SwipeGesture>
             </View>
           );
@@ -131,14 +128,12 @@ class EventsScreen extends React.Component {
             <View>
               <SwipeGesture gestureStyle={styles.swipesGestureContainer} onSwipePerformed={this.onSwipePerformed}>
                   {carousel_component}
-                  <ScrollView contentContainerStyle={{
-    height: "100%",
-    width: "100%",
-    alignItems: 'center',
-    justifyContent: 'center'
-  }}>
-                      <Text> No events for this month </Text>
-                  </ScrollView>
+                  <View style = {styles.lowerView}>
+                    <View style={styles.loadView}>
+                          <Image source={require('../assets/nothing.png')} style={{width: 40, height: 40, opacity:.5}}/>
+                          <Text>No Scheduled Events</Text>
+                    </View>
+                  </View>
               </SwipeGesture>
             </View>
           );
@@ -157,6 +152,12 @@ export default createStackNavigator({
 });
 
 const styles = StyleSheet.create({
+  lowerView:{
+    backgroundColor:"#fcfcfc",
+    top:20,
+    width:"100%",
+    height:"100%"
+  },
   container: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -172,6 +173,7 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    bottom: 80,
   }
 });

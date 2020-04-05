@@ -8,12 +8,13 @@ export default class DiscreteCarousel extends React.Component {
         lmonth = getMonthString(index-1)
         cmonth = getMonthString(index)
         rmonth = getMonthString(index+1)
+        //shortYear = "'"+(getYear(index) - 2000)
         return (
           <View>
               <View style={{top:10}}>
                  <Text style={styles.title}> {getYear(index)} </Text>
               </View>
-              <View style={{flexDirection: "row", justifyContent:'space-evenly', top:10}}>
+              <View style={{flexDirection: "row", justifyContent:'space-around', top:10}}>
                 <TouchableOpacity onPress={()=> this.props.increment(-1)}>
                     <Text style={styles.minor}>{lmonth}</Text>
                 </TouchableOpacity>
@@ -39,10 +40,13 @@ export default class DiscreteCarousel extends React.Component {
         },
         minor: {
           fontWeight: '200',
+          textAlign: "center",
           fontSize: 16
         },
         major: {
+            flex:1,
             fontWeight: '400',
+            textAlign: "center",
             fontSize: 18
         },
         calendarText: {
