@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Button } from 'react-native';
 import Card from '../components/Card.js';
 import Topbar from '../components/Topbar.js';
 import { LIGHT_ORANGE } from '../COLORS.js'
@@ -14,6 +14,13 @@ import { withOrientation } from 'react-navigation';
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerLeft: <Topbar text="Art"/>,
+    headerRight: () => (
+      <Button
+        onPress={() => alert('Filter')}
+        title="Filter"
+        color="#fff"
+      />
+    ),
     headerStyle: {
       backgroundColor: LIGHT_ORANGE,
     },
