@@ -48,7 +48,7 @@ class EventsScreen extends React.Component {
       loading:true,
       data: []
     })
-    fetch(`http://moody-backend.herokuapp.com/general/events?month=${month}&year=${year}`, { method: 'GET'})
+    fetch(`https://moody-backend-273918.uc.r.appspot.com/general/events?month=${month}&year=${year}`, { method: 'GET'})
       .then(response => response.json()) // Get json of response
       .then((responseJson) => {
         this.setState({

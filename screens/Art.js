@@ -66,7 +66,7 @@ class HomeScreen extends React.Component {
   // Fires when componenet is initially set/mounted
   componentDidMount() {
     //Make a fetch call
-    fetch('http://moody-backend.herokuapp.com/campusArt/allArt', { method: 'GET' })
+    fetch('https://moody-backend-273918.uc.r.appspot.com/campusArt/allArt', { method: 'GET' })
       .then(response => response.json()) // Get json of response
       .then((responseJson) => {
         // Adjust state to reflect loaded status / store data from response
