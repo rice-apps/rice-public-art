@@ -1,5 +1,5 @@
 import React, {useEffect, Fragment} from 'react';
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, withNavigation } from 'react-navigation';
 import { StyleSheet, Text, View, Image, Button, StatusBar, Platform } from 'react-native';
 //added bottom tab navigator
 import { createBottomTabNavigator } from 'react-navigation-tabs';
@@ -71,34 +71,25 @@ const TabNavigator = createBottomTabNavigator({
 
 
 const AppContainer = createAppContainer(TabNavigator);
+const delay = ms => new Promise(res => setTimeout(res, ms));
 
 export default class App extends React.Component {
 
   state = {
     assetsLoaded: false,
-    //new
+    // when isReady is set to True, the app is shown
     isReady: false,
   };
 
-  componentDidMount(){
+  componentDidMount(){ 
+    // Shows the splash screen image (logo)
     SplashScreen.preventAutoHide();
   }
 
-  async componentDidMount(){
-    //new
-    //SplashScreen.preventAutoHide();
-    // Load custom fonts
-    await Font.loadAsync({
-      'aktiv-grotesk-regular': require('./assets/fonts/AktivGrotesk-Regular.ttf'),
-      'aktiv-grotesk-bold': require('./assets/fonts/AktivGrotesk-Bold.ttf'),
-    });
-    this.setState({ assetsLoaded: true });
-  }
-
   render() {
+    // Shows gif if ready is false
     if (!this.state.isReady) {
       return (
-        console.log("hello"),
         <View style={{ flex: 1 }}>
           <Image
             source={require('./assets/splash.gif')}
@@ -108,10 +99,11 @@ export default class App extends React.Component {
       );
     }
     StatusBar.setBarStyle('light-content', true);
-    const {assetsLoaded} = this.state;
-    if( assetsLoaded ) {
+    //const {assetsLoaded} = this.state;
+    console.log(this.state)
+    // Rest of app is shown when everything is loaded
+    if( this.state.assetsLoaded ) {
       return (
-        console.log("hi"),
           <AppContainer
               ref={nav => {
                   this.navigator = nav;
@@ -119,15 +111,31 @@ export default class App extends React.Component {
           />
       );
     }
-  }
-}
-_cacheSplashResourcesAsync = async () => {
-  const gif = require('./assets/splash.gif');
-  return Asset.fromModule(gif).downloadAsync();
-};
+    if( !this.state.assetsLoaded ) {
+      return (
+        <View>
 
-_cacheResourcesAsync = async () => {
-  SplashScreen.hide();
-  this.setState({ isReady: true });
-};
+        </View>
+      );
+    }
+  }
+
+  _cacheSplashResourcesAsync = async () => {
+    const gif = require('./assets/splash.gif');
+    return Asset.fromModule(gif).downloadAsync();
+  };
+
+  _cacheResourcesAsync = async () => {
+    SplashScreen.hide();
+    await Font.loadAsync({
+      'aktiv-grotesk-regular': require('./assets/fonts/AktivGrotesk-Regular.ttf'),
+      'aktiv-grotesk-bold': require('./assets/fonts/AktivGrotesk-Bold.ttf'),
+    });
+    // This delay specifies the length of time the gif is on screen
+    await delay(3000);
+    this.setState({ isReady: true });
+    this.setState({ assetsLoaded: true });
+  };
+}
+
 //export default createAppContainer(App);
