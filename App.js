@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import * as Font from 'expo-font';
 import { LIGHT_ORANGE, BLUE, LIGHT_GREEN } from './COLORS.js'
 import { SplashScreen } from 'expo';
+import {Asset} from 'expo-asset';
 
 
 //Screens
@@ -71,7 +72,6 @@ const TabNavigator = createBottomTabNavigator({
 
 const AppContainer = createAppContainer(TabNavigator);
 
-
 export default class App extends React.Component {
 
   state = {
@@ -79,9 +79,11 @@ export default class App extends React.Component {
     //new
     isReady: false,
   };
+
   componentDidMount(){
     SplashScreen.preventAutoHide();
   }
+
   async componentDidMount(){
     //new
     //SplashScreen.preventAutoHide();
@@ -94,7 +96,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    //if (!this.state.isReady) {
+    if (!this.state.isReady) {
       return (
         console.log("hello"),
         <View style={{ flex: 1 }}>
@@ -104,10 +106,10 @@ export default class App extends React.Component {
           />
         </View>
       );
-    //}
+    }
     StatusBar.setBarStyle('light-content', true);
-    //const {assetsLoaded} = this.state;
-    //if( assetsLoaded ) {
+    const {assetsLoaded} = this.state;
+    if( assetsLoaded ) {
       return (
         console.log("hi"),
           <AppContainer
@@ -116,15 +118,8 @@ export default class App extends React.Component {
               }}
           />
       );
-    //}
-    // else {
-    //     return (
-    //         <View >
-               
-    //         </View>
-    //     );
-    // }
     }
+  }
 }
 _cacheSplashResourcesAsync = async () => {
   const gif = require('./assets/splash.gif');
@@ -135,4 +130,4 @@ _cacheResourcesAsync = async () => {
   SplashScreen.hide();
   this.setState({ isReady: true });
 };
-// export default createAppContainer(App);
+//export default createAppContainer(App);
