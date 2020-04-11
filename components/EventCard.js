@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, TouchableHighlight } from 'react-native';
+import SwipeGesture from '../swipe-gesture'
 
 class EventCard extends React.Component {
 
@@ -8,17 +9,20 @@ class EventCard extends React.Component {
   }
 
   render () {
-  dayOfWeek = ["SUN", "MON", "TUES", "WED", "THURS", "FRI", "SAT"][this.props.date.getDay()];
-  dayOfMonth = this.props.date.getDate();
+  dayOfWeek = ["SUN", "MON", "TUES", "WED", "THURS", "FRI", "SAT"][this.props.date.getUTCDay()];
+  dayOfMonth = this.props.date.getUTCDate();
   accent = this.props.color;
+  //Fadeout background: light gray if fadeout; transparent if not fadeout
+  backColor = this.props.fadeOut ? "#f0f0f0":"rgba(255, 255, 255, 0)"
   return (
+    <SwipeGesture onSwipePerformed={this.props.onSwipePerformed}>
     <TouchableHighlight style={[styles.card, { borderColor: accent }]}
             underlayColor="transparent"
             style = {styles.container}
             onPress={() => 
               this.props.navigation.navigate('Details',this.props)
             }>
-            <View style={[styles.card, { borderColor: accent }]}>
+            <View style={[styles.card, { borderColor: accent }, {backgroundColor:backColor}]}>
             <ImageBackground style={styles.image} imageStyle={{ borderRadius: 10 }} source={{ uri: this.props.image }}>
             </ImageBackground>
             <Text style={[styles.title, { color: accent }]}> {this.props.title} </Text>
@@ -36,6 +40,7 @@ class EventCard extends React.Component {
             </View>
             </View>
     </TouchableHighlight>
+    </SwipeGesture>
   );
 }
 }
