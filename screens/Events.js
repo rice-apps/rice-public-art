@@ -109,7 +109,7 @@ class EventsScreen extends React.Component {
           date={date}
           navigation={this.props.navigation}
           onSwipePerformed={this.onSwipePerformed.bind(this)}
-          fadeout = {date < cutoff}
+          fadeOut = {date < cutoff}
           >
           </EventCard>)      
       }
