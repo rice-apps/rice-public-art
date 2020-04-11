@@ -51,14 +51,14 @@ class HomeScreen extends React.Component {
       userLocation: null,
       showFilterMenu: false,
       filters: {
-        sculpture: true,
-        painting: true,
-        film: true,
-        photography: true,
-        installation: true,
-        drawingAndPrints: true,
-        indoors: true,
-        outdoors: true,
+        sculpture: false,
+        painting: false,
+        film: false,
+        photography: false,
+        installation: false,
+        drawingAndPrints: false,
+        indoors: false,
+        outdoors: false,
       }
     };
   }
@@ -99,24 +99,27 @@ class HomeScreen extends React.Component {
     this.setState({filters: filters})
   }
 
-  showArtWithFilter(content) {
-
-    // console.log("********** FILTERING ***********")
-    // console.log(content);
+  shouldShowArtWithFilter(content) {
+    console.log("********** FILTERING ***********")
+    console.log(content);
     if (content.indoors == false) {
       content.outdoors = true;
     }
     const filters = ['sculpture', 'painting', 'film', 'photography', 'installation', 'drawingAndPrints', 'indoors', 'outdoors'];
     var passedFilter = false
     var allFiltersTrue = true
+    var allFiltersFalse = true
     filters.forEach(filter => {
       console.log(filter, this.state.filters[filter], content[filter]);
       if (this.state.filters[filter] && content[filter]) {
         passedFilter = true;
       }
       if (!this.state.filters[filter]) allFiltersTrue = false;
+      if (this.state.filters[filter]) allFiltersFalse = false;
     })
-    if (allFiltersTrue) return true; // don't exclude anything if nothing is filtered out
+    // don't exclude anything if nothing is checked
+    // or if nothing is filtered out
+    if (allFiltersFalse || allFiltersTrue) return true; 
     return passedFilter;
   }
 
@@ -137,7 +140,7 @@ class HomeScreen extends React.Component {
         <View>
           <ScrollView style={styles.scrollView}>
             {this.state.data.map((content, i) =>
-              this.showArtWithFilter(content) ?
+              this.shouldShowArtWithFilter(content) ?
               <Card
                 key={'card' + i}
                 name={content.name}
@@ -209,7 +212,7 @@ class HomeScreen extends React.Component {
               />
               <CheckBox
                 title='Outdoors'
-                checked={this.state.filters.indoors}
+                checked={this.state.filters.outdoors}
                 onPress={() => this.toggleFilter('outdoors')}
                 containerStyle = {{width: 225}}
               />
