@@ -16,13 +16,13 @@ export default class DiscreteCarousel extends React.Component {
               </View>
               <View style={{flexDirection: "row", justifyContent:'space-around', top:10}}>
                 <TouchableOpacity onPress={()=> this.props.increment(-1)}>
-                    <Text style={styles.minor}>{lmonth}</Text>
+                <Text style={[styles.minor,{textAlign: "left"}]}>{lmonth}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=> this.props.increment(0)}>
                     <Text style={styles.major}>{cmonth}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=> this.props.increment(1)}>
-                    <Text style={styles.minor}>{rmonth}</Text>
+                    <Text style={[styles.minor,{textAlign: "right"}]}>{rmonth}</Text>
                 </TouchableOpacity>              
               </View>
           </View>
@@ -40,7 +40,6 @@ export default class DiscreteCarousel extends React.Component {
         },
         minor: {
           fontWeight: '200',
-          textAlign: "center",
           fontSize: 16
         },
         major: {

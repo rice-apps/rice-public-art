@@ -56,6 +56,7 @@ class EventsScreen extends React.Component {
     .catch(error => console.log(error)) //to catch the errors if any
   }
   increment(delta){
+    console.log(this.state.index)
     this.setState({index: this.state.index+delta})
   }
 
