@@ -135,7 +135,7 @@ class EventsScreen extends React.Component {
       })
       if (eventComponenents.length > 0){
         //Find cut off position in list
-        lastFutureEvent = 0;
+        lastFutureEvent = -1;
         eventComponenents.forEach(function (card, index) {
           var date = card.props.date
           if (date > cutoff) {
@@ -143,7 +143,7 @@ class EventsScreen extends React.Component {
           }
         });
         //Add Past Events Label
-        if (lastFutureEvent+1 < eventComponenents.length){
+        if (lastFutureEvent < eventComponenents.length){
           eventComponenents.splice(lastFutureEvent+1,0, <ScrollViewLabel>Past Events</ScrollViewLabel>)
         }
         return (

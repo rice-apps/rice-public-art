@@ -3,7 +3,6 @@ import { View, Text, ImageBackground, StyleSheet, TouchableHighlight } from 'rea
 import SwipeGesture from '../swipe-gesture'
 
 class EventCard extends React.Component {
-
   constructor(props) {
     super(props);
   }
