@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, TouchableHighlight } from 'react-native';
+import SwipeGesture from '../swipe-gesture'
 
 class EventCard extends React.Component {
 
@@ -8,10 +9,11 @@ class EventCard extends React.Component {
   }
 
   render () {
-  dayOfWeek = ["SUN", "MON", "TUES", "WED", "THURS", "FRI", "SAT"][this.props.date.getDay()];
-  dayOfMonth = this.props.date.getDate();
+  dayOfWeek = ["SUN", "MON", "TUES", "WED", "THURS", "FRI", "SAT"][this.props.date.getUTCDay()];
+  dayOfMonth = this.props.date.getUTCDate();
   accent = this.props.color;
   return (
+    <SwipeGesture onSwipePerformed={this.props.onSwipePerformed}>
     <TouchableHighlight style={[styles.card, { borderColor: accent }]}
             underlayColor="transparent"
             style = {styles.container}
@@ -36,6 +38,7 @@ class EventCard extends React.Component {
             </View>
             </View>
     </TouchableHighlight>
+    </SwipeGesture>
   );
 }
 }
