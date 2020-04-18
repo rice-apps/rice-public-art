@@ -11,18 +11,20 @@ export default class DiscreteCarousel extends React.Component {
         //shortYear = "'"+(getYear(index) - 2000)
         return (
           <View>
+             {/* Year container */}
               <View style={{top:10}}>
-                 <Text style={styles.title}> {getYear(index)} </Text>
+                 <Text style={styles.year}> {getYear(index)} </Text>
               </View>
-              <View style={{flexDirection: "row", justifyContent:'space-around', top:10}}>
-                <TouchableOpacity onPress={()=> this.props.increment(-1)}>
-                <Text style={[styles.minor,{textAlign: "left"}]}>{lmonth}</Text>
+              {/* Month container */}
+              <View style={{flexDirection: "row", justifyContent:"space-evenly", top:10}}>
+                <TouchableOpacity style = {{width:"30%"}} onPress={()=> this.props.increment(-1)}>
+                  <Text style={[styles.minor,{textAlign: "center"}]}>   {lmonth}   </Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=> this.props.increment(0)}>
+                <TouchableOpacity style = {{alignSelf:'center', width:"30%"}} onPress={()=> this.props.increment(0)}>
                     <Text style={styles.major}>{cmonth}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=> this.props.increment(1)}>
-                    <Text style={[styles.minor,{textAlign: "right"}]}>{rmonth}</Text>
+                <TouchableOpacity style = {{width:"30%"}} onPress={()=> this.props.increment(1)}>
+                    <Text style={[styles.minor,{textAlign: "center"}]}>   {rmonth}   </Text>
                 </TouchableOpacity>              
               </View>
           </View>
@@ -31,29 +33,23 @@ export default class DiscreteCarousel extends React.Component {
     }
 
     const styles = StyleSheet.create({
-        title: {
+        year: {
           textAlign: "left",
           fontWeight: "bold",
           fontSize: 20,
           marginTop: -10,
-          marginLeft: 20
+          marginLeft: 20,
+          fontFamily:"aktiv-grotesk-bold"
         },
         minor: {
-          fontWeight: '200',
-          fontSize: 16
+          fontWeight: '100',
+          fontSize: 16,
+          //fontFamily:"aktiv-grotesk-regular"
         },
         major: {
-            flex:1,
             fontWeight: '400',
             textAlign: "center",
-            fontSize: 18
-        },
-        calendarText: {
-          textAlign: "center",
-          fontSize: 25,
-          fontWeight: '600'
-        },
-        extraInfo: {
-          marginLeft: 10
-        },
+            fontSize: 18,
+            fontFamily:"aktiv-grotesk-regular"
+          },
       });

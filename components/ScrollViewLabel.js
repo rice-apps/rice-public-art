@@ -8,7 +8,7 @@ export default class ScrollViewLabel extends React.Component {
           <View style={{height:15}}></View> 
           <View style={{height:1, backgroundColor:"#808080"}}></View>
           <View style={{height:5}}></View>
-          <Text style={{fontWeight:"bold", fontSize: 36, color:BLUE}}>{this.props.children}</Text>
+          <Text style={{fontFamily:"aktiv-grotesk-bold",fontWeight:"bold", fontSize: 36, color:BLUE}}>{this.props.children}</Text>
           <View style={{height:10}}></View>
         </View>
         );

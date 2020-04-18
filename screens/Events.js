@@ -144,7 +144,8 @@ class EventsScreen extends React.Component {
         });
         //Add Past Events Label
         if (lastFutureEvent < eventComponenents.length){
-          eventComponenents.splice(lastFutureEvent+1,0, <ScrollViewLabel>Past Events</ScrollViewLabel>)
+          eventComponenents.splice(lastFutureEvent+1,0, <ScrollViewLabel key={'label'}
+          >Past Events</ScrollViewLabel>)
         }
         return (
           <View>
@@ -173,7 +174,7 @@ class EventsScreen extends React.Component {
                 <View style = {styles.lowerView}>
                   <View style={styles.loadView}>
                         <Image source={require('../assets/nothing.png')} style={{width: 40, height: 40, opacity:.5}}/>
-                        <Text>No Scheduled Events</Text>
+                        <Text style={{fontFamily:"aktiv-grotesk-bold"}}>No Scheduled Events</Text>
                   </View>
                 </View>
             </SwipeGesture>

@@ -8,7 +8,7 @@ class EventCard extends React.Component {
   }
 
   render () {
-  dayOfWeek = ["SUN", "MON", "TUES", "WED", "THURS", "FRI", "SAT"][this.props.date.getUTCDay()];
+  dayOfWeek = ["SUN", "MON", "TUE", "WED", "THUR", "FRI", "SAT"][this.props.date.getUTCDay()];
   dayOfMonth = this.props.date.getUTCDate();
   accent = this.props.color;
   //Fadeout background: light gray if fadeout; transparent if not fadeout
@@ -64,7 +64,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
     marginTop: -10,
-    marginLeft: 20
+    marginLeft: 20,
+    fontFamily:"aktiv-grotesk-bold"
   },
   secondaryText: {
     fontWeight: '200',
