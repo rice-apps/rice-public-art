@@ -13,14 +13,22 @@ class EventCard extends React.Component {
   accent = this.props.color;
   //Fadeout background: light gray if fadeout; transparent if not fadeout
   backColor = this.props.fadeOut ? "#f0f0f0":"rgba(255, 255, 255, 0)"
+  onSwipePerformed = (action) => {
+    console.log("card",action)
+    if (action == "press"){
+      //On press
+      this.props.navigation.navigate('Details',this.props)
+    } else {
+      //Otherwise
+      this.props.onSwipePerformed(action)
+    }
+  }
   return (
-    <SwipeGesture onSwipePerformed={this.props.onSwipePerformed}>
-    <TouchableHighlight style={[styles.card, { borderColor: accent }]}
+    <View style={[styles.card, { borderColor: accent }]}
             underlayColor="transparent"
             style = {styles.container}
-            onPress={() => 
-              this.props.navigation.navigate('Details',this.props)
-            }>
+           >
+          <SwipeGesture onSwipePerformed={onSwipePerformed}>
             <View style={[styles.card, { borderColor: accent }, {backgroundColor:backColor}]}>
             <ImageBackground style={styles.image} imageStyle={{ borderRadius: 10 }} source={{ uri: this.props.image }}>
             </ImageBackground>
@@ -38,8 +46,8 @@ class EventCard extends React.Component {
               </View>
             </View>
             </View>
-    </TouchableHighlight>
-    </SwipeGesture>
+        </SwipeGesture>
+    </View>
   );
 }
 }

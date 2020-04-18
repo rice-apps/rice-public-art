@@ -158,7 +158,9 @@ class EventsScreen extends React.Component {
                     marginRight: "auto",
                     width: "90%",
                 }}>
-                  {eventComponenents}
+                  <View>
+                   {eventComponenents}
+                  </View>
                   <View style = {{height:150}}>
                   </View>
                 </ScrollView>

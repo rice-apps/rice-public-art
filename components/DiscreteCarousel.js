@@ -1,3 +1,5 @@
+// Adam Zawierucha
+// zawie@rice.edu if you need help 
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {getMonthString,getYear} from '../util/datelogic.js';
