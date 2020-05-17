@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ImageBackground, StyleSheet, TouchableHighlight} from 'react-native';
+import { View, Text, Image, ImageBackground, StyleSheet, TouchableHighlight, Platform} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {truncate} from '../util/stringlogic.js' 
 
@@ -24,7 +24,13 @@ export default class Card extends React.Component {
                 colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, .1)', 'rgba(0, 0, 0, .5)', 'rgba(0, 0, 0, .9)']}
                 style={{ padding: 15, flex: 1, justifyContent: 'flex-end', borderRadius: 5 }}
               > 
-              <Text style={{textAlign: "right", color:"white", fontSize: 20, marginBottom:0, marginRight:0}}>{(this.props.minutes != null? (this.props.minutes > 60 && ">60" || this.props.minutes) : null)} min. 🕒</Text>
+              <View style = {{flexDirection: 'row', justifyContent: 'flex-end'}}>
+                <Text style={{textAlign: "right", color:"white", fontSize: 20, marginBottom:0, marginRight:0}}>{(this.props.minutes != null? (this.props.minutes > 60 && ">60" || this.props.minutes) : null)} min.</Text>
+                <Image 
+                  source = {require('../images/clockIcon.png')}
+                  style = {{width:20,height:20}}
+                />
+              </View>
               </LinearGradient>
             </ImageBackground>
           </TouchableHighlight>
