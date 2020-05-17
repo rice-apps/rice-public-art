@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, TouchableHighlight} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import {truncate} from '../util/stringlogic.js' 
 export default class Card extends React.Component {
     render() {
         // console.log("route function", this.props.routeTo_art())
@@ -17,7 +17,7 @@ export default class Card extends React.Component {
                 colors={['rgba(0, 0, 0, .9)', 'rgba(0, 0, 0, .5)', 'rgba(0, 0, 0, .1)','rgba(0, 0, 0, 0)']}
                 style={{ padding: 15, borderRadius: 5 }}
               > 
-              <Text style={{textAlign: "left", fontFamily: "aktiv-grotesk-regular", color:"white", textTransform: "uppercase", fontSize: 30, marginTop:-10, marginLeft:-5}}> {this.props.name} </Text>
+              <Text style={{textAlign: "left", fontFamily: "aktiv-grotesk-regular", color:"white", textTransform: "uppercase", fontSize: 30, marginTop:-10, marginLeft:-5}}> {truncate(this.props.name)} </Text>
               </LinearGradient>
               <LinearGradient
                 colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, .1)', 'rgba(0, 0, 0, .5)', 'rgba(0, 0, 0, .9)']}

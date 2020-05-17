@@ -9,6 +9,7 @@ import { createStackNavigator } from 'react-navigation-stack'
 import EventDetailsScreen from './EventDetails.js';
 import DiscreteCarousel from '../components/DiscreteCarousel'
 import {currentMonth,currentYear,getMonth,getYear} from '../util/datelogic.js'
+
 cutoff = new Date(); //Today
 
 class EventsScreen extends React.Component {
@@ -82,7 +83,8 @@ class EventsScreen extends React.Component {
     const didFocus = this.props.navigation.addListener(
       'willFocus',
       payload => {
-          this.setState({index: 0})
+        //Set to current month
+        this.setState({index: 0})
       }
     );
   }
