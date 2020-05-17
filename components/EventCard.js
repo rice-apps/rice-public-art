@@ -18,7 +18,7 @@ class EventCard extends React.Component {
     console.log("card",action)
     if (action == "press"){
       //On press
-      this.props.navigation.navigate('Details',this.props)
+      this.props.navigation.navigate('Details',this.props, {param: "Test"})
     } else {
       //Otherwise
       this.props.onSwipePerformed(action)
