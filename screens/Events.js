@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, ActivityIndicator, Image, DatePickerIOS} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, ActivityIndicator, Image, Alert} from 'react-native';
 import EventCard from '../components/EventCard.js';
 import Topbar from '../components/Topbar.js';
 import ScrollViewLabel from '../components/ScrollViewLabel.js';
@@ -59,8 +59,12 @@ class EventsScreen extends React.Component {
     .catch(error => console.log(error)) //to catch the errors if any
   }
   increment(delta){
-    console.log(this.state.index)
-    this.setState({index: this.state.index+delta})
+    if( Math.abs(this.state.index + delta) <= 12) {
+      console.log("epic gamer moment:",this.state.index)
+      this.setState({index: this.state.index+delta})
+    } else {
+      Alert.alert("You've gone too far!","Only events a year into the future or past will be displayed.")
+    }
   }
 
   // Fires when componenet is initially set/mounted
