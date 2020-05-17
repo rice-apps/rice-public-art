@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, Button } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Button, ActivityIndicator} from 'react-native';
 import Card from '../components/Card.js';
 import Topbar from '../components/Topbar.js';
 import { LIGHT_ORANGE } from '../COLORS.js'
@@ -128,8 +128,8 @@ class HomeScreen extends React.Component {
     if (this.state.loading) {
       // Display something to inform user data is loading
       return (
-        <View>
-          <Text> Loading... </Text>
+        <View style = {{height: "100%", width: "100%", alignItems: 'center', justifyContent: 'center'}}>
+          <ActivityIndicator size="large" color="#000000" />
         </View>
       )
     } else {
