@@ -153,9 +153,9 @@ class HomeScreen extends React.Component {
                 // Assume a 20 min. per mile walking speed
                 // This is on the high end because we are using a straight line approximation for the route
                 // which underestimates the total distance
-                distance={this.state.userLocation != null ?
+                minutes={this.state.userLocation != null ?
                   Math.round(distance(this.state.userLocation.latitude, this.state.userLocation.longitude,
-                    content.location.lat, content.location.lon) * 20) + " min. 🕒"
+                    content.location.lat, content.location.lon) * 20)
                   : null}
                 navigation={this.props.navigation}
               /> : null

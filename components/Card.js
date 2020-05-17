@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, TouchableHighlight} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {truncate} from '../util/stringlogic.js' 
+
 export default class Card extends React.Component {
     render() {
         // console.log("route function", this.props.routeTo_art())
@@ -23,7 +24,7 @@ export default class Card extends React.Component {
                 colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, .1)', 'rgba(0, 0, 0, .5)', 'rgba(0, 0, 0, .9)']}
                 style={{ padding: 15, flex: 1, justifyContent: 'flex-end', borderRadius: 5 }}
               > 
-              <Text style={{textAlign: "right", color:"white", fontSize: 20, marginBottom:0, marginRight:0}}>{this.props.distance}</Text>
+              <Text style={{textAlign: "right", color:"white", fontSize: 20, marginBottom:0, marginRight:0}}>{(this.props.minutes != null? (this.props.minutes > 60 && ">60" || minutes) : null)} min. 🕒</Text>
               </LinearGradient>
             </ImageBackground>
           </TouchableHighlight>
