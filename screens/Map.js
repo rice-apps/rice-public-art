@@ -44,8 +44,6 @@ class MapScreen extends React.Component {
   }
 
   componentDidMount() {
-    
-
     const didFocus = this.props.navigation.addListener(
       'willFocus',
       payload => {

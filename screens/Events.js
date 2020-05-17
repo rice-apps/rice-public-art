@@ -21,6 +21,7 @@ class EventsScreen extends React.Component {
       data: [],
     };
   }
+
   //Navigation Handling
   static navigationOptions = ({ navigation }) => ({
     headerLeft: <Topbar text = 'Events'></Topbar>,
@@ -28,6 +29,7 @@ class EventsScreen extends React.Component {
       backgroundColor: LIGHT_GREEN,
     },
   })
+
   //Swiping
   onSwipePerformed = (action) => {
     console.log(action);
@@ -42,6 +44,8 @@ class EventsScreen extends React.Component {
       }
     }
   }
+
+  //Hit backend
   requestData(month,year){
     console.log("Requesting:",month,year);
     this.setState({
@@ -58,11 +62,15 @@ class EventsScreen extends React.Component {
       })
     .catch(error => console.log(error)) //to catch the errors if any
   }
+  
+  //Increment request
   increment(delta){
+    // Check if swipe is not to far
     if( Math.abs(this.state.index + delta) <= 12) {
-      console.log("epic gamer moment:",this.state.index)
+      //Chance index
       this.setState({index: this.state.index+delta})
     } else {
+      //Alert if gone too far
       Alert.alert("You've gone too far!","Only events a year into the future or past will be displayed.")
     }
   }
@@ -70,6 +78,13 @@ class EventsScreen extends React.Component {
   // Fires when componenet is initially set/mounted
   componentDidMount() {
     this.requestData(currentMonth+1,currentYear)
+    //Resest on focus
+    const didFocus = this.props.navigation.addListener(
+      'willFocus',
+      payload => {
+          this.setState({index: 0})
+      }
+    );
   }
 
   componentDidUpdate(prevProps, prevState){
