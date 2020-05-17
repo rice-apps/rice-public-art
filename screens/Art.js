@@ -129,7 +129,7 @@ class HomeScreen extends React.Component {
       // Display something to inform user data is loading
       return (
         <View style = {{height: "100%", width: "100%", alignItems: 'center', justifyContent: 'center'}}>
-          <ActivityIndicator size="large" color="#000000" />
+          <ActivityIndicator size="large" color="#000000"/>
         </View>
       )
     } else {
