@@ -47,12 +47,16 @@ class MapScreen extends React.Component {
     const didFocus = this.props.navigation.addListener(
       'willFocus',
       payload => {
-        console.debug('willFocus', payload.action.params);
-        let params = payload.action.params
-        
-
+        console.log("Payload", payload)
+        console.debug('willFocus', payload.action.action.params);
+        // var params
+        // if payload.action.action {
+        //   params = payload.action.action.params
+        // } else if payload.action {
+        //   params = payload.action.params
+        // }
+        let params = payload.action.action.params
         if(params) {
-          
           this.setState({
             showCallout: true,
             fromDetails: true,
@@ -115,6 +119,33 @@ class MapScreen extends React.Component {
         })
       })
       .catch(error => console.log(error)) //to catch the errors if any
+  }
+
+  route(){
+
+    let location = this.getParam("location")
+    let index = this.getParam("index") // CAUTION: This might be deprecated with filtering!!!!
+
+    console.log("location", location)
+    console.log("index", index)
+    const resetAction = StackActions.reset({
+      index: 0,
+      //Navigates to Home when you click back to Art or Map
+      actions: [NavigationActions.navigate({ routeName: 'Home' })],
+    });
+    //this runs the action
+this.props.navigation.dispatch(resetAction);
+
+    console.log("location2", location)
+    console.log("index2", index)
+
+    // console.log("LOCATION", location)
+    this.props.navigation.navigate("Map", {
+      "location": location,
+      "index": index      }
+    )
+    // let routing = this.getParam("routeTo_art")
+    // routing()
   }
 
   render() {
@@ -214,6 +245,8 @@ class MapScreen extends React.Component {
                             name: this.state.data[this.state.calloutIndx].name,
                             description: this.state.data[this.state.calloutIndx].description,
                             image: this.state.data[this.state.calloutIndx].image,
+                            location: this.state.data[this.state.calloutIndx].location,
+                            index: this.state.calloutIndx
                           })
                         }}
                       />

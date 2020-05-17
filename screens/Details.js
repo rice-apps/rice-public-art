@@ -46,11 +46,20 @@ export default class DetailsScreen extends React.Component {
       let location = this.getParam("location")
       let index = this.getParam("index") // CAUTION: This might be deprecated with filtering!!!!
 
+      console.log("ROUTE", location, index)
+      // console.log(navigation.state.routeName)
       // console.log("LOCATION", location)
-      this.props.navigation.navigate("Map", {
-        "location": location,
-        "index": index      }
-      )
+
+      // dispatch()
+      this.props.navigation.dispatch(NavigationActions.navigate({
+        routeName: 'Map',
+        action: NavigationActions.navigate({routeName: "Home", params: {"location": location, "index": index}})
+      }))
+
+      // this.props.navigation.navigate({
+      //   routeName: "Map",
+      //   props: {"location": location,"index": index}
+      // })
       // let routing = this.getParam("routeTo_art")
       // routing()
     }
