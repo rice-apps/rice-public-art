@@ -82,13 +82,16 @@ class EventsScreen extends React.Component {
     //Resest on focus
     const didFocus = this.props.navigation.addListener(
       'willFocus',
-      payload => {
-        //Set to current month
-        this.setState({index: 0})
+       payload => {
+        let actionType = payload.action.type
+        //Check if not "back" refocus
+        if (actionType != "Navigation/BACK") {
+          this.setState({index: 0})
+        }
       }
     );
   }
-
+ 
   componentDidUpdate(prevProps, prevState){
     let i = this.state.index
     if (prevState.index  !=  i){
