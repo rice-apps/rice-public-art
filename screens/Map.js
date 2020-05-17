@@ -47,14 +47,6 @@ class MapScreen extends React.Component {
     const didFocus = this.props.navigation.addListener(
       'willFocus',
       payload => {
-        console.log("Payload", payload)
-        console.debug('willFocus', payload.action.action.params);
-        // var params
-        // if payload.action.action {
-        //   params = payload.action.action.params
-        // } else if payload.action {
-        //   params = payload.action.params
-        // }
         let params = payload.action.action.params
         if(params) {
           this.setState({
@@ -135,17 +127,13 @@ class MapScreen extends React.Component {
     });
     //this runs the action
 this.props.navigation.dispatch(resetAction);
-
     console.log("location2", location)
     console.log("index2", index)
 
-    // console.log("LOCATION", location)
     this.props.navigation.navigate("Map", {
       "location": location,
       "index": index      }
     )
-    // let routing = this.getParam("routeTo_art")
-    // routing()
   }
 
   render() {
