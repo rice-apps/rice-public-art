@@ -1,3 +1,5 @@
+// Adam Zawierucha
+// zawie@rice.edu if you need help 
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {getMonthString,getYear} from '../util/datelogic.js';
@@ -8,20 +10,23 @@ export default class DiscreteCarousel extends React.Component {
         lmonth = getMonthString(index-1)
         cmonth = getMonthString(index)
         rmonth = getMonthString(index+1)
+        //shortYear = "'"+(getYear(index) - 2000)
         return (
           <View>
+             {/* Year container */}
               <View style={{top:10}}>
-                 <Text style={styles.title}> {getYear(index)} </Text>
+                 <Text style={styles.year}> {getYear(index)} </Text>
               </View>
-              <View style={{flexDirection: "row", justifyContent:'space-evenly', top:10}}>
-                <TouchableOpacity onPress={()=> this.props.increment(-1)}>
-                    <Text style={styles.minor}>{lmonth}</Text>
+              {/* Month container */}
+              <View style={{flexDirection: "row", justifyContent:"space-evenly", top:10}}>
+                <TouchableOpacity style = {{width:"30%"}} onPress={()=> this.props.increment(-1)}>
+                  <Text style={[styles.minor,{textAlign: "center"}]}>   {lmonth}   </Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=> this.props.increment(0)}>
+                <TouchableOpacity style = {{alignSelf:'center', width:"30%"}} onPress={()=> this.props.increment(0)}>
                     <Text style={styles.major}>{cmonth}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=> this.props.increment(1)}>
-                    <Text style={styles.minor}>{rmonth}</Text>
+                <TouchableOpacity style = {{width:"30%"}} onPress={()=> this.props.increment(1)}>
+                    <Text style={[styles.minor,{textAlign: "center"}]}>   {rmonth}   </Text>
                 </TouchableOpacity>              
               </View>
           </View>
@@ -30,27 +35,23 @@ export default class DiscreteCarousel extends React.Component {
     }
 
     const styles = StyleSheet.create({
-        title: {
+        year: {
           textAlign: "left",
           fontWeight: "bold",
           fontSize: 20,
           marginTop: -10,
-          marginLeft: 20
+          marginLeft: 20,
+          fontFamily:"aktiv-grotesk-bold"
         },
         minor: {
-          fontWeight: '200',
-          fontSize: 16
+          fontWeight: '100',
+          fontSize: 16,
+          //fontFamily:"aktiv-grotesk-regular"
         },
         major: {
             fontWeight: '400',
-            fontSize: 18
-        },
-        calendarText: {
-          textAlign: "center",
-          fontSize: 25,
-          fontWeight: '600'
-        },
-        extraInfo: {
-          marginLeft: 10
-        },
+            textAlign: "center",
+            fontSize: 18,
+            fontFamily:"aktiv-grotesk-regular"
+          },
       });

@@ -1,24 +1,35 @@
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, TouchableHighlight } from 'react-native';
+import SwipeGesture from '../swipe-gesture'
 
 class EventCard extends React.Component {
-
   constructor(props) {
     super(props);
   }
 
   render () {
-  dayOfWeek = ["SUN", "MON", "TUES", "WED", "THURS", "FRI", "SAT"][this.props.date.getDay()];
-  dayOfMonth = this.props.date.getDate();
+  dayOfWeek = ["SUN", "MON", "TUE", "WED", "THUR", "FRI", "SAT"][this.props.date.getUTCDay()];
+  dayOfMonth = this.props.date.getUTCDate();
   accent = this.props.color;
+  //Fadeout background: light gray if fadeout; transparent if not fadeout
+  backColor = this.props.fadeOut ? "#f0f0f0":"rgba(255, 255, 255, 0)"
+  onSwipePerformed = (action) => {
+    console.log("card",action)
+    if (action == "press"){
+      //On press
+      this.props.navigation.navigate('Details',this.props)
+    } else {
+      //Otherwise
+      this.props.onSwipePerformed(action)
+    }
+  }
   return (
-    <TouchableHighlight style={[styles.card, { borderColor: accent }]}
+    <View style={[styles.card, { borderColor: accent }]}
             underlayColor="transparent"
             style = {styles.container}
-            onPress={() => 
-              this.props.navigation.navigate('Details',this.props)
-            }>
-            <View style={[styles.card, { borderColor: accent }]}>
+           >
+          <SwipeGesture onSwipePerformed={onSwipePerformed}>
+            <View style={[styles.card, { borderColor: accent }, {backgroundColor:backColor}]}>
             <ImageBackground style={styles.image} imageStyle={{ borderRadius: 10 }} source={{ uri: this.props.image }}>
             </ImageBackground>
             <Text style={[styles.title, { color: accent }]}> {this.props.title} </Text>
@@ -35,7 +46,8 @@ class EventCard extends React.Component {
               </View>
             </View>
             </View>
-    </TouchableHighlight>
+        </SwipeGesture>
+    </View>
   );
 }
 }
@@ -60,7 +72,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
     marginTop: -10,
-    marginLeft: 20
+    marginLeft: 20,
+    fontFamily:"aktiv-grotesk-bold"
   },
   secondaryText: {
     fontWeight: '200',

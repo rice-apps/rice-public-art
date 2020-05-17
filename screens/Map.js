@@ -44,8 +44,6 @@ class MapScreen extends React.Component {
   }
 
   componentDidMount() {
-    
-
     const didFocus = this.props.navigation.addListener(
       'willFocus',
       payload => {
@@ -89,7 +87,7 @@ class MapScreen extends React.Component {
       { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 });
 
     //Make a fetch call
-    fetch('http://moody-backend.herokuapp.com/campusArt/allArt', { method: 'GET' })
+    fetch('https://moody-backend-273918.uc.r.appspot.com/campusArt/allArt', { method: 'GET' })
       .then(response => response.json()) // Get json of response
       .then((responseJson) => {
         this.setState({
