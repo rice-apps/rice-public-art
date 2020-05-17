@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, TouchableHighlight } from 'react-native';
 import SwipeGesture from '../swipe-gesture'
+import {truncate} from '../util/stringlogic.js' 
 
 class EventCard extends React.Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class EventCard extends React.Component {
             <View style={[styles.card, { borderColor: accent }, {backgroundColor:backColor}]}>
             <ImageBackground style={styles.image} imageStyle={{ borderRadius: 10 }} source={{ uri: this.props.image }}>
             </ImageBackground>
-            <Text style={[styles.title, { color: accent }]}> {this.props.title} </Text>
+            <Text style={[styles.title, { color: accent }]}> {truncate(this.props.title)} </Text>
             <View style={styles.bottom}>
               {/* Calendar bit */}
               <View style={styles.calendar}>
