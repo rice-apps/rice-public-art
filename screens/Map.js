@@ -47,7 +47,10 @@ class MapScreen extends React.Component {
     const didFocus = this.props.navigation.addListener(
       'willFocus',
       payload => {
-        let params = payload.action.action.params
+        var params
+        if (payload.action && payload.action.action) {
+          params = payload.action.action.params
+        }
         if(params) {
           this.setState({
             showCallout: true,
@@ -234,6 +237,8 @@ this.props.navigation.dispatch(resetAction);
                             description: this.state.data[this.state.calloutIndx].description,
                             image: this.state.data[this.state.calloutIndx].image,
                             location: this.state.data[this.state.calloutIndx].location,
+                            artist: this.state.data[this.state.calloutIndx].artist,
+                            year: this.state.data[this.state.calloutIndx].year,
                             index: this.state.calloutIndx
                           })
                         }}
