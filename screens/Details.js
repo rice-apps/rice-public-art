@@ -64,16 +64,16 @@ export default class DetailsScreen extends React.Component {
             <Text>  </Text> 
             <Text>  </Text> 
             {/* Title */}
-            <Text style ={[styles.title, {color: LIGHT_ORANGE}]}> {this.getParam("name","Title")} </Text>
+            <Text style ={[styles.title, {color: LIGHT_ORANGE}]}>{this.getParam("name","Title")}</Text>
             <View style={styles.bottom}>
               {/* Artist and Year*/}
               <View>
-                <Text style={styles.artist}> {this.getParam("artist","Artist")} </Text>
-                <Text style={styles.year}> {this.getParam("year","Year Created")} </Text>
+                <Text style={styles.artist}>{this.getParam("artist","Artist")}</Text>
+                <Text style={styles.year}>{this.getParam("year","Year Created")}</Text>
               </View>
-              <Text> </Text>
+              <Text></Text>
               <View>
-                <Text style={styles.description}> {this.getParam("description","default desc")} </Text>
+                <Text style={styles.description}>{this.getParam("description","default desc")}</Text>
               </View>
             </View>
             <View>
