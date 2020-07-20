@@ -1,3 +1,4 @@
+//THIS IS AN UNUSED COMPONENET??!?!
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
