@@ -15,7 +15,7 @@ export default class Card extends React.Component {
             }>
             <ImageBackground style={{borderRadius:100, height: 200, width:"100%", marginTop:10}}  imageStyle={{ borderRadius: 10, width:"100%"}} source={{uri: this.props.image}}>
               <LinearGradient
-                colors={['rgba(0, 0, 0, .9)', 'rgba(0, 0, 0, .5)', 'rgba(0, 0, 0, .1)','rgba(0, 0, 0, 0)']}
+                colors={['rgba(0, 0, 0, .95)', 'rgba(0, 0, 0, .75)', 'rgba(0, 0, 0, .5)','rgba(0, 0, 0, 0)']}
                 style={{ padding: 15, borderRadius: 5 }}
               > 
               <Text style={{textAlign: "left", fontFamily: "aktiv-grotesk-regular", color:"white", textTransform: "uppercase", fontSize: 30, marginTop:-10, marginLeft:-5}}> {truncate(this.props.name)} </Text>
