@@ -29,21 +29,21 @@ export default class EventDetailsScreen extends React.Component {
             {/* Spacer */}
             <Text>  </Text> 
             {/* Title */}
-            <Text style={[styles.title, { color: accent }]}> {this.getParam('title')} </Text>
+            <Text style={[styles.title, { color: accent }]}>{this.getParam('title')}</Text>
             <View style={styles.bottom}>
               {/* Calendar bit */}
               <View style={styles.calendar}>
-                <Text style={[styles.secondaryText, { fontSize: 15, textAlign: 'center' }]} > {dayOfWeek} </Text>
-                <Text style={styles.calendarText}> {dayOfMonth} </Text>
+                <Text style={[styles.secondaryText, { fontSize: 15, textAlign: 'center' }]} >{dayOfWeek}</Text>
+                <Text style={styles.calendarText}>{dayOfMonth}</Text>
               </View>
               {/* Extra info bit*/}
               <View style={styles.extraInfo}>
-                <Text style={styles.secondaryText}> {this.getParam('time')}  </Text>
-                <Text style={styles.secondaryText} > {this.getParam('location')}  </Text>
+                <Text style={styles.secondaryText}>{this.getParam('time')}</Text>
+                <Text style={styles.secondaryText}>{this.getParam('location')}</Text>
               </View>
             </View>
             <View style = {styles.innerView}>
-              <Text> {this.getParam("description","default desc")} </Text>
+              <Text style = {styles.description}>{this.getParam("description","default desc")}</Text>
             </View>
         </ScrollView>  
       );
@@ -61,16 +61,9 @@ const styles = StyleSheet.create({
     marginRight:"auto",
     width:"95%"
   },
-  title: {
-    textAlign: "left",
-    fontWeight: "bold",
-    fontSize: 20,
-    marginTop: -10,
-    marginLeft: 5
-  },
   secondaryText: {
-    fontWeight: '200',
-    fontSize: 18
+    fontWeight: '300',
+    fontSize: 16,
   },
   calendar: {
     justifyContent: 'center',
@@ -89,5 +82,16 @@ const styles = StyleSheet.create({
   bottom: {
     flexDirection: "row",
     margin: 10,
-  }
+  },
+  description: {
+    fontWeight: '300',
+    fontSize: 14,
+  },
+  title: {
+    textAlign: "left",
+    fontWeight: "bold",
+    fontSize: 25,
+    marginTop: -10,
+    marginLeft: 10,
+  },
 });
