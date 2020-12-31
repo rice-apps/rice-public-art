@@ -132,7 +132,7 @@ export default class App extends React.Component {
       'aktiv-grotesk-bold': require('./assets/fonts/AktivGrotesk-Bold.ttf'),
     });
     // This delay specifies the length of time the gif is on screen
-    await delay(2000);
+    await delay(1500);
     this.setState({ isReady: true });
     this.setState({ assetsLoaded: true });
   };
