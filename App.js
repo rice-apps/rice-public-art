@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, Image, Button, StatusBar, Platform } from 'reac
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import * as Font from 'expo-font';
 import { LIGHT_ORANGE, BLUE, LIGHT_GREEN } from './COLORS.js'
-import { SplashScreen } from 'expo';
+import * as SplashScreen from 'expo-splash-screen';
 import {Asset} from 'expo-asset';
 
 
