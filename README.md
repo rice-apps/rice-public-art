@@ -1,4 +1,4 @@
-# Moody
+# Rice Public Art App
 A React Native app aiming to bring awareness to campus art at Rice
 
 ## Prerequisites
