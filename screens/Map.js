@@ -1,5 +1,6 @@
 import React from 'react';
 import { ImageBackground, TouchableHighlight } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { createStackNavigator } from 'react-navigation-stack'
 import MapView, { Callout } from 'react-native-maps';
 import { Marker } from 'react-native-maps';
@@ -221,32 +222,36 @@ this.props.navigation.dispatch(resetAction);
             <View style={[styles.calloutContainer]}>
               <View style={styles.calloutView}>
                 <ImageBackground style={styles.calloutImage} source={{ uri: this.state.data[this.state.calloutIndx].image }}>
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <View style={[styles.closeCallout, { marginLeft: 10 }]}>
-                      <Button title={"X"} onPress={() => this.setState({ showCallout: false })} />
+                <LinearGradient
+                    colors={['rgba(0, 0, 0, .8)', 'rgba(0, 0, 0, .7)', 'rgba(0, 0, 0, .25)','rgba(0, 0, 0, 0)']}
+                    style={{borderRadius: 5}}
+                 > 
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                      <View style={[styles.closeCallout, { marginLeft: 10 }]}>
+                        <Button title={"X"} onPress={() => this.setState({ showCallout: false })} />
+                      </View>
+                      <Text style={styles.calloutTitle}>
+                        {this.state.data[this.state.calloutIndx].abbreviatedName}
+                      </Text>
+                      <View style={[styles.closeCallout, { marginRight: 10 }]}>
+                        <Button
+                          title={"i"}
+                          onPress={() => {
+                            this.props.navigation.navigate('Details', {
+                              name: this.state.data[this.state.calloutIndx].name,
+                              description: this.state.data[this.state.calloutIndx].description,
+                              image: this.state.data[this.state.calloutIndx].image,
+                              location: this.state.data[this.state.calloutIndx].location,
+                              artist: this.state.data[this.state.calloutIndx].artist,
+                              year: this.state.data[this.state.calloutIndx].year,
+                              index: this.state.calloutIndx
+                            })
+                          }}
+                        />
+                      </View>
                     </View>
-                    <Text style={styles.calloutTitle}>
-                      {this.state.data[this.state.calloutIndx].abbreviatedName}
-                    </Text>
-                    <View style={[styles.closeCallout, { marginRight: 10 }]}>
-                      <Button
-                        title={"i"}
-                        onPress={() => {
-                          this.props.navigation.navigate('Details', {
-                            name: this.state.data[this.state.calloutIndx].name,
-                            description: this.state.data[this.state.calloutIndx].description,
-                            image: this.state.data[this.state.calloutIndx].image,
-                            location: this.state.data[this.state.calloutIndx].location,
-                            artist: this.state.data[this.state.calloutIndx].artist,
-                            year: this.state.data[this.state.calloutIndx].year,
-                            index: this.state.calloutIndx
-                          })
-                        }}
-                      />
-                    </View>
-                  </View>
+                  </LinearGradient>
                 </ImageBackground>
-                
                 <TouchableHighlight 
                   onPress={() => {
                     this.setState({

@@ -13,6 +13,7 @@ export default class Topbar extends React.Component {
         <View style={{
           left: leftDisplacement, 
           //backgroundColor: "orange",
+          bottom: 5,
           flexDirection: 'row'}}>
           <Text style={{left:leftDisplacement, fontFamily: 'aktiv-grotesk-bold', fontSize: 30, color: "white"}} > {this.props.text} </Text>
         </View>

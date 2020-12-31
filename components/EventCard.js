@@ -33,11 +33,11 @@ class EventCard extends React.Component {
             <View style={[styles.card, { borderColor: accent }, {backgroundColor:backColor}]}>
             <ImageBackground style={styles.image} imageStyle={{ borderRadius: 10 }} source={{ uri: this.props.image }}>
             </ImageBackground>
-            <Text style={[styles.title, { color: accent }]}> {truncate(this.props.title)} </Text>
+            <Text style={[styles.title, { color: accent}]}> {truncate(this.props.title,30)} </Text>
             <View style={styles.bottom}>
               {/* Calendar bit */}
               <View style={styles.calendar}>
-                <Text style={[styles.secondaryText, { fontSize: 15, textAlign: 'center' }]} > {dayOfWeek} </Text>
+                <Text style={[styles.secondaryText, { fontSize: 15, textAlign: 'center'}]} > {dayOfWeek} </Text>
                 <Text style={styles.calendarText}> {dayOfMonth} </Text>
               </View>
               {/* Extra info bit*/}
@@ -74,11 +74,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: -10,
     marginLeft: 20,
-    fontFamily:"aktiv-grotesk-bold"
   },
   secondaryText: {
-    fontWeight: '200',
-    fontSize: 18
+    fontWeight: '300',
+    fontSize: 16,
   },
   calendar: {
     justifyContent: 'center',
