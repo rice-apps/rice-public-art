@@ -1,12 +1,10 @@
 {
   "expo": {
-    "name": "Moody Map",
+    "name": "Rice Public Art",
     "slug": "moody",
     "privacy": "public",
     "platforms": [
-      "ios",
-      "android",
-      "web"
+      "ios"
     ],
     "version": "1.0.0",
     "orientation": "portrait",
@@ -23,7 +21,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "org.riceapps.rice-public-art"
     }
   }
 }
