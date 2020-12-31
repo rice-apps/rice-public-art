@@ -1,3 +1,4 @@
+### Rice Public Art App
 ## About us
 This app was developed for the Moody Center for the Arts for the Arts by a team of Rice students:
  - Danny Andreini
