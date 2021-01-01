@@ -14,6 +14,7 @@ import { COLORS, BLUE } from '../COLORS.js';
 const { width, height } = Dimensions.get('window');
 
 class MapScreen extends React.Component {
+
   static navigationOptions = ({ navigation }) => ({
     headerLeft: <Topbar text="Campus"></Topbar>,
     headerStyle: {
@@ -32,7 +33,6 @@ class MapScreen extends React.Component {
     this.state = {
       loading: false,
       data: [],
-      userLocation: null,
       destination: this.getParam("destination"),
       showRoute: this.getParam("showRoute",false),
       routeDuration: null,
@@ -40,6 +40,7 @@ class MapScreen extends React.Component {
       calloutIndx: null
     };
     this.mapView = null;
+    this.userLocation = null;
   }
 
   componentDidMount() {
@@ -55,7 +56,7 @@ class MapScreen extends React.Component {
             showCallout: true,
             fromDetails: true,
             calloutIndx: params.index,
-            showRoute: true,
+            showRoute: false,
             destination: {
               latitude: params.location.lat,
               longitude: params.location.lon
@@ -64,7 +65,7 @@ class MapScreen extends React.Component {
         } else {
           this.setState({
             showCallout: false
-                  })
+          })
         }
         
       }
@@ -73,13 +74,10 @@ class MapScreen extends React.Component {
     navigator.geolocation.getCurrentPosition((position) => {
       var lat = parseFloat(position.coords.latitude)
       var long = parseFloat(position.coords.longitude)
-
-      this.setState({
-        userLocation: {
-          latitude: lat,
-          longitude: long
-        }
-      })
+      this.userLocation = {
+        latitude: lat,
+        longitude: long
+      }
     },
       (error) => console.log(JSON.stringify(error)),
       { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 });
@@ -197,12 +195,18 @@ this.props.navigation.dispatch(resetAction);
             latitudeDelta: 0.03,
             longitudeDelta: 0.015,
           }}
+          onUserLocationChange={locationChangedEvent => {
+            this.userLocation = {
+              latitude: locationChangedEvent.nativeEvent.coordinate.latitude,
+              longitude: locationChangedEvent.nativeEvent.coordinate.longitude
+            }
+          }}
         >
           {markers}
           {
             this.state.showRoute  ?
               <MapViewDirections
-                origin={this.state.userLocation}
+                origin={this.userLocation}
                 destination={this.state.destination}
                 apikey={GOOGLE_MAPS_APIKEY}
                 strokeWidth={7}
