@@ -229,22 +229,7 @@ this.props.navigation.dispatch(resetAction);
           (this.state.showCallout && this.state.finished) ? (
             <View style={[styles.calloutContainer]}>
               <View style={styles.calloutView}>
-                <ImageBackground style={styles.calloutImage} source={{ uri: this.state.data[this.state.calloutIndx].image }}>
-                <LinearGradient
-                    colors={['rgba(0, 0, 0, .8)', 'rgba(0, 0, 0, .7)', 'rgba(0, 0, 0, .25)','rgba(0, 0, 0, 0)']}
-                    style={{borderRadius: 5}}
-                 > 
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                      <View style={[styles.closeCallout, { marginLeft: 10 }]}>
-                        <Button title={"X"} onPress={() => this.setState({ showCallout: false })} />
-                      </View>
-                      <Text style={styles.calloutTitle}>
-                        {this.state.data[this.state.calloutIndx].abbreviatedName}
-                      </Text>
-                      <View style={[styles.closeCallout, { marginRight: 10 }]}>
-                        <Button
-                          title={"i"}
-                          onPress={() => {
+                <TouchableHighlight onPress={() => {
                             this.props.navigation.navigate('Details', {
                               name: this.state.data[this.state.calloutIndx].name,
                               description: this.state.data[this.state.calloutIndx].description,
@@ -255,11 +240,23 @@ this.props.navigation.dispatch(resetAction);
                               index: this.state.calloutIndx
                             })
                           }}
-                        />
+                >
+                <ImageBackground style={styles.calloutImage} source={{ uri: this.state.data[this.state.calloutIndx].image }}>
+                <LinearGradient
+                    colors={['rgba(0, 0, 0, .8)', 'rgba(0, 0, 0, .7)', 'rgba(0, 0, 0, .25)','rgba(0, 0, 0, 0)']}
+                    style={{borderRadius: 5}}
+                 > 
+                    <View style={{ flexDirection: 'row', justifyContent: 'left' }}>
+                      <View style={[styles.closeCallout, { marginLeft: 10, marginRight:10 }]}>
+                        <Button title={"X"} onPress={() => this.setState({ showCallout: false })} />
                       </View>
+                      <Text style={styles.calloutTitle}>
+                        {this.state.data[this.state.calloutIndx].abbreviatedName}
+                      </Text>
                     </View>
                   </LinearGradient>
                 </ImageBackground>
+                </TouchableHighlight>
                 <TouchableHighlight 
                   onPress={() => {
                     this.setState({
