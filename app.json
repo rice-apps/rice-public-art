@@ -22,7 +22,7 @@
     ],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "org.riceapps.rice-public-art"
+      "bundleIdentifier": "org.riceapps.ricepublicart"
     }
   }
 }
