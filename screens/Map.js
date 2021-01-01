@@ -168,6 +168,7 @@ this.props.navigation.dispatch(resetAction);
               longitudeDelta: this.mapView.props.initialRegion.longitudeDelta * 0.8
             });
           }}
+          onDeselect={()=> this.setState({showCallout: false})}
           centerOffset={{ x: 0, y: -25 }}
         >
           <Image source={require('../images/mapIcon.png')} style={{ height: 50, width: 50, tintColor: art.colorCode }} />
@@ -246,10 +247,7 @@ this.props.navigation.dispatch(resetAction);
                     colors={['rgba(0, 0, 0, .8)', 'rgba(0, 0, 0, .7)', 'rgba(0, 0, 0, .25)','rgba(0, 0, 0, 0)']}
                     style={{borderRadius: 5}}
                  > 
-                    <View style={{ flexDirection: 'row', justifyContent: 'left' }}>
-                      <View style={[styles.closeCallout, { marginLeft: 10, marginRight:10 }]}>
-                        <Button title={"X"} onPress={() => this.setState({ showCallout: false })} />
-                      </View>
+                    <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
                       <Text style={styles.calloutTitle}>
                         {this.state.data[this.state.calloutIndx].abbreviatedName}
                       </Text>
