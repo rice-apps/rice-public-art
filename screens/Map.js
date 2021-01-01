@@ -63,7 +63,7 @@ class MapScreen extends React.Component {
                   })
         } else {
           this.setState({
-            showCallout: false
+            showCallout: true
                   })
         }
         
