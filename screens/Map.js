@@ -10,8 +10,6 @@ import { GOOGLE_MAPS_APIKEY } from '../AUTHENTICATION.js';
 import Topbar from '../components/Topbar.js';
 import DetailsScreen from './Details.js';
 import { COLORS, BLUE } from '../COLORS.js';
-import { withRouter } from 'react-router-dom';
-import { withOrientation } from 'react-navigation';
 
 const { width, height } = Dimensions.get('window');
 
@@ -213,6 +211,15 @@ this.props.navigation.dispatch(resetAction);
                   this.setState({
                     routeDuration: Math.round(result.duration)
                   })
+                  // Center map on route
+                  this.mapView.fitToCoordinates(result.coordinates, {
+                    edgePadding: {
+                      right: (width / 10),
+                      bottom: (height / 10),
+                      left: (width / 10),
+                      top: (height / 10),
+                    }
+                  });
                 }}
               /> : null
           }
