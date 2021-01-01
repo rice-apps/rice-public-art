@@ -42,7 +42,7 @@ export default class DetailsScreen extends React.Component {
       );
     }
 
-    route(){
+    showArtOnMap(){
       let location = this.getParam("location")
       let index = this.getParam("index") // CAUTION: This might be deprecated with filtering!!!!
 
@@ -77,7 +77,7 @@ export default class DetailsScreen extends React.Component {
               </View>
             </View>
             <View>
-              <Button title="Route Me" onPress={() => this.route()}>
+              <Button title="Show On Map" onPress={() => this.showArtOnMap()}>
                 
               </Button>
             </View>
