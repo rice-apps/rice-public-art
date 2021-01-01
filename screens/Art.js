@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, Button, ActivityIndicator} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Button, ActivityIndicator, Alert} from 'react-native';
 import Card from '../components/Card.js';
 import Topbar from '../components/Topbar.js';
 import { LIGHT_ORANGE } from '../COLORS.js'
@@ -13,6 +13,7 @@ import { withOrientation } from 'react-navigation';
 
 import Modal from 'react-native-modal';
 import { CheckBox } from 'react-native-elements';
+import { SYSTEM_BRIGHTNESS } from 'expo-permissions';
 
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -93,9 +94,40 @@ class HomeScreen extends React.Component {
       { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 });
   }
 
+  generateCards(){
+    return this.state.data.map((content, i) =>
+    this.shouldShowArtWithFilter(content) ?
+    <Card
+      key={'card' + i}
+      name={content.name}
+      description={content.description}
+      image={content.image}
+      artist={content.artist}
+      location={content.location}
+      year={content.year}
+      index={i} // !!!!!!!!CAUTION: This might be deprecated if filtering is added!!!!!!!!
+      // Assume a 20 min. per mile walking speed
+      // This is on the high end because we are using a straight line approximation for the route
+      // which underestimates the total distance
+      minutes={this.state.userLocation != null ?
+        Math.round(distance(this.state.userLocation.latitude, this.state.userLocation.longitude,
+          content.location.lat, content.location.lon) * 20)
+        : null}
+      navigation={this.props.navigation}
+    /> : null
+  )
+  }
   toggleFilter(filterName) {
     let filters = this.state.filters
     filters[filterName] =  !filters[filterName]
+    if (this.generateCards().filter(x=>x!=null).length == 0){
+      //Reset filters
+      Object.keys(filters).forEach(function(key) {
+        filters[key] = false;
+      });
+      //Alert user
+      Alert.alert("No content","Try selecting different filters");
+    }
     this.setState({filters: filters})
   }
 
@@ -136,30 +168,11 @@ class HomeScreen extends React.Component {
       // We got the data
       // Here we have to do somoething with this.state.data to reflect in the return statement
       // Return display formating data into Piece componenets
+
       return (
         <View>
           <ScrollView style={styles.scrollView}>
-            {this.state.data.map((content, i) =>
-              this.shouldShowArtWithFilter(content) ?
-              <Card
-                key={'card' + i}
-                name={content.name}
-                description={content.description}
-                image={content.image}
-                artist={content.artist}
-                location={content.location}
-                year={content.year}
-                index={i} // !!!!!!!!CAUTION: This might be deprecated if filtering is added!!!!!!!!
-                // Assume a 20 min. per mile walking speed
-                // This is on the high end because we are using a straight line approximation for the route
-                // which underestimates the total distance
-                minutes={this.state.userLocation != null ?
-                  Math.round(distance(this.state.userLocation.latitude, this.state.userLocation.longitude,
-                    content.location.lat, content.location.lon) * 20)
-                  : null}
-                navigation={this.props.navigation}
-              /> : null
-            )}
+            {this.generateCards()}
           </ScrollView>
           <Modal
             isVisible={this.state.showFilterMenu}
