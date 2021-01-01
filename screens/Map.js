@@ -244,12 +244,12 @@ this.props.navigation.dispatch(resetAction);
                 >
                 <ImageBackground style={styles.calloutImage} source={{ uri: this.state.data[this.state.calloutIndx].image }}>
                 <LinearGradient
-                    colors={['rgba(0, 0, 0, .8)', 'rgba(0, 0, 0, .7)', 'rgba(0, 0, 0, .25)','rgba(0, 0, 0, 0)']}
+                    colors={['rgba(0, 0, 0, .8)', 'rgba(0, 0, 0, .7)', 'rgba(0, 0, 0, .3)','rgba(0, 0, 0, 0)']}
                     style={{borderRadius: 5}}
                  > 
                     <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
-                      <Text style={styles.calloutTitle}>
-                        {this.state.data[this.state.calloutIndx].abbreviatedName}
+                      <Text style={[styles.calloutTitle,{margin:10}]}>
+                        {this.state.data[this.state.calloutIndx].name}
                       </Text>
                     </View>
                   </LinearGradient>
