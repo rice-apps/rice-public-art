@@ -151,7 +151,8 @@ this.props.navigation.dispatch(resetAction);
           key={art.name}
           coordinate={{ latitude: art.location.lat, longitude: art.location.lon }}
           title={art.name}
-          onPress={() => {
+          isPreselected={false}
+          onSelect={() => {
             this.setState({
               showRoute: false,
               showCallout: true,
