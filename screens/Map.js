@@ -52,6 +52,7 @@ class MapScreen extends React.Component {
           params = payload.action.action.params
         }
         if(params) {
+          // Update state
           this.setState({
             showCallout: true,
             fromDetails: true,
@@ -61,7 +62,17 @@ class MapScreen extends React.Component {
               latitude: params.location.lat,
               longitude: params.location.lon
             }
-                  })
+          })
+          // Center on artpiece if data already loaded
+          if (this.state.data.length > 0) {
+            let art = this.state.data[params.index];
+            this.mapView.animateToRegion({
+              latitude: art.location.lat - this.mapView.props.initialRegion.latitudeDelta * 0.08,
+              longitude: art.location.lon,
+              latitudeDelta: this.mapView.props.initialRegion.latitudeDelta * 0.5,
+              longitudeDelta: this.mapView.props.initialRegion.longitudeDelta * 0.5
+            });
+          }
         } else {
           this.setState({
             showCallout: true
@@ -137,8 +148,7 @@ this.props.navigation.dispatch(resetAction);
   }
 
   render() {
-    console.log("screen options", this.props.navigation.state)
-    let markers = []
+    let markers = [];
 
     for (let i = 0; i < this.state.data.length; i++) {
       const art = this.state.data[i];
