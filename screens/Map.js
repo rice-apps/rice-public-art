@@ -10,9 +10,34 @@ import { GOOGLE_MAPS_APIKEY } from '../AUTHENTICATION.js';
 import Topbar from '../components/Topbar.js';
 import DetailsScreen from './Details.js';
 import { COLORS, BLUE } from '../COLORS.js';
+import distance from "../util/distance.js";
 
 const { width, height } = Dimensions.get('window');
 
+function smartColor(artPieces){  
+  for(var i = 0; i < artPieces.length; i++){
+    var artPiecesCopy = Array.from(artPieces);
+    //Sort artPiecesCopy from closest to farthest
+    artPiecesCopy.sort((a,b)=>{
+        var aloc = a.location; var bloc = b.location; var iloc = artPieces[i].location;
+        var d1 = distance(aloc.lat,aloc.lon,  iloc.lat,iloc.lon)
+        var d2 = distance(bloc.lat,bloc.lon,  iloc.lat,iloc.lon)
+        return d1-d2
+    })
+    var possibleColors = new Set(COLORS)
+    //Remove possible colors that are close
+    for(var j=0; j < artPiecesCopy.length; j++){
+      if (possibleColors.size == 1) break;
+      if (artPiecesCopy[j].colorCode) possibleColors.delete(artPiecesCopy[j].colorCode);
+    }
+    //Pick a possible color deterministically (so it's conistent accros loads)
+    possibleColors = Array.from(possibleColors);
+    possibleColors.sort();
+    var color = possibleColors[i % possibleColors.length];
+    //Set color
+    artPieces[i].colorCode = color;
+  }
+}
 class MapScreen extends React.Component {
 
   static navigationOptions = ({ navigation }) => ({
@@ -97,11 +122,12 @@ class MapScreen extends React.Component {
     fetch('https://moody-backend-273918.uc.r.appspot.com/campusArt/allArt', { method: 'GET' })
       .then(response => response.json()) // Get json of response
       .then((responseJson) => {
+        smartColor(responseJson.data);
         this.setState({
           loading: false,
           data: responseJson.data.map((art, i) => {
-            art.colorCode = COLORS[i % COLORS.length];
             art.abbreviatedName = art.name
+            console.log("boo",art.colorCode);
             if (art.name.length > 15) {
               art.abbreviatedName = art.name.substring(0, 15) + '...'
             }
@@ -122,7 +148,7 @@ class MapScreen extends React.Component {
         })
       })
       .catch(error => console.log(error)) //to catch the errors if any
-  }
+    }
 
   route(){
 
