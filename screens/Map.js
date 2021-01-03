@@ -127,7 +127,6 @@ class MapScreen extends React.Component {
           loading: false,
           data: responseJson.data.map((art, i) => {
             art.abbreviatedName = art.name
-            console.log("boo",art.colorCode);
             if (art.name.length > 15) {
               art.abbreviatedName = art.name.substring(0, 15) + '...'
             }
@@ -155,8 +154,8 @@ class MapScreen extends React.Component {
     let location = this.getParam("location")
     let index = this.getParam("index") // CAUTION: This might be deprecated with filtering!!!!
 
-    console.log("location", location)
-    console.log("index", index)
+    // console.log("location", location)
+    // console.log("index", index)
     const resetAction = StackActions.reset({
       index: 0,
       //Navigates to Home when you click back to Art or Map
@@ -164,8 +163,8 @@ class MapScreen extends React.Component {
     });
     //this runs the action
 this.props.navigation.dispatch(resetAction);
-    console.log("location2", location)
-    console.log("index2", index)
+    // console.log("location2", location)
+    // console.log("index2", index)
 
     this.props.navigation.navigate("Map", {
       "location": location,
