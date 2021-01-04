@@ -119,14 +119,14 @@ class HomeScreen extends React.Component {
   }
   toggleFilter(filterName) {
     let filters = this.state.filters
-    filters[filterName] =  !filters[filterName]
-    if (this.generateCards().filter(x=>x!=null).length == 0){
-      //Reset filters
-      Object.keys(filters).forEach(function(key) {
-        filters[key] = false;
-      });
+    var v = !filters[filterName]
+    //Reset filters
+    Object.keys(filters).forEach((key)=>filters[key] = false)
+    filters[filterName] = v
+    if (this.generateCards().filter(x=>x!=null).length == 0) {
       //Alert user
       Alert.alert("No content","Try selecting different filters");
+      filters[filterName] = false;
     }
     this.setState({filters: filters})
   }
