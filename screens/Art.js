@@ -40,7 +40,7 @@ class HomeScreen extends React.Component {
 
   _showFilter = () => {
     this.setState({showFilterMenu: true});
-    console.log("Showing filter menu");
+    //console.log("Showing filter menu");
   }
 
   // Set default state for Homescreen (no data, and loading)
@@ -95,7 +95,7 @@ class HomeScreen extends React.Component {
   }
 
   generateCards(){
-    return this.state.data.map((content, i) =>
+    var cards = this.state.data.map((content, i) =>
     this.shouldShowArtWithFilter(content) ?
     <Card
       key={'card' + i}
@@ -114,8 +114,15 @@ class HomeScreen extends React.Component {
           content.location.lat, content.location.lon) * 20)
         : null}
       navigation={this.props.navigation}
-    /> : null
-  )
+    /> : null)
+    var myloc = {lat:this.state.userLocation.latitude,lon:this.state.userLocation.longitude}
+    cards.sort((a,b)=>{
+      var aloc = a.props.location; var bloc = b.props.location;
+      var d1 = distance(aloc.lat,aloc.lon,  myloc.lat,myloc.lon)
+      var d2 = distance(bloc.lat,bloc.lon,  myloc.lat,myloc.lon)
+      return d1-d2
+  })
+    return cards;
   }
   toggleFilter(filterName) {
     let filters = this.state.filters
@@ -132,8 +139,8 @@ class HomeScreen extends React.Component {
   }
 
   shouldShowArtWithFilter(content) {
-    console.log("********** FILTERING ***********")
-    console.log(content);
+    //console.log("********** FILTERING ***********")
+    //console.log(content);
     if (content.indoors == false) {
       content.outdoors = true;
     }
@@ -142,7 +149,7 @@ class HomeScreen extends React.Component {
     var allFiltersTrue = true
     var allFiltersFalse = true
     filters.forEach(filter => {
-      console.log(filter, this.state.filters[filter], content[filter]);
+      //console.log(filter, this.state.filters[filter], content[filter]);
       if (this.state.filters[filter] && content[filter]) {
         passedFilter = true;
       }
