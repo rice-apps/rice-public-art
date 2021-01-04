@@ -56,13 +56,14 @@ class MapScreen extends React.Component {
     super(props);
     // console.log("propss", this.getParam("destination"))
     this.state = {
-      loading: false,
+      loading: true,
       data: [],
       destination: this.getParam("destination"),
       showRoute: this.getParam("showRoute",false),
       routeDuration: null,
       showCallout: false,
-      calloutIndx: null
+      calloutIndx: null,
+      fromDetails: false,
     };
     this.mapView = null;
     this.userLocation = null;
@@ -77,7 +78,8 @@ class MapScreen extends React.Component {
           params = payload.action.action.params
         }
         if(params) {
-          // Update state
+          // Navigated here from the art info page
+          // Update state to show callout for appropriate art piece
           this.setState({
             showCallout: true,
             fromDetails: true,
@@ -98,12 +100,7 @@ class MapScreen extends React.Component {
               longitudeDelta: this.mapView.props.initialRegion.longitudeDelta * 0.5
             });
           }
-        } else {
-          this.setState({
-            showCallout: true
-                  })
         }
-        
       }
     );
     // console.log("passed props", this.props.navigation.state)
@@ -124,7 +121,6 @@ class MapScreen extends React.Component {
       .then((responseJson) => {
         smartColor(responseJson.data);
         this.setState({
-          loading: false,
           data: responseJson.data.map((art, i) => {
             art.abbreviatedName = art.name
             if (art.name.length > 15) {
@@ -132,7 +128,7 @@ class MapScreen extends React.Component {
             }
             return art;
           }),
-          finished: true
+          loading: false,
         }, () => {
           if(this.state.fromDetails) {
             console.log("Centering!")
@@ -266,7 +262,7 @@ this.props.navigation.dispatch(resetAction);
           }
         </MapView>
         {
-          (this.state.showCallout && this.state.finished) ? (
+          (this.state.showCallout && !this.state.loading) ? (
             <View style={[styles.calloutContainer]}>
               <View style={styles.calloutView}>
                 <TouchableHighlight onPress={() => {
