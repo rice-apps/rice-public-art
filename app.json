@@ -14,7 +14,6 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "permissions": ["ACCESS_FINE_LOCATION"],
     "updates": {
       "fallbackToCacheTimeout": 0
     },
