@@ -117,11 +117,13 @@ class HomeScreen extends React.Component {
     /> : null)
     var myloc = {lat:this.state.userLocation.latitude,lon:this.state.userLocation.longitude}
     cards.sort((a,b)=>{
-      var aloc = a.props.location; var bloc = b.props.location;
-      var d1 = distance(aloc.lat,aloc.lon,  myloc.lat,myloc.lon)
-      var d2 = distance(bloc.lat,bloc.lon,  myloc.lat,myloc.lon)
-      return d1-d2
-  })
+      if(a!= null & b!= null){
+        var aloc = a.props.location; var bloc = b.props.location;
+        var d1 = distance(aloc.lat,aloc.lon,  myloc.lat,myloc.lon)
+        var d2 = distance(bloc.lat,bloc.lon,  myloc.lat,myloc.lon)
+        return d1-d2
+      }
+    })
     return cards;
   }
   toggleFilter(filterName) {
