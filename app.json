@@ -22,7 +22,10 @@
     ],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "org.riceapps.ricepublicart"
+      "bundleIdentifier": "org.riceapps.ricepublicart",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "This app uses your location to show you where you are relative to art pieces on campus."
+      }
     }
   }
 }
