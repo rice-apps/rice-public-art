@@ -228,9 +228,11 @@ this.props.navigation.dispatch(resetAction);
             longitudeDelta: 0.015,
           }}
           onUserLocationChange={locationChangedEvent => {
-            this.userLocation = {
-              latitude: locationChangedEvent.nativeEvent.coordinate.latitude,
-              longitude: locationChangedEvent.nativeEvent.coordinate.longitude
+            if (locationChangedEvent.nativeEvent.coordinate){
+              this.userLocation = {
+                latitude: locationChangedEvent.nativeEvent.coordinate.latitude,
+                longitude: locationChangedEvent.nativeEvent.coordinate.longitude
+              }
             }
           }}
         >
