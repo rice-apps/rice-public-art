@@ -1,11 +1,13 @@
 ## About us
 This app was developed for the Moody Center for the Arts by a team of RiceApp developers:
- - Danny Andreini
- - Ryan Knightly
- - Katherine Ngo
- - Jiin Rhew
- - Ananya Vaidya
- - Adam Zawierucha
+- Danny Andreini
+- Ginny Jeon
+- Ryan Knightly
+- Nicholas Meisburger
+- Katherine Ngo
+- Jiin Rhew
+- Ananya Vaidya
+- Adam Zawierucha
  
 ## Privacy Policy
 No personal data shared with us will be given to any third party, under any circumstances. Your data will also never be used by us for any purpose without specific permission.
