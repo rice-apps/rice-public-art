@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, Button, ActivityIndicator, Alert} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Button, ActivityIndicator, Alert } from 'react-native';
 import Card from '../components/Card.js';
 import Topbar from '../components/Topbar.js';
 import { LIGHT_ORANGE } from '../COLORS.js'
@@ -20,7 +20,7 @@ class HomeScreen extends React.Component {
     const params = navigation.state.params || {};
 
     return {
-      headerLeft: <Topbar text="Art"/>,
+      headerLeft: <Topbar text="Art" />,
       headerRight: () => (
         <Button
           onPress={navigation.getParam('showFilter')}
@@ -39,7 +39,7 @@ class HomeScreen extends React.Component {
   }
 
   _showFilter = () => {
-    this.setState({showFilterMenu: true});
+    this.setState({ showFilterMenu: true });
     //console.log("Showing filter menu");
   }
 
@@ -94,35 +94,35 @@ class HomeScreen extends React.Component {
       { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 });
   }
 
-  generateCards(){
+  generateCards() {
     var cards = this.state.data.map((content, i) =>
-    this.shouldShowArtWithFilter(content) ?
-    <Card
-      key={'card' + i}
-      name={content.name}
-      description={content.description}
-      image={content.image}
-      artist={content.artist}
-      location={content.location}
-      year={content.year}
-      index={i} // !!!!!!!!CAUTION: This might be deprecated if filtering is added!!!!!!!!
-      // Assume a 20 min. per mile walking speed
-      // This is on the high end because we are using a straight line approximation for the route
-      // which underestimates the total distance
-      minutes={this.state.userLocation != null ?
-        Math.round(distance(this.state.userLocation.latitude, this.state.userLocation.longitude,
-          content.location.lat, content.location.lon) * 20)
-        : null}
-      navigation={this.props.navigation}
-    /> : null)
-    if(this.state && this.state.userLocation && this.state.userLocation.latitude && this.state.userLocation.longitude){
-      var myloc = {lat:this.state.userLocation.latitude,lon:this.state.userLocation.longitude}
-      cards.sort((a,b)=>{
-        if(a!= null & b!= null){
+      this.shouldShowArtWithFilter(content) ?
+        <Card
+          key={'card' + i}
+          name={content.name}
+          description={content.description}
+          image={content.image}
+          artist={content.artist}
+          location={content.location}
+          year={content.year}
+          index={i} // !!!!!!!!CAUTION: This might be deprecated if filtering is added!!!!!!!!
+          // Assume a 20 min. per mile walking speed
+          // This is on the high end because we are using a straight line approximation for the route
+          // which underestimates the total distance
+          minutes={this.state.userLocation != null ?
+            Math.round(distance(this.state.userLocation.latitude, this.state.userLocation.longitude,
+              content.location.lat, content.location.lon) * 20)
+            : null}
+          navigation={this.props.navigation}
+        /> : null)
+    if (this.state && this.state.userLocation && this.state.userLocation.latitude && this.state.userLocation.longitude) {
+      var myloc = { lat: this.state.userLocation.latitude, lon: this.state.userLocation.longitude }
+      cards.sort((a, b) => {
+        if (a != null & b != null) {
           var aloc = a.props.location; var bloc = b.props.location;
-          var d1 = distance(aloc.lat,aloc.lon,  myloc.lat,myloc.lon)
-          var d2 = distance(bloc.lat,bloc.lon,  myloc.lat,myloc.lon)
-          return d1-d2
+          var d1 = distance(aloc.lat, aloc.lon, myloc.lat, myloc.lon)
+          var d2 = distance(bloc.lat, bloc.lon, myloc.lat, myloc.lon)
+          return d1 - d2
         }
       })
     }
@@ -132,14 +132,14 @@ class HomeScreen extends React.Component {
     let filters = this.state.filters
     var v = !filters[filterName]
     //Reset filters
-    Object.keys(filters).forEach((key)=>filters[key] = false)
+    Object.keys(filters).forEach((key) => filters[key] = false)
     filters[filterName] = v
-    if (this.generateCards().filter(x=>x!=null).length == 0) {
+    if (this.generateCards().filter(x => x != null).length == 0) {
       //Alert user
-      Alert.alert("No content","Try selecting different filters");
+      Alert.alert("No content", "Try selecting different filters");
       filters[filterName] = false;
     }
-    this.setState({filters: filters})
+    this.setState({ filters: filters })
   }
 
   shouldShowArtWithFilter(content) {
@@ -162,7 +162,7 @@ class HomeScreen extends React.Component {
     })
     // don't exclude anything if nothing is checked
     // or if nothing is filtered out
-    if (allFiltersFalse || allFiltersTrue) return true; 
+    if (allFiltersFalse || allFiltersTrue) return true;
     return passedFilter;
   }
 
@@ -171,8 +171,8 @@ class HomeScreen extends React.Component {
     if (this.state.loading) {
       // Display something to inform user data is loading
       return (
-        <View style = {{height: "100%", width: "100%", alignItems: 'center', justifyContent: 'center'}}>
-          <ActivityIndicator size="large" color="#000000"/>
+        <View style={{ height: "100%", width: "100%", alignItems: 'center', justifyContent: 'center' }}>
+          <ActivityIndicator size="large" color="#000000" />
         </View>
       )
     } else {
@@ -187,7 +187,7 @@ class HomeScreen extends React.Component {
           </ScrollView>
           <Modal
             isVisible={this.state.showFilterMenu}
-            onSwipeComplete={() => this.setState({showFilterMenu: false})}
+            onSwipeComplete={() => this.setState({ showFilterMenu: false })}
             swipeDirection={['down']}
           >
             <View style={styles.filterMenu}>
@@ -196,51 +196,51 @@ class HomeScreen extends React.Component {
                 title='Sculpture'
                 checked={this.state.filters.sculpture}
                 onPress={() => this.toggleFilter('sculpture')}
-                containerStyle = {{width: 225}}
+                containerStyle={{ width: 225 }}
               />
               <CheckBox
                 title='Painting'
                 checked={this.state.filters.painting}
                 onPress={() => this.toggleFilter('painting')}
-                containerStyle = {{width: 225}}
+                containerStyle={{ width: 225 }}
               />
               <CheckBox
                 title='Film'
                 checked={this.state.filters.film}
                 onPress={() => this.toggleFilter('film')}
-                containerStyle = {{width: 225}}
+                containerStyle={{ width: 225 }}
               />
               <CheckBox
                 title='Photography'
                 checked={this.state.filters.photography}
                 onPress={() => this.toggleFilter('photography')}
-                containerStyle = {{width: 225}}
+                containerStyle={{ width: 225 }}
               />
               <CheckBox
                 title='Installation'
                 checked={this.state.filters.installation}
                 onPress={() => this.toggleFilter('installation')}
-                containerStyle = {{width: 225}}
+                containerStyle={{ width: 225 }}
               />
               <CheckBox
                 title='Drawing and Prints'
                 checked={this.state.filters.drawingAndPrints}
                 onPress={() => this.toggleFilter('drawingAndPrints')}
-                containerStyle = {{width: 225}}
+                containerStyle={{ width: 225 }}
               />
               <CheckBox
                 title='Indoors'
                 checked={this.state.filters.indoors}
                 onPress={() => this.toggleFilter('indoors')}
-                containerStyle = {{width: 225}}
+                containerStyle={{ width: 225 }}
               />
               <CheckBox
                 title='Outdoors'
                 checked={this.state.filters.outdoors}
                 onPress={() => this.toggleFilter('outdoors')}
-                containerStyle = {{width: 225}}
+                containerStyle={{ width: 225 }}
               />
-              <Button testID={'close-button'} onPress={() => this.setState({showFilterMenu: false})} title="Close" />
+              <Button testID={'close-button'} onPress={() => this.setState({ showFilterMenu: false })} title="Close" />
             </View>
           </Modal>
         </View>

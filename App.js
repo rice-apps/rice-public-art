@@ -1,18 +1,19 @@
-import React, {useEffect, Fragment} from 'react';
+import React, { useEffect, Fragment } from 'react';
 import { createAppContainer, withNavigation } from 'react-navigation';
 import { StyleSheet, Text, View, Image, Button, StatusBar, Platform } from 'react-native';
 //added bottom tab navigator
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import * as Font from 'expo-font';
-import { LIGHT_ORANGE, BLUE, LIGHT_GREEN } from './COLORS.js'
+import { LIGHT_ORANGE, BLUE, LIGHT_GREEN, LIGHT_BLUE } from './COLORS.js'
 import * as SplashScreen from 'expo-splash-screen';
-import {Asset} from 'expo-asset';
+import { Asset } from 'expo-asset';
 
 
 //Screens
 import EventsNavigator from './screens/Events'
 import MapNavigator from './screens/Map'
 import ArtNavigator from './screens/Art'
+import ArtistNavigator from './screens/Artist'
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -20,12 +21,26 @@ const TabNavigator = createBottomTabNavigator({
   Art: {
     screen: ArtNavigator,
     navigationOptions: {
-      tabBarIcon: ({focused, tintColor}) => {
+      tabBarIcon: ({ focused, tintColor }) => {
         return (
           <Image
-            style={{ width: 35, height: 35, tintColor: focused ? LIGHT_ORANGE: 'grey'}}
-            source={require('./images/moodyOutlineLogo.png')} 
-            color = {tintColor}
+            style={{ width: 35, height: 35, tintColor: focused ? LIGHT_ORANGE : 'grey' }}
+            source={require('./images/moodyOutlineLogo.png')}
+            color={tintColor}
+          />
+        )
+      }
+    }
+  },
+  Artist: {
+    screen: ArtistNavigator,
+    navigationOptions: {
+      tabBarIcon: ({ focused, tintColor }) => {
+        return (
+          <Image
+            style={{ width: 35, height: 35, tintColor: focused ? LIGHT_BLUE : 'grey' }}
+            source={require('./images/moodyOutlineLogo.png')}
+            color={tintColor}
           />
         )
       }
@@ -34,12 +49,12 @@ const TabNavigator = createBottomTabNavigator({
   Map: {
     screen: MapNavigator,
     navigationOptions: {
-      tabBarIcon: ({focused, tintColor}) => {
+      tabBarIcon: ({ focused, tintColor }) => {
         return (
           <Image
-            style={{ width: 35, height: 35, tintColor: focused ? BLUE : 'grey'}}
-            source={require('./images/mapIconOutline.png')} 
-            color = {tintColor}
+            style={{ width: 35, height: 35, tintColor: focused ? BLUE : 'grey' }}
+            source={require('./images/mapIconOutline.png')}
+            color={tintColor}
           />
         )
       }
@@ -58,16 +73,17 @@ const TabNavigator = createBottomTabNavigator({
     }
   },
 },
-  {tabBarOptions: {
-    showLabel: true,
-    activeTintColor: 'grey',
-    inactiveTintColor: 'grey',
-    style: {
-      backgroundColor: 'white',
-      height: 70,
-    },
-  }
-});
+  {
+    tabBarOptions: {
+      showLabel: true,
+      activeTintColor: 'grey',
+      inactiveTintColor: 'grey',
+      style: {
+        backgroundColor: 'white',
+        height: 70,
+      },
+    }
+  });
 
 
 const AppContainer = createAppContainer(TabNavigator);
@@ -81,7 +97,7 @@ export default class App extends React.Component {
     isReady: false,
   };
 
-  componentDidMount(){ 
+  componentDidMount() {
     // Shows the splash screen image (logo)
     SplashScreen.preventAutoHide();
   }
@@ -102,16 +118,16 @@ export default class App extends React.Component {
     //const {assetsLoaded} = this.state;
     console.log(this.state)
     // Rest of app is shown when everything is loaded
-    if( this.state.assetsLoaded ) {
+    if (this.state.assetsLoaded) {
       return (
-          <AppContainer
-              ref={nav => {
-                  this.navigator = nav;
-              }}
-          />
+        <AppContainer
+          ref={nav => {
+            this.navigator = nav;
+          }}
+        />
       );
     }
-    if( !this.state.assetsLoaded ) {
+    if (!this.state.assetsLoaded) {
       return (
         <View>
 

@@ -10,6 +10,7 @@
   "dependencies": {
     "@types/react-native-snap-carousel": "^3.7.4",
     "expo": "^40.0.0",
+    "expo-cli": "^4.7.2",
     "expo-linear-gradient": "~8.4.0",
     "expo-splash-screen": "~0.8.1",
     "react": "16.13.1",
