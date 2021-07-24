@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
     fontWeight: '600'
   },
   extraInfo: {
+    flexShrink: 1,
     marginLeft: 10
   },
   bottom: {
