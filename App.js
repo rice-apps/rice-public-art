@@ -38,8 +38,8 @@ const TabNavigator = createBottomTabNavigator({
       tabBarIcon: ({ focused, tintColor }) => {
         return (
           <Image
-            style={{ width: 35, height: 35, tintColor: focused ? LIGHT_BLUE : 'grey' }}
-            source={require('./images/moodyOutlineLogo.png')}
+            style={{ width: 38, height: 38, tintColor: focused ? LIGHT_BLUE : 'grey' }}
+            source={require('./images/artist.png')}
             color={tintColor}
           />
         )
