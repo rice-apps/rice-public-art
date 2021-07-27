@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Button } from 'react-native';
 import Topbar from '../components/Topbar.js';
 import { Dimensions } from 'react-native';
 import Image from 'react-native-scalable-image';
@@ -45,6 +45,11 @@ export default class EventDetailsScreen extends React.Component {
             <View style = {styles.innerView}>
               <Text style = {styles.description}>{this.getParam("description","default desc")}</Text>
             </View>
+            <Button
+              onPress={() => Alert.alert('Simple Button pressed')}
+              title="Add to Calendar"
+              color="#841584"
+            />
         </ScrollView>  
       );
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ImageBackground, StyleSheet, TouchableHighlight } from 'react-native';
+import { View, Text, ImageBackground, StyleSheet, Button, TouchableHighlight } from 'react-native';
 import SwipeGesture from '../swipe-gesture'
 import {truncate} from '../util/stringlogic.js' 
 
@@ -46,6 +46,11 @@ class EventCard extends React.Component {
                 <Text style={styles.secondaryText} > {this.props.location}  </Text>
               </View>
             </View>
+            <Button
+              onPress={() => Alert.alert('Simple Button pressed')}
+              title="Add to Calendar"
+              color="#841584"
+            />
             </View>
         </SwipeGesture>
     </View>

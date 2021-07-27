@@ -24,7 +24,14 @@
       "supportsTablet": false,
       "bundleIdentifier": "org.riceapps.ricepublicart",
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "This app uses your location to show you where you are relative to art pieces on campus."
+        "NSLocationWhenInUseUsageDescription": "This app uses your location to show you where you are relative to art pieces on campus.",
+        "NSReminderUsageDescription": "This app needs access to your calendar for adding events."
+      }
+    },
+    "android": {
+      "permissions": {
+        "READ_CALENDAR": "This app needs access to your calendar for adding events.",
+        "WRITE_CALENDAR": "This app needs permission to edit your calendar for adding events."
       }
     }
   }
