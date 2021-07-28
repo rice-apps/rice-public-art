@@ -223,7 +223,7 @@ class MapScreen extends React.Component {
 
     // let callout = 
     // const marker = markers[0]
-    console.log(markers)
+    // console.log(markers)
     // console.log(this.mark)
     return (
 

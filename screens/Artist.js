@@ -28,6 +28,7 @@ class ArtistScreen extends React.Component {
         };
     };
 
+
     // componentWillMount() {
     //     this.props.navigation.setParams({ showFilter: this._showFilter });
     // }
@@ -43,24 +44,40 @@ class ArtistScreen extends React.Component {
         this.state = {
             loading: true,
             data: [],
+            content: []
         };
     }
 
     // Fires when componenet is initially set/mounted
     componentDidMount() {
         this.setState({
-            loading: false
+            loading: false,
+            data: [{
+                name: 'Jane Doe',
+                pieces: 'A'
+            },
+            {
+                name: 'John Smith',
+                pieces: 'B'
+            },
+            {
+                name: 'Mary Jane',
+                pieces: 'C'
+            }]
         })
     }
 
     generateCards() {
-        var cards = this.state.data.map((content, i) =>
-            <Card
-                key={'card' + i}
-                index={i} // !!!!!!!!CAUTION: This might be deprecated if filtering is added!!!!!!!!
-            />)
+        // var cards = this.state.data.map((content, i) =>
+        //     <Card
+        //         key={'card' + i}
+        //         name={content.name}
+        //         pieces={content.pieces}
+        //         index={i}
+        //     />)
 
-        return cards;
+
+        // return cards;
     }
 
 
