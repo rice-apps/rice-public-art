@@ -1,7 +1,8 @@
-import React from 'react';
-import { View, Text, ImageBackground, StyleSheet, Button, TouchableHighlight } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Text, ImageBackground, StyleSheet, Button, Alert, TouchableHighlight } from 'react-native';
 import SwipeGesture from '../swipe-gesture'
-import {truncate} from '../util/stringlogic.js' 
+import {truncate} from '../util/stringlogic.js'
+import * as Calendar from 'expo-calendar'; 
 
 class EventCard extends React.Component {
   constructor(props) {
@@ -9,12 +10,19 @@ class EventCard extends React.Component {
   }
 
   render () {
-  dayOfWeek = ["SUN", "MON", "TUE", "WED", "THUR", "FRI", "SAT"][this.props.date.getUTCDay()];
-  dayOfMonth = this.props.date.getUTCDate();
-  accent = this.props.color;
+    const details = {
+      title: this.props.title,
+      startDate: this.props.date.getUTCDate(),
+      endDate: this.props.date.getUTCDate(),
+      location: this.props.location
+    }
+
+  const dayOfWeek = ["SUN", "MON", "TUE", "WED", "THUR", "FRI", "SAT"][this.props.date.getUTCDay()];
+  const dayOfMonth = this.props.date.getUTCDate();
+  const accent = this.props.color;
   //Fadeout background: light gray if fadeout; transparent if not fadeout
-  backColor = this.props.fadeOut ? "#f0f0f0":"rgba(255, 255, 255, 0)"
-  onSwipePerformed = (action) => {
+  const backColor = this.props.fadeOut ? "#f0f0f0":"rgba(255, 255, 255, 0)"
+  const onSwipePerformed = (action) => {
     console.log("card",action)
     if (action == "press"){
       //On press
@@ -24,6 +32,23 @@ class EventCard extends React.Component {
       this.props.onSwipePerformed(action)
     }
   }
+
+  function addToCalendar() {
+    (async () => {
+      const { status } = await Calendar.requestCalendarPermissionsAsync();
+      console.log(status)
+      if (status === 'granted') {
+        const calendars = await Calendar.getCalendarsAsync(Calendar.EntityTypes.EVENT);
+        console.log(calendars);
+        const defaultCalendar = calendars[0];
+        console.log('default', defaultCalendar);
+        const calendarId = defaultCalendar.id;
+        console.log('id', calendarId);
+        console.log(Calendar.createEventAsync(calendarId, details));
+      }
+    })();
+  }
+  
   return (
     <View style={[styles.card, { borderColor: accent }]}
             underlayColor="transparent"
@@ -47,7 +72,7 @@ class EventCard extends React.Component {
               </View>
             </View>
             <Button
-              onPress={() => Alert.alert('Simple Button pressed')}
+              onPress={() => addToCalendar()}
               title="Add to Calendar"
               color="#841584"
             />
