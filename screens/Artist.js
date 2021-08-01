@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView, Button, ActivityIndicator, Alert } from 'react-native';
-import Card from '../components/Card.js';
+import Card2 from '../components/Card2.js';
 import Topbar from '../components/Topbar.js';
 import { LIGHT_BLUE } from '../COLORS.js'
 
@@ -43,8 +43,7 @@ class ArtistScreen extends React.Component {
         super(props);
         this.state = {
             loading: true,
-            data: [],
-            content: []
+            data: []
         };
     }
 
@@ -53,31 +52,40 @@ class ArtistScreen extends React.Component {
         this.setState({
             loading: false,
             data: [{
-                name: 'Jane Doe',
-                pieces: 'A'
+                name: 'Natasha Romanoff',
+                image: 'https://cdn.pocket-lint.com/r/s/1200x/assets/images/156367-tv-news-feature-every-marvel-movie-and-show-to-watch-before-black-widow-image10-9lcwr2ywcm.jpg',
+                description: ""
             },
             {
-                name: 'John Smith',
-                pieces: 'B'
+                name: 'Steve Rogers',
+                image: 'https://media.distractify.com/brand-img/n2YUu1302/0x0/steve-rogers-1616186121342.jpeg',
+                description: ""
             },
             {
-                name: 'Mary Jane',
-                pieces: 'C'
-            }]
+                name: 'Yelena Belova',
+                image: 'https://am21.mediaite.com/tms/cnt/uploads/2020/11/Were-Going-To-See-More-of-Yelena-as-Florence-Pugh-Heads-To-Hawkeye-1200x675.jpg',
+                description: ""
+            },
+            {
+                name: 'Shang Chi',
+                image: 'https://www.gannett-cdn.com/presto/2021/07/19/USAT/72386be9-0d52-45d0-8fc8-1be5f02845e9-marvel-shang-chi.png?width=660&height=372&fit=crop&format=pjpg&auto=webp',
+                description: ""
+            },
+            ]
         })
     }
 
     generateCards() {
-        // var cards = this.state.data.map((content, i) =>
-        //     <Card
-        //         key={'card' + i}
-        //         name={content.name}
-        //         pieces={content.pieces}
-        //         index={i}
-        //     />)
+        var cards = this.state.data.map((content, i) =>
+            <Card2
+                key={'card' + i}
+                name={content.name}
+                image={content.image}
+                index={i}
+            />)
+        return cards
 
 
-        // return cards;
     }
 
 
