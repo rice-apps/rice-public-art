@@ -95,7 +95,7 @@ class HomeScreen extends React.Component {
   }
 
   generateCards() {
-    // console.log(this.state.data[0])
+    // console.log(this.state.data)
     var cards = this.state.data.map((content, i) =>
       this.shouldShowArtWithFilter(content) ?
         <Card
