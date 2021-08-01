@@ -11,14 +11,13 @@ class EventCard extends React.Component {
     this.handleClick = this.handlePress.bind(this);
   }
   handlePress = async () => {
-
     //Getting Permissions
     const statusCal = await Permissions.askAsync(Permissions.CALENDAR);
     const statusRem = await Permissions.askAsync(Permissions.REMINDERS);
 
-    const { id } = await getDefaultCalendar()
-
     if (statusCal.status === 'granted' && statusRem.status === 'granted') {
+      //"Default" Calendar determined as Calendar with "Home" title
+      const { id } = await getDefaultCalendar()
       const calEvent = await Calendar.createEventAsync(id,
         {
           title: this.props.title,
@@ -78,9 +77,8 @@ class EventCard extends React.Component {
             </View>
             <Button
                   title="Add Event to your Calendar"
-
                   onPress={this.handlePress}
-                />
+            />
             </View>
         </SwipeGesture>
     </View>
@@ -137,10 +135,8 @@ const styles = StyleSheet.create({
 
 export default EventCard;
 
-
 async function getDefaultCalendar() {
   const sources = await Calendar.getCalendarsAsync()
   const defaultCalendar = sources.filter(each => each.title === 'Home');
   return defaultCalendar[0];
 }
-
