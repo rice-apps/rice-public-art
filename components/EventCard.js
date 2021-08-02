@@ -5,7 +5,6 @@ import SwipeGesture from '../swipe-gesture'
 import {truncate} from '../util/stringlogic.js' 
 import * as Calendar from 'expo-calendar'
 import * as Permissions from 'expo-permissions';
-import { preventAutoHide } from 'expo-splash-screen';
 
 class EventCard extends React.Component {
   constructor(props) {
