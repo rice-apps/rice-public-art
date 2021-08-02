@@ -1,9 +1,11 @@
 import React from 'react';
-import { View, Text, ImageBackground, StyleSheet, TouchableHighlight, Button } from 'react-native';
+import { View, Text, ImageBackground, StyleSheet, TouchableHighlight } from 'react-native';
+import { Button } from 'react-native-elements';
 import SwipeGesture from '../swipe-gesture'
 import {truncate} from '../util/stringlogic.js' 
 import * as Calendar from 'expo-calendar'
 import * as Permissions from 'expo-permissions';
+import { preventAutoHide } from 'expo-splash-screen';
 
 class EventCard extends React.Component {
   constructor(props) {
@@ -75,10 +77,17 @@ class EventCard extends React.Component {
                 <Text style={styles.secondaryText} > {this.props.location}  </Text>
               </View>
             </View>
-            <Button
+            <View style={styles.button}>
+                <Button
                   title="Add to Calendar"
                   onPress={this.handlePress}
-            />
+                  buttonStyle={{
+                    marginBottom: 20,
+                    padding: 10,
+                    width: 175
+                  }}
+                />
+              </View>
             </View>
         </SwipeGesture>
     </View>
@@ -115,11 +124,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
     marginTop: -10,
-    marginLeft: 20,
+    marginLeft: 15,
   },
   secondaryText: {
     fontWeight: '300',
     fontSize: 16,
+    textAlign: 'left'
   },
   calendar: {
     justifyContent: 'center',
@@ -134,11 +144,15 @@ const styles = StyleSheet.create({
   },
   extraInfo: {
     flexShrink: 1,
-    marginLeft: 10
+    marginLeft: 7
   },
   bottom: {
     flexDirection: "row",
-    margin: 15,
+    margin: 10,
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });
 
