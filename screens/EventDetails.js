@@ -6,7 +6,7 @@ import Image from 'react-native-scalable-image';
 import { COLORS, LIGHT_GREEN } from '../COLORS.js';
 
 export default class EventDetailsScreen extends React.Component {
-    accent = this.props.color;
+    
     getParam(param,def){
       return this.props.navigation.getParam(param,def)
     } 
@@ -20,6 +20,7 @@ export default class EventDetailsScreen extends React.Component {
       }
     }
     render() {
+      
       return (
         <ScrollView style={styles.scrollView}>
             <Image  
@@ -29,12 +30,12 @@ export default class EventDetailsScreen extends React.Component {
             {/* Spacer */}
             <Text>  </Text> 
             {/* Title */}
-            <Text style={[styles.title, { color: accent }]}>{this.getParam('title')}</Text>
+            <Text style={[styles.title, { color: this.getParam("color") }]}>{this.getParam('title')}</Text>
             <View style={styles.bottom}>
               {/* Calendar bit */}
               <View style={styles.calendar}>
-                <Text style={[styles.secondaryText, { fontSize: 15, textAlign: 'center' }]} >{dayOfWeek}</Text>
-                <Text style={styles.calendarText}>{dayOfMonth}</Text>
+                <Text style={[styles.secondaryText, { fontSize: 15, textAlign: 'center' }]} >{["SUN", "MON", "TUE", "WED", "THUR", "FRI", "SAT"][this.getParam('date').getUTCDay()]}</Text>
+                <Text style={styles.calendarText}>{this.getParam('date').getUTCDate()}</Text>
               </View>
               {/* Extra info bit*/}
               <View style={styles.extraInfo}>

@@ -160,7 +160,7 @@ class EventsScreen extends React.Component {
       var date1 = new Date(2021, 6, 17, 11, 0, 0, 0);
       eventComponenents.push(
         <EventCard
-        key={'card1'}
+        key={'card123141511'}
         title="Dummy Event 1"
         description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
         image={"http://www.html.am/images/samples/remarkables_queenstown_new_zealand-300x225.jpg"}
@@ -176,7 +176,7 @@ class EventsScreen extends React.Component {
       var date2 = new Date(2021, 6, 10, 13, 0, 0, 0);
       eventComponenents.push(
         <EventCard
-        key={'card2'}
+        key={'card2342624'}
         title="Dummy Event 2"
         description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
         image={"http://www.html.am/images/samples/remarkables_queenstown_new_zealand-300x225.jpg"}
