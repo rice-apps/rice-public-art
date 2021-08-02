@@ -10,13 +10,13 @@ class EventCard extends React.Component {
     super(props);
     this.handleClick = this.handlePress.bind(this);
   }
-  
+
   handlePress = async () => {
     //Getting Permissions
     const statusCal = await Permissions.askAsync(Permissions.CALENDAR);
     const statusRem = await Permissions.askAsync(Permissions.REMINDERS);
 
-    if (statusCal.status === 'granted') {
+    if (statusCal.status === 'granted' && statusRem.status === 'granted') {
       //"Default" Calendar determined as first calendar
       const { id } = await getDefaultCalendar()
       const calEvent = await Calendar.createEventAsync(id,
