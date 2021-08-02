@@ -20,6 +20,9 @@ class EventCard extends React.Component {
     if (statusCal.status === 'granted' && statusRem.status === 'granted') {
       //"Default" Calendar determined as first calendar
       const { id } = await getDefaultCalendar()
+      if (id === undefined) {
+        return;
+      }
       const calEvent = await Calendar.createEventAsync(id,
         {
           title: this.props.title,
@@ -95,12 +98,14 @@ class EventCard extends React.Component {
 }
 
 async function getDefaultCalendar() {
-  const sources = await Calendar.getCalendarsAsync()
-  const defaultCalendar = sources[0];
-  if (!defaultCalendar) {
-    alert('No calendars availabe.')
+  try {
+    const sources = await Calendar.getCalendarsAsync();
+    const defaultCalendar = sources[0];
+    return defaultCalendar;
+    } catch (e) {
+      alert('No calendars availabe.')
+      return;
   }
-  return defaultCalendar;
 }
 
 const styles = StyleSheet.create({
