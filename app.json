@@ -24,6 +24,8 @@
       "supportsTablet": false,
       "bundleIdentifier": "org.riceapps.ricepublicart",
       "infoPlist": {
+        "NSCalendarsUsageDescription": "Allow Moody to access your calendar",
+        "NSRemindersUsageDescription": "This app uses your calendar to allow you to add events to your calendar.",
         "NSLocationWhenInUseUsageDescription": "This app uses your location to show you where you are relative to art pieces on campus."
       }
     }
