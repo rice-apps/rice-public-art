@@ -10,6 +10,7 @@ class EventCard extends React.Component {
     super(props);
     this.handleClick = this.handlePress.bind(this);
   }
+  
   handlePress = async () => {
     //Getting Permissions
     const statusCal = await Permissions.askAsync(Permissions.CALENDAR);
@@ -34,7 +35,6 @@ class EventCard extends React.Component {
       alert('Cannot add event to calendar without calendar permissions.')
     }
   }
-
 
   render () {
   const dayOfWeek = ["SUN", "MON", "TUE", "WED", "THUR", "FRI", "SAT"][this.props.date.getUTCDay()];
