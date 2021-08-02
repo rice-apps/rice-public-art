@@ -15,8 +15,8 @@ class EventCard extends React.Component {
     const statusCal = await Permissions.askAsync(Permissions.CALENDAR);
     const statusRem = await Permissions.askAsync(Permissions.REMINDERS);
 
-    if (statusCal.status === 'granted' && statusRem.status === 'granted') {
-      //"Default" Calendar determined as Calendar with "Home" title
+    if (statusCal.status === 'granted') {
+      //"Default" Calendar determined as first calendar
       const { id } = await getDefaultCalendar()
       const calEvent = await Calendar.createEventAsync(id,
         {
@@ -28,21 +28,21 @@ class EventCard extends React.Component {
           availability: this.props.time
         })
         console.log("Event Added to Calendar")
-        alert('This event has been added to your calendar')
+        alert('This event has been added to your calendar.')
     }
     else{
-      alert('Cannot add event to calendar without proper permission')
+      alert('Cannot add event to calendar without calendar permissions.')
     }
   }
 
 
   render () {
-  dayOfWeek = ["SUN", "MON", "TUE", "WED", "THUR", "FRI", "SAT"][this.props.date.getUTCDay()];
-  dayOfMonth = this.props.date.getUTCDate();
-  accent = this.props.color;
+  const dayOfWeek = ["SUN", "MON", "TUE", "WED", "THUR", "FRI", "SAT"][this.props.date.getUTCDay()];
+  const dayOfMonth = this.props.date.getUTCDate();
+  const accent = this.props.color;
 
   //Fadeout background: light gray if fadeout; transparent if not fadeout
-  backColor = this.props.fadeOut ? "#f0f0f0":"rgba(255, 255, 255, 0)"
+  const backColor = this.props.fadeOut ? "#f0f0f0":"rgba(255, 255, 255, 0)"
   onSwipePerformed = (action) => {
     console.log("card",action)
     if (action == "press"){
@@ -76,7 +76,7 @@ class EventCard extends React.Component {
               </View>
             </View>
             <Button
-                  title="Add Event to your Calendar"
+                  title="Add to Calendar"
                   onPress={this.handlePress}
             />
             </View>
@@ -84,6 +84,15 @@ class EventCard extends React.Component {
     </View>
   );
 }
+}
+
+async function getDefaultCalendar() {
+  const sources = await Calendar.getCalendarsAsync()
+  const defaultCalendar = sources[0];
+  if (!defaultCalendar) {
+    alert('No calendars availabe.')
+  }
+  return defaultCalendar;
 }
 
 const styles = StyleSheet.create({
@@ -134,9 +143,3 @@ const styles = StyleSheet.create({
 });
 
 export default EventCard;
-
-async function getDefaultCalendar() {
-  const sources = await Calendar.getCalendarsAsync()
-  const defaultCalendar = sources.filter(each => each.title === 'Home');
-  return defaultCalendar[0];
-}
