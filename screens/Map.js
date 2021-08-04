@@ -3,7 +3,7 @@ import { ImageBackground, TouchableHighlight } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { createStackNavigator } from 'react-navigation-stack'
 import MapView, { Callout } from 'react-native-maps';
-import { Marker } from 'react-native-maps';
+import { Marker } from 'react-native-maps'; // check here
 import { StyleSheet, Text, View, Image, Button, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import MapViewDirections from 'react-native-maps-directions';
 import { GOOGLE_MAPS_APIKEY } from '../AUTHENTICATION.js';
@@ -14,19 +14,19 @@ import distance from "../util/distance.js";
 
 const { width, height } = Dimensions.get('window');
 
-function smartColor(artPieces){  
-  for(var i = 0; i < artPieces.length; i++){
+function smartColor(artPieces) {
+  for (var i = 0; i < artPieces.length; i++) {
     var artPiecesCopy = Array.from(artPieces);
     //Sort artPiecesCopy from closest to farthest
-    artPiecesCopy.sort((a,b)=>{
-        var aloc = a.location; var bloc = b.location; var iloc = artPieces[i].location;
-        var d1 = distance(aloc.lat,aloc.lon,  iloc.lat,iloc.lon)
-        var d2 = distance(bloc.lat,bloc.lon,  iloc.lat,iloc.lon)
-        return d1-d2
+    artPiecesCopy.sort((a, b) => {
+      var aloc = a.location; var bloc = b.location; var iloc = artPieces[i].location;
+      var d1 = distance(aloc.lat, aloc.lon, iloc.lat, iloc.lon)
+      var d2 = distance(bloc.lat, bloc.lon, iloc.lat, iloc.lon)
+      return d1 - d2
     })
     var possibleColors = new Set(COLORS)
     //Remove possible colors that are close
-    for(var j=0; j < artPiecesCopy.length; j++){
+    for (var j = 0; j < artPiecesCopy.length; j++) {
       if (possibleColors.size == 1) break;
       if (artPiecesCopy[j].colorCode) possibleColors.delete(artPiecesCopy[j].colorCode);
     }
@@ -46,12 +46,12 @@ class MapScreen extends React.Component {
       backgroundColor: BLUE,
     },
   })
-  getParam(param,def){
+  getParam(param, def) {
     // console.log("getting param")
     // console.log(param)
-    // console.log(this.props.navigation.getParam(param,def))
-    return this.props.navigation.getParam(param,def)
-  } 
+    // console.log(this.props.navigation.getParam(param, def))
+    return this.props.navigation.getParam(param, def)
+  }
   constructor(props) {
     super(props);
     // console.log("propss", this.getParam("destination"))
@@ -59,12 +59,13 @@ class MapScreen extends React.Component {
       loading: true,
       data: [],
       destination: this.getParam("destination"),
-      showRoute: this.getParam("showRoute",false),
+      showRoute: this.getParam("showRoute", false),
       routeDuration: null,
       showCallout: false,
       calloutIndx: null,
       fromDetails: false,
     };
+    this.mark = [];
     this.mapView = null;
     this.userLocation = null;
   }
@@ -77,7 +78,7 @@ class MapScreen extends React.Component {
         if (payload.action && payload.action.action) {
           params = payload.action.action.params
         }
-        if(params) {
+        if (params) {
           // Navigated here from the art info page
           // Update state to show callout for appropriate art piece
           this.setState({
@@ -102,7 +103,9 @@ class MapScreen extends React.Component {
           }
         }
       }
+
     );
+
     // console.log("passed props", this.props.navigation.state)
     navigator.geolocation.getCurrentPosition((position) => {
       var lat = parseFloat(position.coords.latitude)
@@ -130,9 +133,10 @@ class MapScreen extends React.Component {
           }),
           loading: false,
         }, () => {
-          if(this.state.fromDetails) {
-            console.log("Centering!")
+          if (this.state.fromDetails) {
+            console.log(this.state.showCallout)
             let art = this.state.data[this.state.calloutIndx];
+
             this.mapView.animateToRegion({
               latitude: art.location.lat - this.mapView.props.initialRegion.latitudeDelta * 0.08,
               longitude: art.location.lon,
@@ -143,9 +147,9 @@ class MapScreen extends React.Component {
         })
       })
       .catch(error => console.log(error)) //to catch the errors if any
-    }
+  }
 
-  route(){
+  route() {
 
     let location = this.getParam("location")
     let index = this.getParam("index") // CAUTION: This might be deprecated with filtering!!!!
@@ -158,13 +162,14 @@ class MapScreen extends React.Component {
       actions: [NavigationActions.navigate({ routeName: 'Home' })],
     });
     //this runs the action
-this.props.navigation.dispatch(resetAction);
+    this.props.navigation.dispatch(resetAction);
     // console.log("location2", location)
     // console.log("index2", index)
 
     this.props.navigation.navigate("Map", {
       "location": location,
-      "index": index      }
+      "index": index
+    }
     )
   }
 
@@ -173,11 +178,13 @@ this.props.navigation.dispatch(resetAction);
 
     for (let i = 0; i < this.state.data.length; i++) {
       const art = this.state.data[i];
+
       markers.push(
         <Marker
+          ref={ref => { this.mark.push(ref) }}
           key={art.name}
           coordinate={{ latitude: art.location.lat, longitude: art.location.lon }}
-          title={art.name}
+          title={art.name} // tooltip check documentation
           isPreselected={false}
           onSelect={() => {
             this.setState({
@@ -190,6 +197,7 @@ this.props.navigation.dispatch(resetAction);
                 longitude: art.location.lon
               }
             })
+            // console.log(this.state.data[i].name)
             this.mapView.animateToRegion({
               latitude: art.location.lat - this.mapView.props.initialRegion.latitudeDelta * 0.08,
               longitude: art.location.lon,
@@ -197,7 +205,7 @@ this.props.navigation.dispatch(resetAction);
               longitudeDelta: this.mapView.props.initialRegion.longitudeDelta * 0.8
             });
           }}
-          onDeselect={()=> this.setState({showCallout: false})}
+          onDeselect={() => this.setState({ showCallout: false })}
           centerOffset={{ x: 0, y: -25 }}
         >
           <Image source={require('../images/mapIcon.png')} style={{ height: 50, width: 50, tintColor: art.colorCode }} />
@@ -210,12 +218,15 @@ this.props.navigation.dispatch(resetAction);
     // console.log("finished", this.state.finished)
     // console.log("show route", this.state.showRoute)
     // console.log("location", this.state.location)
+    // console.log(this.state.data[this.state.calloutIndx].name)
 
 
     // let callout = 
-
+    // const marker = markers[0]
+    // console.log(markers)
+    // console.log(this.mark)
     return (
-      
+
       <View style={styles.container}>
         <MapView
           style={styles.mapStyle}
@@ -228,17 +239,18 @@ this.props.navigation.dispatch(resetAction);
             longitudeDelta: 0.015,
           }}
           onUserLocationChange={locationChangedEvent => {
-            if (locationChangedEvent.nativeEvent.coordinate){
+            if (locationChangedEvent.nativeEvent.coordinate) {
               this.userLocation = {
                 latitude: locationChangedEvent.nativeEvent.coordinate.latitude,
                 longitude: locationChangedEvent.nativeEvent.coordinate.longitude
               }
             }
           }}
+        // onLayout={() => { this.mark[0].showCallout(); }}
         >
           {markers}
           {
-            this.state.showRoute  ?
+            this.state.showRoute ?
               <MapViewDirections
                 origin={this.userLocation}
                 destination={this.state.destination}
@@ -262,49 +274,51 @@ this.props.navigation.dispatch(resetAction);
                 }}
               /> : null
           }
+
         </MapView>
         {
-          (this.state.showCallout && !this.state.loading) ? (
+          (this.state.showCallout && !this.state.loading) ? ( // show in this
             <View style={[styles.calloutContainer]}>
               <View style={styles.calloutView}>
+
                 <TouchableHighlight onPress={() => {
-                            this.props.navigation.navigate('Details', {
-                              name: this.state.data[this.state.calloutIndx].name,
-                              description: this.state.data[this.state.calloutIndx].description,
-                              image: this.state.data[this.state.calloutIndx].image,
-                              location: this.state.data[this.state.calloutIndx].location,
-                              artist: this.state.data[this.state.calloutIndx].artist,
-                              year: this.state.data[this.state.calloutIndx].year,
-                              index: this.state.calloutIndx
-                            })
-                          }}
+                  this.props.navigation.navigate('Details', {
+                    name: this.state.data[this.state.calloutIndx].name,
+                    description: this.state.data[this.state.calloutIndx].description,
+                    image: this.state.data[this.state.calloutIndx].image,
+                    location: this.state.data[this.state.calloutIndx].location,
+                    artist: this.state.data[this.state.calloutIndx].artist,
+                    year: this.state.data[this.state.calloutIndx].year,
+                    index: this.state.calloutIndx
+                  })
+                }}
                 >
-                <ImageBackground style={styles.calloutImage} source={{ uri: this.state.data[this.state.calloutIndx].image }}>
-                <LinearGradient
-                    colors={['rgba(0, 0, 0, .8)', 'rgba(0, 0, 0, .7)', 'rgba(0, 0, 0, .3)','rgba(0, 0, 0, 0)']}
-                    style={{borderRadius: 5}}
-                 > 
-                    <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
-                      <Text style={[styles.calloutTitle,{margin:10}]}>
-                        {this.state.data[this.state.calloutIndx].name}
-                      </Text>
-                    </View>
-                  </LinearGradient>
-                </ImageBackground>
+                  <ImageBackground style={styles.calloutImage} source={{ uri: this.state.data[this.state.calloutIndx].image }}>
+                    <LinearGradient
+                      colors={['rgba(0, 0, 0, .8)', 'rgba(0, 0, 0, .7)', 'rgba(0, 0, 0, .3)', 'rgba(0, 0, 0, 0)']}
+                      style={{ borderRadius: 5 }}
+                    >
+                      <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+                        <Text style={[styles.calloutTitle, { margin: 10 }]}>
+                          {this.state.data[this.state.calloutIndx].name}
+                        </Text>
+                      </View>
+                    </LinearGradient>
+                  </ImageBackground>
                 </TouchableHighlight>
-                <TouchableHighlight 
+                <TouchableHighlight
                   onPress={() => {
                     this.setState({
                       showRoute: !this.state.showRoute,
                     });
                   }}
-                  underlayColor = {'#eeeeee'}
+                  underlayColor={'#eeeeee'}
                 >
                   <View style={styles.calloutButtonView}>
-                  <Text style={{fontSize: 18,fontWeight: 'bold'}}>
-                    {this.state.showRoute ? 'Hide Route' : 'Show Route'}
+                    <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+                      {this.state.showRoute ? 'Hide Route' : 'Show Route'}
                     </Text>
-                  {this.state.showRoute && this.state.routeDuration != null?
+                    {this.state.showRoute && this.state.routeDuration != null ?
                       <Text style={{ textAlign: 'center', margin: 0, padding: 0 }}>
                         Distance: {this.state.routeDuration} min
                       </Text> : null}
@@ -367,7 +381,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   calloutButtonView: {
-    height:55,
+    height: 55,
     justifyContent: 'center',
     alignItems: 'center',
   },

@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, Image, ImageBackground, StyleSheet, TouchableHighlight, Platform} from 'react-native';
+import { View, Text, Image, ImageBackground, StyleSheet, TouchableHighlight, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import {truncate} from '../util/stringlogic.js' 
+import { truncate } from '../util/stringlogic.js'
 
 export default class Card extends React.Component {
     render() {
