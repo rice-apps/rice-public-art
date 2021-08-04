@@ -71,15 +71,6 @@ export default class EventDetailsScreen extends React.Component {
                 <Text style={styles.secondaryText}>{this.getParam('time')}</Text>
                 <Text style={styles.secondaryText}>{this.getParam('location')}</Text>
               </View>
-              <View style={styles.button}>
-                <Button
-                    title="Add to Calendar"
-                    onPress={this.handlePress}
-                    buttonStyle={{
-                      padding: 10,
-                    }}
-                />
-              </View>
             </View>
             <View style = {styles.innerView}>
               <Text style = {styles.description}>{this.getParam("description","default desc")}</Text>
@@ -138,7 +129,8 @@ const styles = StyleSheet.create({
   },
   extraInfo: {
     flexShrink: 1,
-    marginLeft: 10
+    marginLeft: 10,
+    width: 140
   },
   bottom: {
     flexDirection: "row",
