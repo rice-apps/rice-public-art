@@ -137,11 +137,63 @@ class EventsScreen extends React.Component {
           >
           </EventCard>)      
       }
+      for (let i = 0; i < this.state.data.length; i++) {
+        var content = this.state.data[i]
+        const date = new Date(content.date + 'T06:00:00');
+        eventComponenents.push(
+          <EventCard
+          key={'card' + i}
+          title={content.title}
+          description={content.description}
+          image={content.image}
+          time={content.time}
+          location={content.location}
+          color={COLORS[i % COLORS.length]}
+          date={date}
+          navigation={this.props.navigation}
+          onSwipePerformed={this.onSwipePerformed.bind(this)}
+          fadeOut = {date < cutoff}
+          >
+          </EventCard>)      
+      }
+      // Creating two dummy events for testing events
+      var date1 = new Date(2021, 6, 17, 11, 0, 0, 0);
+      eventComponenents.push(
+        <EventCard
+        key={'card123141511'}
+        title="Dummy Event 1"
+        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        image={"http://www.html.am/images/samples/remarkables_queenstown_new_zealand-300x225.jpg"}
+        time={"11:00"}
+        location={"Reckling Park at Cameron Field"}
+        color={COLORS[1 % COLORS.length]}
+        date={date1}
+        navigation={this.props.navigation}
+        onSwipePerformed={this.onSwipePerformed.bind(this)}
+        fadeOut = {date1 < cutoff}
+        >
+        </EventCard>)  
+      var date2 = new Date(2021, 6, 10, 13, 0, 0, 0);
+      eventComponenents.push(
+        <EventCard
+        key={'card2342624'}
+        title="Dummy Event 2"
+        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        image={"http://www.html.am/images/samples/remarkables_queenstown_new_zealand-300x225.jpg"}
+        time={"13:00"}
+        location={"Dummy Location"}
+        color={COLORS[2 % COLORS.length]}
+        date={date2}
+        navigation={this.props.navigation}
+        onSwipePerformed={this.onSwipePerformed.bind(this)}
+        fadeOut = {date2 < cutoff}
+        >
+        </EventCard>)  
       //Sort event cards
       eventComponenents.sort((card_a,card_b)=>{
         //Get date of each card
-        date_a = card_a.props.date
-        date_b = card_b.props.date
+        var date_a = card_a.props.date
+        var date_b = card_b.props.date
         if ((date_a > cutoff) == (date_b > cutoff)){
           //Both in future or both in past
           if (date_a < date_b){
@@ -159,7 +211,7 @@ class EventsScreen extends React.Component {
       })
       if (eventComponenents.length > 0){
         //Find cut off position in list
-        lastFutureEvent = -1;
+        var lastFutureEvent = -1;
         eventComponenents.forEach(function (card, index) {
           var date = card.props.date
           if (date > cutoff) {
@@ -171,6 +223,7 @@ class EventsScreen extends React.Component {
           eventComponenents.splice(lastFutureEvent+1,0, <ScrollViewLabel key={'label'}
           >Past Events</ScrollViewLabel>)
         }
+
         return (
           <View>
             {carousel_component}

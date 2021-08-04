@@ -4,9 +4,12 @@ import Topbar from '../components/Topbar.js';
 import { Dimensions } from 'react-native';
 import Image from 'react-native-scalable-image';
 import { COLORS, LIGHT_GREEN } from '../COLORS.js';
+import { Button } from 'react-native-elements';
+import * as Calendar from 'expo-calendar'
+import * as Permissions from 'expo-permissions';
 
 export default class EventDetailsScreen extends React.Component {
-    accent = this.props.color;
+    
     getParam(param,def){
       return this.props.navigation.getParam(param,def)
     } 
@@ -19,7 +22,34 @@ export default class EventDetailsScreen extends React.Component {
         },
       }
     }
+
+    handlePress = async () => {
+      //Getting Permissions
+      const statusCal = await Permissions.askAsync(Permissions.CALENDAR);
+      const statusRem = await Permissions.askAsync(Permissions.REMINDERS);
+  
+      if (statusCal.status === 'granted' && statusRem.status === 'granted') {
+        //"Default" Calendar determined as first calendar
+        const { id } = await getDefaultCalendar()
+        const calEvent = await Calendar.createEventAsync(id,
+          {
+            title: this.getParam("title"),
+            startDate: this.getParam("date"),
+            endDate: new Date(this.getParam("date").getTime() + 60*60000),
+            timeZone: 'US/Central',
+            location: this.getParam("location"),
+            availability: this.getParam("time")
+          })
+          console.log("Event Added to Calendar")
+          alert('This event has been added to your calendar.')
+      }
+      else{
+        alert('Cannot add event to calendar without calendar permissions.')
+      }
+    }
+
     render() {
+      
       return (
         <ScrollView style={styles.scrollView}>
             <Image  
@@ -29,12 +59,12 @@ export default class EventDetailsScreen extends React.Component {
             {/* Spacer */}
             <Text>  </Text> 
             {/* Title */}
-            <Text style={[styles.title, { color: accent }]}>{this.getParam('title')}</Text>
+            <Text style={[styles.title, { color: this.getParam("color") }]}>{this.getParam('title')}</Text>
             <View style={styles.bottom}>
               {/* Calendar bit */}
               <View style={styles.calendar}>
-                <Text style={[styles.secondaryText, { fontSize: 15, textAlign: 'center' }]} >{dayOfWeek}</Text>
-                <Text style={styles.calendarText}>{dayOfMonth}</Text>
+                <Text style={[styles.secondaryText, { fontSize: 15, textAlign: 'center' }]} >{["SUN", "MON", "TUE", "WED", "THUR", "FRI", "SAT"][this.getParam('date').getUTCDay()]}</Text>
+                <Text style={styles.calendarText}>{this.getParam('date').getUTCDate()}</Text>
               </View>
               {/* Extra info bit*/}
               <View style={styles.extraInfo}>
@@ -45,10 +75,31 @@ export default class EventDetailsScreen extends React.Component {
             <View style = {styles.innerView}>
               <Text style = {styles.description}>{this.getParam("description","default desc")}</Text>
             </View>
+            <View style={styles.button}>
+              <Button
+                  title="Add to Calendar"
+                  onPress={this.handlePress}
+                  buttonStyle={{
+                    padding: 10,
+                    marginTop: 20,
+                    width: 170
+                  }}
+              />
+            </View>
         </ScrollView>  
       );
     }
   }
+
+async function getDefaultCalendar() {
+  const sources = await Calendar.getCalendarsAsync();
+  const defaultCalendar = sources[0];
+  if (!defaultCalendar) {
+    alert('No calendars availabe.')
+    return;
+  }
+  return defaultCalendar;
+}
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -77,7 +128,9 @@ const styles = StyleSheet.create({
     fontWeight: '600'
   },
   extraInfo: {
-    marginLeft: 10
+    flexShrink: 1,
+    marginLeft: 10,
+    width: 140
   },
   bottom: {
     flexDirection: "row",
@@ -94,4 +147,8 @@ const styles = StyleSheet.create({
     marginTop: -10,
     marginLeft: 10,
   },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
 });

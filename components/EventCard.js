@@ -1,19 +1,52 @@
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, TouchableHighlight } from 'react-native';
+import { Button } from 'react-native-elements';
 import SwipeGesture from '../swipe-gesture'
 import {truncate} from '../util/stringlogic.js' 
+import * as Calendar from 'expo-calendar'
+import * as Permissions from 'expo-permissions';
 
 class EventCard extends React.Component {
   constructor(props) {
     super(props);
+    this.handleClick = this.handlePress.bind(this);
+  }
+
+  handlePress = async () => {
+    //Getting Permissions
+    const statusCal = await Permissions.askAsync(Permissions.CALENDAR);
+    const statusRem = await Permissions.askAsync(Permissions.REMINDERS);
+
+    if (statusCal.status === 'granted' && statusRem.status === 'granted') {
+      //"Default" Calendar determined as first calendar
+      const { id } = await getDefaultCalendar()
+      if (id === undefined) {
+        return;
+      }
+      const calEvent = await Calendar.createEventAsync(id,
+        {
+          title: this.props.title,
+          startDate: this.props.date,
+          endDate: new Date(this.props.date.getTime() + 60*60000),
+          timeZone: 'US/Central',
+          location: this.props.location,
+          availability: this.props.time
+        })
+        console.log("Event Added to Calendar")
+        alert('This event has been added to your calendar.')
+    }
+    else{
+      alert('Cannot add event to calendar without calendar permissions.')
+    }
   }
 
   render () {
-  dayOfWeek = ["SUN", "MON", "TUE", "WED", "THUR", "FRI", "SAT"][this.props.date.getUTCDay()];
-  dayOfMonth = this.props.date.getUTCDate();
-  accent = this.props.color;
+  const dayOfWeek = ["SUN", "MON", "TUE", "WED", "THUR", "FRI", "SAT"][this.props.date.getUTCDay()];
+  const dayOfMonth = this.props.date.getUTCDate();
+  const accent = this.props.color;
+
   //Fadeout background: light gray if fadeout; transparent if not fadeout
-  backColor = this.props.fadeOut ? "#f0f0f0":"rgba(255, 255, 255, 0)"
+  const backColor = this.props.fadeOut ? "#f0f0f0":"rgba(255, 255, 255, 0)"
   onSwipePerformed = (action) => {
     console.log("card",action)
     if (action == "press"){
@@ -46,11 +79,33 @@ class EventCard extends React.Component {
                 <Text style={styles.secondaryText} > {this.props.location}  </Text>
               </View>
             </View>
+            <View style={styles.button}>
+                <Button
+                  title="Add to Calendar"
+                  onPress={this.handlePress}
+                  buttonStyle={{
+                    marginBottom: 20,
+                    padding: 10,
+                    width: 175
+                  }}
+                />
+              </View>
             </View>
         </SwipeGesture>
     </View>
   );
 }
+}
+
+async function getDefaultCalendar() {
+  try {
+    const sources = await Calendar.getCalendarsAsync();
+    const defaultCalendar = sources[0];
+    return defaultCalendar;
+    } catch (e) {
+      alert('No calendars availabe.')
+      return;
+  }
 }
 
 const styles = StyleSheet.create({
@@ -73,11 +128,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
     marginTop: -10,
-    marginLeft: 20,
+    marginLeft: 15,
   },
   secondaryText: {
     fontWeight: '300',
     fontSize: 16,
+    textAlign: 'left'
   },
   calendar: {
     justifyContent: 'center',
@@ -91,11 +147,16 @@ const styles = StyleSheet.create({
     fontWeight: '600'
   },
   extraInfo: {
-    marginLeft: 10
+    flexShrink: 1,
+    marginLeft: 7
   },
   bottom: {
     flexDirection: "row",
-    margin: 15,
+    margin: 10,
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });
 
