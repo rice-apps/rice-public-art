@@ -18,8 +18,8 @@ export default class Card extends React.Component {
                 colors={['rgba(0, 0, 0, .95)', 'rgba(0, 0, 0, .7)', 'rgba(0, 0, 0, .4)','rgba(0, 0, 0, 0)']}
                 style={{ padding: 15, borderRadius: 5 }}
               > 
-              <Text style={{textAlign: "left", fontFamily: "aktiv-grotesk-regular", color:"white", textTransform: "uppercase", fontSize: 25, marginTop:-10, marginLeft:-5}}> {truncate(this.props.name,20)} </Text>
-              <Text style={{textAlign: "left", fontFamily: "aktiv-grotesk-regular", color:"white", textTransform: "uppercase", fontSize: 15, marginTop:2, marginLeft:-5}}> {truncate(this.props.artist,20)} </Text>
+              <Text style={{textAlign: "left", fontFamily: "aktiv-grotesk-regular", color:"white", textTransform: "uppercase", fontSize: 25, marginTop:-10, marginLeft:-5}}> {truncate(this.props.artist,20)} </Text>
+              <Text style={{textAlign: "left", fontFamily: "aktiv-grotesk-regular", color:"white", textTransform: "uppercase", fontSize: 15, marginTop:2, marginLeft:-5}}> {truncate(this.props.name,20)} </Text>
               </LinearGradient>
               <LinearGradient
                 colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, .1)', 'rgba(0, 0, 0, .5)', 'rgba(0, 0, 0, .9)']}
