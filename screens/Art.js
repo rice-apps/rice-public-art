@@ -52,14 +52,10 @@ class HomeScreen extends React.Component {
       userLocation: null,
       showFilterMenu: false,
       filters: {
-        sculpture: false,
-        painting: false,
-        film: false,
-        photography: false,
-        installation: false,
-        drawingAndPrints: false,
         indoors: false,
         outdoors: false,
+        permanent: false,
+        temporary: false
       }
     };
   }
@@ -149,7 +145,7 @@ class HomeScreen extends React.Component {
     if (content.indoors == false) {
       content.outdoors = true;
     }
-    const filters = ['sculpture', 'painting', 'film', 'photography', 'installation', 'drawingAndPrints', 'indoors', 'outdoors'];
+    const filters = ['indoors', 'outdoors', 'permananent', 'temporary'];
     var passedFilter = false
     var allFiltersTrue = true
     var allFiltersFalse = true
@@ -194,42 +190,6 @@ class HomeScreen extends React.Component {
             <View style={styles.filterMenu}>
               <Text style={styles.filterMenuTitle}>Filter Art</Text>
               <CheckBox
-                title='Sculpture'
-                checked={this.state.filters.sculpture}
-                onPress={() => this.toggleFilter('sculpture')}
-                containerStyle={{ width: 225 }}
-              />
-              <CheckBox
-                title='Painting'
-                checked={this.state.filters.painting}
-                onPress={() => this.toggleFilter('painting')}
-                containerStyle={{ width: 225 }}
-              />
-              <CheckBox
-                title='Film'
-                checked={this.state.filters.film}
-                onPress={() => this.toggleFilter('film')}
-                containerStyle={{ width: 225 }}
-              />
-              <CheckBox
-                title='Photography'
-                checked={this.state.filters.photography}
-                onPress={() => this.toggleFilter('photography')}
-                containerStyle={{ width: 225 }}
-              />
-              <CheckBox
-                title='Installation'
-                checked={this.state.filters.installation}
-                onPress={() => this.toggleFilter('installation')}
-                containerStyle={{ width: 225 }}
-              />
-              <CheckBox
-                title='Drawing and Prints'
-                checked={this.state.filters.drawingAndPrints}
-                onPress={() => this.toggleFilter('drawingAndPrints')}
-                containerStyle={{ width: 225 }}
-              />
-              <CheckBox
                 title='Indoors'
                 checked={this.state.filters.indoors}
                 onPress={() => this.toggleFilter('indoors')}
@@ -239,6 +199,18 @@ class HomeScreen extends React.Component {
                 title='Outdoors'
                 checked={this.state.filters.outdoors}
                 onPress={() => this.toggleFilter('outdoors')}
+                containerStyle={{ width: 225 }}
+              />
+              <CheckBox
+                title='Permanent'
+                checked={this.state.filters.permanent}
+                onPress={() => this.toggleFilter('permanent')}
+                containerStyle={{ width: 225 }}
+              />
+              <CheckBox
+                title='Temporary'
+                checked={this.state.filters.temporary}
+                onPress={() => this.toggleFilter('temporary')}
                 containerStyle={{ width: 225 }}
               />
               <Button testID={'close-button'} onPress={() => this.setState({ showFilterMenu: false })} title="Close" />
