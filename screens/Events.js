@@ -156,39 +156,41 @@ class EventsScreen extends React.Component {
           >
           </EventCard>)      
       }
+      
       // Creating two dummy events for testing events
-      var date1 = new Date(2021, 6, 17, 11, 0, 0, 0);
-      eventComponenents.push(
-        <EventCard
-        key={'card123141511'}
-        title="Dummy Event 1"
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-        image={"http://www.html.am/images/samples/remarkables_queenstown_new_zealand-300x225.jpg"}
-        time={"11:00"}
-        location={"Reckling Park at Cameron Field"}
-        color={COLORS[1 % COLORS.length]}
-        date={date1}
-        navigation={this.props.navigation}
-        onSwipePerformed={this.onSwipePerformed.bind(this)}
-        fadeOut = {date1 < cutoff}
-        >
-        </EventCard>)  
-      var date2 = new Date(2021, 6, 10, 13, 0, 0, 0);
-      eventComponenents.push(
-        <EventCard
-        key={'card2342624'}
-        title="Dummy Event 2"
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-        image={"http://www.html.am/images/samples/remarkables_queenstown_new_zealand-300x225.jpg"}
-        time={"13:00"}
-        location={"Dummy Location"}
-        color={COLORS[2 % COLORS.length]}
-        date={date2}
-        navigation={this.props.navigation}
-        onSwipePerformed={this.onSwipePerformed.bind(this)}
-        fadeOut = {date2 < cutoff}
-        >
-        </EventCard>)  
+      // var date1 = new Date(2021, 6, 17, 11, 0, 0, 0);
+      // eventComponenents.push(
+      //   <EventCard
+      //   key={'card123141511'}
+      //   title="Dummy Event 1"
+      //   description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+      //   image={"http://www.html.am/images/samples/remarkables_queenstown_new_zealand-300x225.jpg"}
+      //   time={"11:00"}
+      //   location={"Reckling Park at Cameron Field"}
+      //   color={COLORS[1 % COLORS.length]}
+      //   date={date1}
+      //   navigation={this.props.navigation}
+      //   onSwipePerformed={this.onSwipePerformed.bind(this)}
+      //   fadeOut = {date1 < cutoff}
+      //   >
+      //   </EventCard>)  
+      // var date2 = new Date(2021, 6, 10, 13, 0, 0, 0);
+      // eventComponenents.push(
+      //   <EventCard
+      //   key={'card2342624'}
+      //   title="Dummy Event 2"
+      //   description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+      //   image={"http://www.html.am/images/samples/remarkables_queenstown_new_zealand-300x225.jpg"}
+      //   time={"13:00"}
+      //   location={"Dummy Location"}
+      //   color={COLORS[2 % COLORS.length]}
+      //   date={date2}
+      //   navigation={this.props.navigation}
+      //   onSwipePerformed={this.onSwipePerformed.bind(this)}
+      //   fadeOut = {date2 < cutoff}
+      //   >
+      //   </EventCard>)  
+
       //Sort event cards
       eventComponenents.sort((card_a,card_b)=>{
         //Get date of each card
