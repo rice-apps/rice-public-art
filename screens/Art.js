@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, Button, ActivityIndicator, Alert } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Button, ActivityIndicator, Alert, Pressable } from 'react-native';
 import Card from '../components/Card.js';
 import Topbar from '../components/Topbar.js';
 import { LIGHT_ORANGE } from '../COLORS.js'
@@ -22,11 +22,15 @@ class HomeScreen extends React.Component {
     return {
       headerLeft: <Topbar text="Art" />,
       headerRight: () => (
-        <Button
-          onPress={navigation.getParam('showFilter')}
-          title="Filter"
-          color="#fff"
-        />
+        // <Button 
+        //   onPress={navigation.getParam('showFilter')}
+        //   color="#fff">
+            
+        // </Button>
+        <Pressable style={styles.button} onPress={navigation.getParam('showFilter')}>
+      <Text style={styles.text}>Filters</Text>
+    </Pressable>
+  
       ),
       headerStyle: {
         backgroundColor: LIGHT_ORANGE,
@@ -253,4 +257,20 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 12,
   },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: LIGHT_ORANGE,
+  },
+  text: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: 'bold',
+    letterSpacing: 0.25,
+    color: 'white',
+  }
 });
